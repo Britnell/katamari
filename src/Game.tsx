@@ -15,9 +15,10 @@ import {
   OrbitControls,
   PerspectiveCamera,
   useKeyboardControls,
+  Text3D,
+  Center,
 } from "@react-three/drei";
 import { Letter } from "./components/Letter";
-import { Text3D, Center } from "@react-three/drei";
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -381,7 +382,7 @@ function KatamariBall() {
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
             >
-              <Center scale={[0.7, 0.7, 0.7]}>
+              <Center scale={[0.8, 0.8, 0.8]}>
                 <Text3D
                   font="/fonts/Roboto_Regular.json"
                   size={fontSize}
