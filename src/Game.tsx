@@ -55,11 +55,9 @@ function KatamariBall() {
 
   const BASE_MOVE_FORCE = 1.5;
   const TURN_SPEED = 1.5;
-  const BASE_MAX_VELOCITY = 3;
   const CAMERA_HEIGHT = 2;
   const CAMERA_DISTANCE = 5;
   const CAMERA_SMOOTHING = 0.05;
-  const MAX_ANGULAR_VELOCITY = 2;
 
   const [_sub, getState] = useKeyboardControls();
   const { camera } = useThree();
@@ -93,14 +91,12 @@ function KatamariBall() {
       direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
     }
 
-    const currentMaxVelocity =
-      BASE_MAX_VELOCITY * (1 + 0.2 * Math.sqrt(virtualRadius - 0.5));
-    const speedFactor = Math.max(0, 1 - (speed / currentMaxVelocity) * 0.8);
-    const currentMoveForce =
-      BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
-    const TORQUE_FACTOR = 0.8;
-
     if (keys.forward) {
+      const TORQUE_FACTOR = 0.8;
+      const naturalSpeedFactor = Math.max(0, 1 - speed * 0.15);
+      const sizeProportionalForce =
+        BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
+      //
       const upVector = new THREE.Vector3(0, 1, 0);
       const moveDirection = direction.current.clone();
       const rotationAxis = new THREE.Vector3()
@@ -113,36 +109,20 @@ function KatamariBall() {
             rotationAxis.x *
             TORQUE_FACTOR *
             delta *
-            currentMoveForce *
-            speedFactor,
+            sizeProportionalForce *
+            naturalSpeedFactor,
           y:
             rotationAxis.y *
             TORQUE_FACTOR *
             delta *
-            currentMoveForce *
-            speedFactor,
+            sizeProportionalForce *
+            naturalSpeedFactor,
           z:
             rotationAxis.z *
             TORQUE_FACTOR *
             delta *
-            currentMoveForce *
-            speedFactor,
-        },
-        true
-      );
-    }
-
-    if (speed > currentMaxVelocity) {
-      const normalizedVel = new THREE.Vector3(
-        velocity.x,
-        velocity.y,
-        velocity.z
-      ).normalize();
-      ballBody.setLinvel(
-        {
-          x: normalizedVel.x * currentMaxVelocity,
-          y: velocity.y,
-          z: normalizedVel.z * currentMaxVelocity,
+            sizeProportionalForce *
+            naturalSpeedFactor,
         },
         true
       );
