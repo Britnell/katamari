@@ -11,14 +11,13 @@ import * as THREE from "three";
 import { useKeyboardControls, Text3D, Center } from "@react-three/drei";
 import { UserData } from "./Game";
 
-export default function KatamariBall() {
-  const initialRadius = 0.5;
+const initialRadius = 0.5;
 
-  const ballRef = useRef<RapierRigidBody>(null);
-  const [ballSize] = useState(initialRadius);
-  const [virtualRadius, setVirtualRadius] = useState(initialRadius);
+export default function KatamariBall() {
   const [totalMass, setTotalMass] = useState(3);
   const [rotation, setRotation] = useState(0);
+  const [virtualRadius, setVirtualRadius] = useState(initialRadius);
+  const ballRef = useRef<RapierRigidBody>(null);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
 
   const CAMERA_HEIGHT = 2;
@@ -51,7 +50,7 @@ export default function KatamariBall() {
   >(new Map());
 
   useEffect(() => {
-    camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+    camera.position.set(0, CAMERA_HEIGHT, -CAMERA_DISTANCE);
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
@@ -367,13 +366,13 @@ export default function KatamariBall() {
         friction={1.5}
         linearDamping={0.8}
         angularDamping={0.5}
-        position={[0, ballSize, 0]}
+        position={[0, initialRadius, 0]}
         mass={totalMass}
         onCollisionEnter={onCollision}
         canSleep={false}
       >
         <mesh castShadow>
-          <sphereGeometry args={[ballSize, 32, 32]} />
+          <sphereGeometry args={[initialRadius, 32, 32]} />
           <meshStandardMaterial map={texture.current} />
         </mesh>
 
