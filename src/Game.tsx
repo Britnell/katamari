@@ -17,6 +17,7 @@ import {
   useKeyboardControls,
 } from "@react-three/drei";
 import { Letter } from "./components/Letter";
+import { Text3D, Center } from "@react-three/drei";
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -56,6 +57,15 @@ type UserData = {
   depth: number;
   id: number;
   setCollected: (x: boolean) => void;
+  type?: string;
+  char?: string;
+  fontSize?: number;
+  color?: string;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
 };
 
 function KatamariBall() {
@@ -84,6 +94,15 @@ function KatamariBall() {
         position: THREE.Vector3;
         rotation: THREE.Quaternion;
         geometry: [number, number, number];
+        type: string;
+        char?: string;
+        fontSize?: number;
+        color?: string;
+        bevelEnabled?: boolean;
+        bevelThickness?: number;
+        bevelSize?: number;
+        bevelSegments?: number;
+        curveSegments?: number;
       }
     >
   >(new Map());
@@ -283,6 +302,17 @@ function KatamariBall() {
         position: attachPoint,
         rotation: relativeRotation,
         geometry: objectDimensions,
+        type: userData.type || "box",
+        ...(userData.type === "letter" && {
+          char: userData.char,
+          fontSize: userData.fontSize,
+          color: userData.color,
+          bevelEnabled: userData.bevelEnabled,
+          bevelThickness: userData.bevelThickness,
+          bevelSize: userData.bevelSize,
+          bevelSegments: userData.bevelSegments,
+          curveSegments: userData.curveSegments,
+        }),
       });
 
       otherBody.setEnabled(false);
@@ -331,7 +361,44 @@ function KatamariBall() {
 
     return Array.from(collectedObjects.current.entries()).map(
       ([id, object]) => {
-        const { position, rotation, geometry } = object;
+        const { position, rotation, geometry, type } = object;
+
+        if (type === "letter") {
+          const {
+            char,
+            fontSize = 1,
+            color = "white",
+            bevelEnabled = true,
+            bevelThickness = 0.03,
+            bevelSize = 0.02,
+            bevelSegments = 4,
+            curveSegments = 12,
+          } = object;
+
+          return (
+            <group
+              key={`collected-${id}`}
+              position={[position.x, position.y, position.z]}
+              quaternion={rotation}
+            >
+              <Center scale={[0.7, 0.7, 0.7]}>
+                <Text3D
+                  font="/fonts/Roboto_Regular.json"
+                  size={fontSize}
+                  height={geometry[2]}
+                  curveSegments={curveSegments}
+                  bevelEnabled={bevelEnabled}
+                  bevelThickness={bevelThickness}
+                  bevelSize={bevelSize}
+                  bevelSegments={bevelSegments}
+                >
+                  {char}
+                  <meshStandardMaterial color={color} />
+                </Text3D>
+              </Center>
+            </group>
+          );
+        }
 
         return (
           <group
@@ -406,12 +473,30 @@ function CollectibleObject({
   height,
   depth,
   id,
+  type,
+  char,
+  fontSize,
+  color,
+  bevelEnabled,
+  bevelThickness,
+  bevelSize,
+  bevelSegments,
+  curveSegments,
 }: {
   position: [number, number, number];
   width: number;
   height: number;
   depth: number;
   id: number;
+  type?: string;
+  char?: string;
+  fontSize?: number;
+  color?: string;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
 }) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -443,6 +528,15 @@ function CollectibleObject({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
+        type,
+        char,
+        fontSize,
+        color,
+        bevelEnabled,
+        bevelThickness,
+        bevelSize,
+        bevelSegments,
+        curveSegments,
       }}
       sensor={isCollected}
     >
@@ -542,6 +636,8 @@ function LetterObjects() {
           bevelEnabled={true}
           bevelThickness={0.05}
           bevelSize={0.04}
+          bevelSegments={4}
+          curveSegments={12}
         />
       ))}
     </>

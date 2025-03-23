@@ -109,6 +109,15 @@ export function Letter({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
+        type: "letter",
+        char,
+        fontSize,
+        color,
+        bevelEnabled,
+        bevelThickness,
+        bevelSize,
+        bevelSegments,
+        curveSegments,
       }}
       sensor={isCollected}
     >
