@@ -45,16 +45,24 @@ export default function Game() {
   );
 }
 
+type UserData = {
+  isCollectable: boolean;
+  volume: number;
+  size: number;
+  id: number;
+  setCollected: (x: boolean) => void;
+};
+
 function KatamariBall() {
+  const initialBallSize = 0.5;
+
   const ballRef = useRef<RapierRigidBody>(null);
-  const [ballSize] = useState(0.5);
-  const [virtualRadius, setVirtualRadius] = useState(0.5);
+  const [ballSize] = useState(initialBallSize);
+  const [virtualRadius, setVirtualRadius] = useState(initialBallSize);
   const [totalMass, setTotalMass] = useState(3);
   const [rotation, setRotation] = useState(0);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
 
-  const BASE_MOVE_FORCE = 1.5;
-  const TURN_SPEED = 1.5;
   const CAMERA_HEIGHT = 2;
   const CAMERA_DISTANCE = 5;
   const CAMERA_SMOOTHING = 0.05;
@@ -83,7 +91,9 @@ function KatamariBall() {
     );
 
     if (keys.left || keys.right) {
+      const TURN_SPEED = 1.5;
       const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
+      //
       const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
       if (keys.left) setRotation((prev) => prev + effectiveTurnSpeed);
       if (keys.right) setRotation((prev) => prev - effectiveTurnSpeed);
@@ -93,9 +103,10 @@ function KatamariBall() {
 
     if (keys.forward) {
       const TORQUE_FACTOR = 0.8;
-      const naturalSpeedFactor = Math.max(0, 1 - speed * 0.15);
-      const sizeProportionalForce =
-        BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
+      const BASE_MOVE_FORCE = 1.5;
+      const speedProportional = Math.max(0, 1 - speed * 0.15);
+      const sizeProportional =
+        BASE_MOVE_FORCE * (1 + 0.3 * (virtualRadius - initialBallSize));
       //
       const upVector = new THREE.Vector3(0, 1, 0);
       const moveDirection = direction.current.clone();
@@ -109,20 +120,20 @@ function KatamariBall() {
             rotationAxis.x *
             TORQUE_FACTOR *
             delta *
-            sizeProportionalForce *
-            naturalSpeedFactor,
+            sizeProportional *
+            speedProportional,
           y:
             rotationAxis.y *
             TORQUE_FACTOR *
             delta *
-            sizeProportionalForce *
-            naturalSpeedFactor,
+            sizeProportional *
+            speedProportional,
           z:
             rotationAxis.z *
             TORQUE_FACTOR *
             delta *
-            sizeProportionalForce *
-            naturalSpeedFactor,
+            sizeProportional *
+            speedProportional,
         },
         true
       );
@@ -222,7 +233,9 @@ function KatamariBall() {
   );
 
   const collectObject = useCallback(
-    (otherBody, userData) => {
+    (otherBody: RapierRigidBody, userData: UserData) => {
+      if (!ballRef.current) return;
+
       const id = userData.id;
       if (attachedObjectsRef.current.has(id)) return;
       const newVolume =
@@ -275,10 +288,9 @@ function KatamariBall() {
 
   const onCollision: CollisionEnterHandler = useCallback(
     ({ other }) => {
-      const userData = other.rigidBody?.userData;
+      const userData = other.rigidBody?.userData as UserData;
       if (userData?.isCollectable) {
         const objectVolume = userData.volume;
-        console.log({ s: userData.size }, userData);
         const isColl = isCollectable(
           userData.size,
           objectVolume,
