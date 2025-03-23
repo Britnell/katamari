@@ -2,22 +2,11 @@ import {
   Physics,
   RigidBody,
   useRapier,
-  CuboidCollider,
-  InstancedRigidBodyProps,
-  RigidBodyAutoCollider,
   RapierRigidBody,
   CollisionEnterHandler,
-  CylinderCollider,
   BallCollider,
 } from "@react-three/rapier";
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-  RefObject,
-} from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import {
@@ -91,24 +80,10 @@ function KatamariBall() {
     const ballBody = ballRef.current;
     const ballPosition = ballBody.translation();
 
-    const getScaledMoveForce = () => {
-      return BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
-    };
-
-    const getScaledMaxVelocity = () => {
-      return BASE_MAX_VELOCITY * (1 + 0.2 * Math.sqrt(virtualRadius - 0.5));
-    };
-
-    const currentMoveForce = getScaledMoveForce();
-    const currentMaxVelocity = getScaledMaxVelocity();
-
-    const velocity = ballBody.linvel();
     const angularVelocity = ballBody.angvel();
-    const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
     const angularSpeed = Math.sqrt(
       angularVelocity.x ** 2 + angularVelocity.y ** 2 + angularVelocity.z ** 2
     );
-
     if (angularSpeed > MAX_ANGULAR_VELOCITY) {
       const scale = MAX_ANGULAR_VELOCITY / angularSpeed;
       ballBody.setAngvel(
@@ -121,6 +96,10 @@ function KatamariBall() {
       );
     }
 
+    const velocity = ballBody.linvel();
+    const speed = Math.sqrt(
+      velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2
+    );
     const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
     const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
     if (keys.left) {
@@ -132,7 +111,11 @@ function KatamariBall() {
 
     direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
 
+    const currentMaxVelocity =
+      BASE_MAX_VELOCITY * (1 + 0.2 * Math.sqrt(virtualRadius - 0.5));
     const speedFactor = Math.max(0, 1 - (speed / currentMaxVelocity) * 0.8);
+    const currentMoveForce =
+      BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
 
     if (keys.forward) {
       const upVector = new THREE.Vector3(0, 1, 0);
