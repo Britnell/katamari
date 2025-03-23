@@ -49,6 +49,9 @@ type UserData = {
   isCollectable: boolean;
   volume: number;
   size: number;
+  width: number;
+  height: number;
+  depth: number;
   id: number;
   setCollected: (x: boolean) => void;
 };
@@ -69,16 +72,26 @@ function KatamariBall() {
 
   const [_sub, getState] = useKeyboardControls();
   const { camera } = useThree();
-  const { rapier } = useRapier();
+  const { rapier, world } = useRapier();
   const texture = useRef(createBallTexture());
-  const attachedObjectsRef = useRef(new Map());
+
+  const collectedObjects = useRef<
+    Map<
+      number,
+      {
+        position: THREE.Vector3;
+        rotation: THREE.Quaternion;
+        geometry: [number, number, number];
+      }
+    >
+  >(new Map());
 
   useEffect(() => {
     camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (!ballRef.current) return;
 
     const keys = getState();
@@ -93,7 +106,6 @@ function KatamariBall() {
     if (keys.left || keys.right) {
       const TURN_SPEED = 1.5;
       const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
-      //
       const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
       if (keys.left) setRotation((prev) => prev + effectiveTurnSpeed);
       if (keys.right) setRotation((prev) => prev - effectiveTurnSpeed);
@@ -105,7 +117,6 @@ function KatamariBall() {
       const BASE_MOVE_FORCE = 0.4;
       const speedProportional = Math.max(0, 1 - speed * 0.15);
       const sizeProportional = BASE_MOVE_FORCE * totalMass;
-      //
       const factor =
         TORQUE_FACTOR * delta * sizeProportional * speedProportional;
       const upVector = new THREE.Vector3(0, 1, 0);
@@ -140,51 +151,8 @@ function KatamariBall() {
     camera.lookAt(targetLookAt);
   });
 
-  useFrame(() => {
-    if (!ballRef.current) return;
-
-    const ballPos = ballRef.current.translation();
-    const ballRot = ballRef.current.rotation();
-
-    const ballQuaternion = new THREE.Quaternion(
-      ballRot.x,
-      ballRot.y,
-      ballRot.z,
-      ballRot.w
-    );
-
-    attachedObjectsRef.current.forEach((obj) => {
-      const rotatedPoint = obj.attachPoint
-        .clone()
-        .applyQuaternion(ballQuaternion);
-
-      const objSize = obj.size / 2;
-      const newPos = {
-        x: ballPos.x + rotatedPoint.x,
-        y: ballPos.y + rotatedPoint.y + objSize,
-        z: ballPos.z + rotatedPoint.z,
-      };
-
-      obj.body.setTranslation(newPos, true);
-
-      const combinedRotation = ballQuaternion
-        .clone()
-        .multiply(obj.relativeRotation);
-
-      obj.body.setRotation(
-        {
-          x: combinedRotation.x,
-          y: combinedRotation.y,
-          z: combinedRotation.z,
-          w: combinedRotation.w,
-        },
-        true
-      );
-    });
-  });
-
   const calculateAttachmentPoint = useCallback(
-    (objectBody) => {
+    (objectBody: RapierRigidBody) => {
       if (!ballRef.current) return new THREE.Vector3(0, 0, 0);
 
       const ballPos = ballRef.current.translation();
@@ -216,12 +184,55 @@ function KatamariBall() {
     [virtualRadius, ballRef]
   );
 
+  const addCompoundCollider = useCallback(
+    (
+      _otherRigidBody: RapierRigidBody,
+      attachPoint: THREE.Vector3,
+      relativeRotation: THREE.Quaternion,
+      objectSize: [number, number, number]
+    ) => {
+      if (!ballRef.current || !world) return;
+
+      try {
+        const ballRigidBodyHandle = ballRef.current.handle;
+
+        const colliderDesc = rapier.ColliderDesc.cuboid(
+          objectSize[0] / 2,
+          objectSize[1] / 2,
+          objectSize[2] / 2
+        );
+
+        colliderDesc.setTranslation(
+          attachPoint.x,
+          attachPoint.y,
+          attachPoint.z
+        );
+        colliderDesc.setRotation({
+          x: relativeRotation.x,
+          y: relativeRotation.y,
+          z: relativeRotation.z,
+          w: relativeRotation.w,
+        });
+
+        colliderDesc.setFriction(1.5);
+        colliderDesc.setRestitution(0.1);
+
+        const rigidBodyHandle = ballRigidBodyHandle as unknown as any;
+        world.createCollider(colliderDesc, rigidBodyHandle);
+      } catch (error) {
+        console.error("Error creating compound collider:", error);
+      }
+    },
+    [ballRef, rapier, world]
+  );
+
   const collectObject = useCallback(
     (otherBody: RapierRigidBody, userData: UserData) => {
       if (!ballRef.current) return;
 
       const id = userData.id;
-      if (attachedObjectsRef.current.has(id)) return;
+      if (collectedObjects.current.has(id)) return;
+
       const newVolume =
         (4 / 3) * Math.PI * virtualRadius ** 3 + userData.volume;
       const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
@@ -253,13 +264,23 @@ function KatamariBall() {
         .clone()
         .multiply(inverseRotation);
 
-      attachedObjectsRef.current.set(id, {
-        id,
-        body: otherBody,
+      const objectDimensions: [number, number, number] = [
+        userData.width,
+        userData.height,
+        userData.depth,
+      ];
+
+      addCompoundCollider(
+        otherBody,
         attachPoint,
-        size: userData.size,
-        volume: userData.volume,
-        relativeRotation: relativeRotation,
+        relativeRotation,
+        objectDimensions
+      );
+
+      collectedObjects.current.set(id, {
+        position: attachPoint,
+        rotation: relativeRotation,
+        geometry: objectDimensions,
       });
 
       otherBody.setEnabled(false);
@@ -268,7 +289,13 @@ function KatamariBall() {
         userData.setCollected(true);
       }
     },
-    [virtualRadius, calculateAttachmentPoint, setVirtualRadius, setTotalMass]
+    [
+      virtualRadius,
+      calculateAttachmentPoint,
+      setVirtualRadius,
+      setTotalMass,
+      addCompoundCollider,
+    ]
   );
 
   const onCollision: CollisionEnterHandler = useCallback(
@@ -281,9 +308,7 @@ function KatamariBall() {
           objectVolume,
           virtualRadius
         );
-        if (isColl) {
-          collectObject(other.rigidBody, userData);
-        }
+        if (isColl && other.rigidBody) collectObject(other.rigidBody, userData);
       }
     },
     [collectObject, virtualRadius]
@@ -298,6 +323,28 @@ function KatamariBall() {
     },
     []
   );
+
+  const renderCollectedObjects = useCallback(() => {
+    if (!ballRef.current) return null;
+
+    return Array.from(collectedObjects.current.entries()).map(
+      ([id, object]) => {
+        const { position, rotation, geometry } = object;
+
+        return (
+          <group
+            key={`collected-${id}`}
+            position={[position.x, position.y, position.z]}
+          >
+            <mesh position={[0, 0, 0]} quaternion={rotation} scale={[1, 1, 1]}>
+              <boxGeometry args={geometry} />
+              <meshStandardMaterial color="orange" />
+            </mesh>
+          </group>
+        );
+      }
+    );
+  }, []);
 
   return (
     <>
@@ -329,6 +376,8 @@ function KatamariBall() {
             opacity={0.2}
           />
         </mesh>
+
+        {renderCollectedObjects()}
       </RigidBody>
     </>
   );
@@ -349,8 +398,20 @@ function Ground() {
   );
 }
 
-function CollectibleObject({ position, width, height, depth, id }) {
-  const rigidBodyRef = useRef(null);
+function CollectibleObject({
+  position,
+  width,
+  height,
+  depth,
+  id,
+}: {
+  position: [number, number, number];
+  width: number;
+  height: number;
+  depth: number;
+  id: number;
+}) {
+  const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
   const objectVolume = useMemo(
     () => width * height * depth,
@@ -363,7 +424,7 @@ function CollectibleObject({ position, width, height, depth, id }) {
 
   const adjustedPosition = useMemo(() => {
     const yPos = -0.5 + height / 2;
-    return [position[0], yPos, position[2]];
+    return [position[0], yPos, position[2]] as [number, number, number];
   }, [position, height]);
 
   return (
@@ -374,60 +435,50 @@ function CollectibleObject({ position, width, height, depth, id }) {
       userData={{
         id,
         size: maxDimension,
+        width,
+        height,
+        depth,
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
       }}
       sensor={isCollected}
     >
-      <mesh castShadow>
-        <boxGeometry args={[width, height, depth]} />
-        <meshStandardMaterial color="orange" />
-      </mesh>
+      {!isCollected && (
+        <mesh castShadow>
+          <boxGeometry args={[width, height, depth]} />
+          <meshStandardMaterial color="orange" />
+        </mesh>
+      )}
     </RigidBody>
   );
 }
 
-function CollectibleObjects({}) {
+function CollectibleObjects() {
   const count = 500;
   const area = 60;
   const maxSize = 0.8;
 
-  const objects = Array.from({ length: count }).map((_, i) => {
-    const position = [
-      (Math.random() - 0.5) * area,
-      0,
-      (Math.random() - 0.5) * area,
-    ];
+  const objects = useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => {
+      const position: [number, number, number] = [
+        (Math.random() - 0.5) * area,
+        0,
+        (Math.random() - 0.5) * area,
+      ];
 
-    const width = 0.1 + Math.random() * maxSize;
-    const height = 0.1 + Math.random() * maxSize;
-    const depth = 0.1 + Math.random() * maxSize;
-    const maxDimension = Math.max(width, height, depth);
-    const volume = width * height * depth;
+      const width = Math.random() * maxSize + 0.2;
+      const height = Math.random() * maxSize + 0.2;
+      const depth = Math.random() * maxSize + 0.2;
 
-    return {
-      id: `object-${i}`,
-      position,
-      width,
-      height,
-      depth,
-      size: maxDimension,
-      volume,
-    };
-  });
+      return { position, width, height, depth, id: i };
+    });
+  }, [count, area, maxSize]);
 
   return (
     <>
-      {objects.map((obj) => (
-        <CollectibleObject
-          key={obj.id}
-          id={obj.id}
-          position={obj.position}
-          width={obj.width}
-          height={obj.height}
-          depth={obj.depth}
-        />
+      {objects.map((props) => (
+        <CollectibleObject key={props.id} {...props} />
       ))}
     </>
   );
