@@ -1,0 +1,343 @@
+{
+  "glyphs": {
+    "A": {
+      "ha": 211,
+      "x_min": 3,
+      "x_max": 208,
+      "o": "m 208 0 l 138 0 l 129 168 l 82 168 l 74 0 l 3 0 l 56 1033 l 156 1033 l 208 0 m 100 558 l 85 233 l 126 233 l 111 558 l 107 871 l 104 871 l 100 558 z "
+    },
+    "B": {
+      "ha": 196,
+      "x_min": 14,
+      "x_max": 183,
+      "o": "m 14 0 l 14 1033 l 94 1033 q 160 1009 138 1033 q 183 942 183 985 l 183 626 q 173 584 183 600 q 136 561 163 568 l 136 560 q 173 538 163 554 q 183 490 183 521 l 183 79 q 163 19 183 39 q 97 0 142 0 l 14 0 m 94 586 q 113 621 113 586 l 113 944 q 97 968 113 968 l 83 968 l 83 586 l 94 586 m 97 65 q 114 89 114 65 l 114 492 q 94 521 114 521 l 83 521 l 83 65 l 97 65 z "
+    },
+    "C": {
+      "ha": 194,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 83 13 40 l 13 950 q 35 1018 13 993 q 97 1043 58 1043 q 160 1018 136 1043 q 183 950 183 993 l 183 635 l 113 635 l 113 957 q 97 978 113 978 q 83 957 83 978 l 83 78 q 88 60 83 67 q 97 54 92 54 q 108 60 104 54 q 113 78 113 67 l 113 432 l 183 432 l 183 83 q 160 15 183 40 q 97 -10 138 -10 z "
+    },
+    "D": {
+      "ha": 196,
+      "x_min": 14,
+      "x_max": 183,
+      "o": "m 14 0 l 14 1033 l 97 1033 q 160 1008 136 1033 q 183 940 183 983 l 183 93 q 160 25 183 50 q 97 0 136 0 l 14 0 m 97 65 q 113 88 113 65 l 113 947 q 97 968 113 968 l 83 968 l 83 65 l 97 65 z "
+    },
+    "E": {
+      "ha": 146,
+      "x_min": 14,
+      "x_max": 139,
+      "o": "m 139 0 l 14 0 l 14 1033 l 139 1033 l 139 968 l 83 968 l 83 568 l 131 568 l 131 504 l 83 504 l 83 65 l 139 65 l 139 0 z "
+    },
+    "F": {
+      "ha": 146,
+      "x_min": 14,
+      "x_max": 139,
+      "o": "m 83 0 l 14 0 l 14 1033 l 139 1033 l 139 967 l 83 967 l 83 544 l 131 544 l 131 481 l 83 481 l 83 0 z "
+    },
+    "G": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 83 13 40 l 13 950 q 35 1018 13 993 q 97 1043 58 1043 q 160 1018 136 1043 q 183 950 183 993 l 183 640 l 113 640 l 113 957 q 97 978 113 978 q 83 957 83 978 l 83 78 q 88 60 83 67 q 99 54 92 54 q 111 61 106 54 q 117 78 117 68 l 117 419 l 96 419 l 96 485 l 183 485 l 183 83 q 160 15 183 40 q 97 -10 138 -10 z "
+    },
+    "H": {
+      "ha": 199,
+      "x_min": 14,
+      "x_max": 185,
+      "o": "m 114 565 l 114 1033 l 185 1033 l 185 0 l 114 0 l 114 499 l 83 499 l 83 0 l 14 0 l 14 1033 l 83 1033 l 83 565 l 114 565 z "
+    },
+    "I": {
+      "ha": 97,
+      "x_min": 14,
+      "x_max": 83,
+      "o": "m 83 0 l 14 0 l 14 1033 l 83 1033 l 83 0 z "
+    },
+    "J": {
+      "ha": 135,
+      "x_min": 3,
+      "x_max": 122,
+      "o": "m 122 82 q 38 -10 122 -10 q 3 -7 22 -10 l 3 60 q 25 58 11 58 q 51 89 51 58 l 51 963 l 6 963 l 6 1033 l 122 1033 l 122 82 z "
+    },
+    "K": {
+      "ha": 200,
+      "x_min": 14,
+      "x_max": 197,
+      "o": "m 83 0 l 14 0 l 14 1033 l 83 1033 l 83 557 l 90 557 l 122 1033 l 196 1033 l 154 531 l 154 529 l 197 0 l 124 0 l 90 504 l 83 504 l 83 0 z "
+    },
+    "L": {
+      "ha": 139,
+      "x_min": 14,
+      "x_max": 132,
+      "o": "m 132 0 l 14 0 l 14 1033 l 83 1033 l 83 71 l 132 71 l 132 0 z "
+    },
+    "M": {
+      "ha": 279,
+      "x_min": 14,
+      "x_max": 265,
+      "o": "m 79 0 l 14 0 l 14 1033 l 99 1033 l 138 431 l 139 315 l 142 315 l 143 431 l 181 1033 l 265 1033 l 265 0 l 200 0 l 200 388 l 221 867 l 219 867 l 217 810 l 172 181 l 107 181 l 63 810 l 60 867 l 58 867 l 79 388 l 79 0 z "
+    },
+    "N": {
+      "ha": 213,
+      "x_min": 14,
+      "x_max": 199,
+      "o": "m 79 0 l 14 0 l 14 1033 l 89 1033 l 146 282 l 154 167 l 157 167 l 133 646 l 133 1033 l 199 1033 l 199 0 l 124 0 l 67 750 l 58 867 l 56 867 l 79 388 l 79 0 z "
+    },
+    "O": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 83 13 40 l 13 950 q 35 1018 13 993 q 97 1043 58 1043 q 160 1018 136 1043 q 183 950 183 993 l 183 83 q 160 15 183 40 q 97 -10 138 -10 m 97 54 q 113 78 113 54 l 113 957 q 97 978 113 978 q 83 957 83 978 l 83 78 q 97 54 83 54 z "
+    },
+    "P": {
+      "ha": 199,
+      "x_min": 14,
+      "x_max": 185,
+      "o": "m 14 0 l 14 1033 l 99 1033 q 163 1010 140 1033 q 185 943 185 986 l 185 424 q 162 358 185 381 q 97 335 139 335 l 83 335 l 83 0 l 14 0 m 97 400 q 114 424 114 400 l 114 943 q 99 968 114 968 l 83 968 l 83 400 l 97 400 z "
+    },
+    "Q": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 1043 q 160 1018 136 1043 q 183 950 183 993 l 183 83 q 169 26 183 49 q 128 -6 154 3 l 128 -93 l 68 -93 l 68 -6 q 27 26 42 3 q 13 83 13 49 l 13 950 q 35 1018 13 993 q 97 1043 58 1043 m 83 78 q 97 54 83 54 q 113 78 113 54 l 113 957 q 97 978 113 978 q 83 957 83 978 l 83 78 z "
+    },
+    "R": {
+      "ha": 196,
+      "x_min": 14,
+      "x_max": 190,
+      "o": "m 14 0 l 14 1033 l 99 1033 q 163 1010 140 1033 q 185 943 185 986 l 185 557 q 174 512 185 529 q 132 488 163 494 l 132 486 q 174 463 165 481 q 183 394 183 444 l 183 133 q 190 0 183 40 l 121 0 q 113 129 113 54 l 113 417 q 108 439 113 432 q 94 446 104 446 l 83 446 l 83 0 l 14 0 m 97 511 q 114 535 114 511 l 114 943 q 99 968 114 968 l 83 968 l 83 511 l 97 511 z "
+    },
+    "S": {
+      "ha": 194,
+      "x_min": 11,
+      "x_max": 183,
+      "o": "m 94 -10 q 34 14 57 -10 q 11 78 11 38 l 11 408 l 82 408 l 82 78 q 86 61 82 68 q 97 54 90 54 q 108 61 104 54 q 113 78 113 68 l 113 425 q 101 478 113 460 q 68 517 90 496 q 26 567 40 542 q 11 644 11 593 l 11 956 q 34 1019 11 996 q 94 1043 57 1043 q 159 1019 135 1043 q 183 956 183 996 l 183 658 l 113 658 l 113 956 q 108 971 113 965 q 97 976 104 976 q 86 971 90 976 q 82 956 82 965 l 82 649 q 93 597 82 615 q 126 558 104 578 q 169 504 156 531 q 182 432 182 478 l 182 78 q 158 14 182 38 q 94 -10 135 -10 z "
+    },
+    "T": {
+      "ha": 194,
+      "x_min": 7,
+      "x_max": 188,
+      "o": "m 132 0 l 61 0 l 61 963 l 7 963 l 7 1033 l 188 1033 l 188 963 l 132 963 l 132 0 z "
+    },
+    "U": {
+      "ha": 193,
+      "x_min": 13,
+      "x_max": 181,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 83 13 40 l 13 1033 l 82 1033 l 82 78 q 86 61 82 68 q 97 54 90 54 q 107 60 103 54 q 111 78 111 67 l 111 1033 l 181 1033 l 181 83 q 158 15 181 40 q 97 -10 136 -10 z "
+    },
+    "V": {
+      "ha": 208,
+      "x_min": 3,
+      "x_max": 206,
+      "o": "m 53 0 l 3 1033 l 74 1033 l 99 388 l 103 161 l 106 161 l 111 388 l 136 1033 l 206 1033 l 154 0 l 53 0 z "
+    },
+    "W": {
+      "ha": 325,
+      "x_min": 3,
+      "x_max": 322,
+      "o": "m 142 0 l 51 0 l 3 1033 l 74 1033 l 99 378 l 100 161 l 103 161 l 104 304 l 126 1033 l 199 1033 l 221 304 l 222 161 l 225 161 l 228 378 l 251 1033 l 322 1033 l 274 0 l 183 0 l 165 651 l 164 756 l 163 756 l 160 651 l 142 0 z "
+    },
+    "X": {
+      "ha": 228,
+      "x_min": 7,
+      "x_max": 221,
+      "o": "m 79 0 l 7 0 l 64 539 l 15 1033 l 88 1033 l 108 735 l 113 600 l 115 600 l 118 735 l 142 1033 l 214 1033 l 165 539 l 221 0 l 149 0 l 118 347 l 115 478 l 113 478 l 110 349 l 79 0 z "
+    },
+    "Y": {
+      "ha": 203,
+      "x_min": 3,
+      "x_max": 200,
+      "o": "m 136 0 l 67 0 l 67 281 l 3 1033 l 74 1033 l 99 572 l 99 457 l 103 457 l 106 572 l 129 1033 l 200 1033 l 136 281 l 136 0 z "
+    },
+    "Z": {
+      "ha": 190,
+      "x_min": 8,
+      "x_max": 182,
+      "o": "m 176 0 l 8 0 l 8 68 l 118 963 l 17 963 l 17 1033 l 182 1033 l 182 965 l 71 71 l 176 71 l 176 0 z "
+    },
+    "a": {
+      "ha": 194,
+      "x_min": 11,
+      "x_max": 182,
+      "o": "m 96 836 q 159 810 136 836 q 182 742 182 785 l 182 0 l 117 0 l 117 7 l 118 26 l 117 26 q 68 -10 101 -10 q 11 76 11 -10 l 11 383 q 24 458 11 433 q 69 483 38 483 q 111 468 92 483 l 111 747 q 97 771 111 771 q 82 747 82 771 l 82 560 l 11 560 l 11 740 q 34 810 11 785 q 96 836 57 836 m 111 422 q 96 429 108 429 q 85 419 88 429 q 82 383 82 408 l 82 78 q 94 54 82 54 q 111 89 111 54 l 111 422 z "
+    },
+    "b": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 125 836 q 183 750 183 836 l 183 79 q 126 -10 183 -10 q 78 26 89 -10 l 75 26 l 78 7 l 78 0 l 13 0 l 13 1064 l 82 1064 l 82 835 l 75 800 l 78 800 q 125 836 89 836 m 113 747 q 99 771 113 771 q 82 736 82 771 l 82 88 q 87 65 82 74 q 99 56 92 56 q 113 79 113 56 l 113 747 z "
+    },
+    "c": {
+      "ha": 194,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 85 13 40 l 13 742 q 35 811 13 786 q 97 836 58 836 q 160 810 138 836 q 183 742 183 785 l 183 499 l 113 499 l 113 747 q 97 771 113 771 q 86 765 90 771 q 82 747 82 758 l 82 79 q 86 62 82 68 q 97 56 90 56 q 113 79 113 56 l 113 347 l 183 347 l 183 85 q 160 16 183 42 q 97 -10 138 -10 z "
+    },
+    "d": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 114 1064 l 183 1064 l 183 0 l 118 0 l 118 7 l 121 26 l 118 26 q 69 -10 107 -10 q 13 79 13 -10 l 13 750 q 72 836 13 836 q 118 800 107 836 l 121 800 l 114 835 l 114 1064 m 97 56 q 114 88 114 56 l 114 736 q 97 771 114 771 q 83 747 83 771 l 83 79 q 97 56 83 56 z "
+    },
+    "e": {
+      "ha": 194,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 836 q 160 810 138 836 q 183 742 183 785 l 183 388 l 82 388 l 82 79 q 97 56 82 56 q 113 79 113 56 l 113 311 l 183 311 l 183 85 q 160 16 183 42 q 97 -10 138 -10 q 35 15 58 -10 q 13 85 13 40 l 13 742 q 35 811 13 786 q 97 836 58 836 m 82 446 l 113 446 l 113 749 q 97 771 113 771 q 82 749 82 771 l 82 446 z "
+    },
+    "f": {
+      "ha": 157,
+      "x_min": 3,
+      "x_max": 167,
+      "o": "m 143 1003 q 115 990 122 1003 q 107 950 107 978 l 107 826 l 156 826 l 156 760 l 107 760 l 107 0 l 38 0 l 38 760 l 3 760 l 3 826 l 38 826 l 38 944 q 57 1038 38 1007 q 132 1069 76 1069 q 167 1065 154 1069 l 167 1001 q 143 1003 157 1003 z "
+    },
+    "g": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 118 826 l 183 826 l 183 -15 q 86 -146 183 -146 q 14 -125 49 -146 l 36 -64 q 82 -76 57 -76 q 106 -62 99 -76 q 113 -4 113 -47 l 113 31 l 121 57 l 118 57 q 68 21 106 21 q 13 106 13 21 l 13 756 q 27 817 13 799 q 71 836 42 836 q 118 800 106 836 l 121 800 l 118 821 l 118 826 m 113 738 q 97 771 113 771 q 82 749 82 771 l 82 106 q 97 86 82 86 q 113 117 113 86 l 113 738 z "
+    },
+    "h": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 125 836 q 183 750 183 836 l 183 0 l 113 0 l 113 747 q 99 771 113 771 q 82 736 82 771 l 82 0 l 13 0 l 13 1064 l 79 1064 l 79 829 l 76 800 l 78 800 q 125 836 89 836 z "
+    },
+    "i": {
+      "ha": 94,
+      "x_min": 7,
+      "x_max": 88,
+      "o": "m 47 893 q 16 906 25 893 q 7 951 7 918 q 16 997 7 983 q 47 1010 25 1010 q 78 997 68 1010 q 88 951 88 983 q 78 906 88 919 q 47 893 68 893 m 82 0 l 13 0 l 13 826 l 82 826 l 82 0 z "
+    },
+    "j": {
+      "ha": 97,
+      "x_min": -37,
+      "x_max": 90,
+      "o": "m 50 893 q 19 906 28 893 q 10 951 10 918 q 19 997 10 983 q 50 1010 28 1010 q 81 997 71 1010 q 90 951 90 983 q 81 906 90 919 q 50 893 71 893 m -12 -144 q -37 -142 -21 -144 l -37 -75 l -24 -76 q 6 -62 -1 -76 q 14 -15 14 -49 l 14 826 l 83 826 l 83 -26 q -12 -144 83 -144 z "
+    },
+    "k": {
+      "ha": 206,
+      "x_min": 13,
+      "x_max": 203,
+      "o": "m 86 0 l 13 0 l 13 1064 l 86 1064 l 86 449 l 93 449 l 128 826 l 200 826 l 158 419 l 203 0 l 131 0 l 93 383 l 86 383 l 86 0 z "
+    },
+    "l": {
+      "ha": 94,
+      "x_min": 13,
+      "x_max": 82,
+      "o": "m 82 0 l 13 0 l 13 1064 l 82 1064 l 82 0 z "
+    },
+    "m": {
+      "ha": 293,
+      "x_min": 13,
+      "x_max": 281,
+      "o": "m 13 0 l 13 826 l 78 826 l 78 821 l 76 800 l 78 800 q 96 826 83 817 q 126 836 108 836 q 175 800 165 836 l 176 800 q 195 826 182 817 q 224 836 208 836 q 281 749 281 836 l 281 0 l 211 0 l 211 747 q 199 771 211 771 q 182 738 182 771 l 182 0 l 113 0 l 113 747 q 100 771 113 771 q 82 736 82 771 l 82 0 l 13 0 z "
+    },
+    "n": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 125 836 q 183 750 183 836 l 183 0 l 113 0 l 113 747 q 99 771 113 771 q 82 736 82 771 l 82 0 l 13 0 l 13 826 l 78 826 l 78 821 l 76 800 l 78 800 q 125 836 90 836 z "
+    },
+    "o": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 97 -10 q 35 15 58 -10 q 13 85 13 40 l 13 742 q 35 811 13 786 q 97 836 58 836 q 160 810 138 836 q 183 742 183 785 l 183 85 q 160 16 183 42 q 97 -10 138 -10 m 97 56 q 113 79 113 56 l 113 747 q 97 771 113 771 q 86 765 90 771 q 82 747 82 758 l 82 79 q 86 62 82 68 q 97 56 90 56 z "
+    },
+    "p": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 126 836 q 169 813 154 836 q 183 747 183 790 l 183 76 q 125 -10 183 -10 q 78 26 89 -10 l 75 26 l 82 -8 l 82 -236 l 13 -236 l 13 826 l 78 826 l 78 821 l 75 800 l 78 800 q 126 836 89 836 m 113 747 q 99 771 113 771 q 82 738 82 771 l 82 90 q 99 56 82 56 q 113 79 113 56 l 113 747 z "
+    },
+    "q": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 118 826 l 183 826 l 183 -236 l 114 -236 l 114 -8 l 121 26 l 118 26 q 101 0 113 10 q 72 -10 89 -10 q 13 76 13 -10 l 13 747 q 27 813 13 790 q 69 836 42 836 q 118 800 107 836 l 121 800 l 118 821 l 118 826 m 97 56 q 114 90 114 56 l 114 738 q 97 771 114 771 q 83 747 83 771 l 83 79 q 97 56 83 56 z "
+    },
+    "r": {
+      "ha": 144,
+      "x_min": 13,
+      "x_max": 139,
+      "o": "m 125 836 q 139 835 135 836 l 139 757 q 122 760 131 760 q 82 701 82 760 l 82 0 l 13 0 l 13 826 l 78 826 l 78 819 l 71 790 l 74 790 q 125 836 88 836 z "
+    },
+    "s": {
+      "ha": 192,
+      "x_min": 13,
+      "x_max": 179,
+      "o": "m 96 -8 q 35 16 57 -8 q 13 83 13 40 l 13 335 l 82 335 l 82 78 q 86 62 82 68 q 96 56 90 56 q 106 62 101 56 q 110 78 110 68 l 110 363 q 99 396 110 383 q 68 421 89 408 q 26 457 40 439 q 13 514 13 475 l 13 744 q 35 813 13 789 q 97 836 57 836 q 158 812 138 836 q 179 744 179 788 l 179 547 l 108 547 l 108 750 q 96 771 108 771 q 83 750 83 771 l 83 526 q 92 494 83 506 q 122 469 101 483 q 142 455 125 467 q 169 422 160 443 q 179 369 179 400 l 179 82 q 157 16 179 40 q 96 -8 135 -8 z "
+    },
+    "t": {
+      "ha": 165,
+      "x_min": 3,
+      "x_max": 160,
+      "o": "m 132 58 q 160 61 140 58 l 160 -4 q 115 -10 140 -10 q 54 14 71 -10 q 38 92 38 38 l 38 760 l 3 760 l 3 826 l 38 826 l 38 975 l 107 975 l 107 826 l 156 826 l 156 760 l 107 760 l 107 94 q 112 67 107 76 q 132 58 117 58 z "
+    },
+    "u": {
+      "ha": 196,
+      "x_min": 13,
+      "x_max": 183,
+      "o": "m 113 826 l 183 826 l 183 0 l 118 0 l 118 6 l 119 26 l 118 26 q 71 -10 106 -10 q 13 76 13 -10 l 13 826 l 82 826 l 82 78 q 97 56 82 56 q 113 89 113 56 l 113 826 z "
+    },
+    "v": {
+      "ha": 179,
+      "x_min": 4,
+      "x_max": 175,
+      "o": "m 139 0 l 39 0 l 4 826 l 68 826 l 86 290 l 88 139 l 90 139 l 92 290 l 110 826 l 175 826 l 139 0 z "
+    },
+    "w": {
+      "ha": 292,
+      "x_min": 4,
+      "x_max": 288,
+      "o": "m 126 0 l 42 0 l 4 826 l 68 826 l 86 289 l 88 139 l 89 139 l 93 289 l 114 826 l 178 826 l 199 289 l 203 139 l 204 139 l 206 289 l 224 826 l 288 826 l 251 0 l 167 0 l 150 549 l 147 643 l 144 643 l 142 549 l 126 0 z "
+    },
+    "x": {
+      "ha": 214,
+      "x_min": 3,
+      "x_max": 211,
+      "o": "m 71 0 l 3 0 l 57 431 l 11 826 l 81 826 l 101 619 l 106 529 l 108 529 l 113 619 l 133 826 l 203 826 l 156 431 l 211 0 l 143 0 l 113 257 l 108 347 l 106 347 l 101 257 l 71 0 z "
+    },
+    "y": {
+      "ha": 179,
+      "x_min": 4,
+      "x_max": 175,
+      "o": "m 14 -139 q 58 -89 44 -115 q 81 0 72 -62 l 39 0 l 4 826 l 68 826 l 83 343 l 88 139 l 90 139 l 94 343 l 110 826 l 175 826 l 140 39 q 115 -112 136 -61 q 39 -196 94 -162 l 14 -139 z "
+    },
+    "z": {
+      "ha": 157,
+      "x_min": 6,
+      "x_max": 151,
+      "o": "m 151 0 l 6 0 l 6 64 l 82 760 l 8 760 l 8 826 l 151 826 l 151 764 l 74 65 l 151 65 l 151 0 z "
+    }
+  },
+  "familyName": "Heading Now Trial 04",
+  "ascender": 1458,
+  "descender": -368,
+  "underlinePosition": -104,
+  "underlineThickness": 69,
+  "boundingBox": { "yMin": -290, "xMin": -546, "yMax": 1442, "xMax": 1761 },
+  "resolution": 1000,
+  "original_font_information": {
+    "format": 0,
+    "copyright": "Copyright (c) 2017 by Studio Kmzero & Zetafonts. All rights reserved.",
+    "fontFamily": "Heading Now Trial 04",
+    "fontSubfamily": "Bold",
+    "uniqueID": "1.001;UKWN;HeadingNowTrial-06Bold",
+    "fullName": "Heading Now Trial 06 Bold",
+    "version": "Version 1.001",
+    "postScriptName": "HeadingNowTrial-06Bold",
+    "manufacturer": "Studio Kmzero & Zetafonts",
+    "designer": "Francesco Canovaro",
+    "manufacturerURL": "www.zetafonts.com",
+    "designerURL": "www.kmzero.com",
+    "licence": "END USER LICENSE AGREEMENT\n\nBy downloading and using this software you accept the terms of the following agreement (\"EULA\"):\n\nThis licence is reserved to individuals and doesn't apply to corporate/studio entities. It allows one single person on unlimited cpus to use the font(s) for personal - not commercial uses. This license doesn't apply to broadcast and software embedding uses, and doesn't allow re-distribution in any form. For commercial uses, you have to purchase a commercial license from www.zetafonts.com. (more informations at www.zetafonts.com/licensing)\n \nOur End-User License Agreement (\"EULA\") grants you the following rights:\n\n01] You may install and use an unlimited number of copies of the fonts.\n\n02] You can make archival copies of the fonts for your own purposes.\n\n03] A copy of the fonts may be sent as part of a file release to a prepress bureau.\n\n04] Fonts can be embedded in other software files, such as Portable Document Format (PDF) or Flash files, but you will take all reasonable care to embed the fonts in such a way that they cannot be extracted from the files you create.\n\n05] You may modify the fonts for your own purposes, but the copyright remains with Zetafonts, and you are not allowed to distribuite renamed, edited or derivative works, either for profit or not.\n\n06] No reselling of the font as a font software is allowed: copies of the font installation files may not be distributed or shared in any way (for profit or free of charge) either on a standalone basis or included as part of your own product. (for use of the font on websites as webfonts or in applications as screen fonts, a software license is required) \n\nZetafonts expressly disclaims any warranty for the fonts. The fonts and any related documentation is provided \"as it is\" without warranty of any kind, either express or implied, including, without limitation, the implied warranties or merchantability, fitness for a particular purpose, or noninfringement. The entire risk arising out of use or performance of the fonts remains with you. In no event shall Zetafonts or its suppliers be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or any other pecuniary loss) arising out of the use of or inability to use this product, even if Zetafonts has been advised of the possibility of such damages. Because some states/jurisdictions do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.\n\nThis free for personal / non commercial use license is provided with free downloads of fonts.\n\nIt allows unlimited use of the font(s) on all personal CPUs for non-commercial uses (i.e. no-profit projects, student work, pro-bono assignements).\n\nIf you're an individual and plan to use our fonts for commercial projects, you should buy a personal commercial license.\n\nA company, studio or corporation that wants to make the fonts avalaible to many users should either buy a volume license (which is calculated as a discount on many single licenses) or a worldwide license.If you're using it for personal and non commercial use (school project, academic use, pro-bono work) you can download the font and use it freely.\n\nPlease refer to www.zetafonts.com/licensing for information\n\nFeel free to contact us for further enquiries at\ninfo@zetafonts.com",
+    "licenceURL": "http://zetafonts.com/licensing",
+    "preferredFamily": "Heading Now Trial",
+    "preferredSubfamily": "06 Bold"
+  },
+  "cssFontWeight": "bold",
+  "cssFontStyle": "normal"
+}

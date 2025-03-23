@@ -16,6 +16,7 @@ import {
   PerspectiveCamera,
   useKeyboardControls,
 } from "@react-three/drei";
+import { Letter } from "./components/Letter";
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -38,6 +39,7 @@ export default function Game() {
             <KatamariBall />
             <Ground />
             <CollectibleObjects />
+            <LetterObjects />
           </Physics>
         </Canvas>
       </KeyboardControls>
@@ -521,3 +523,27 @@ const useKeyboardMap = () =>
     ],
     []
   );
+
+function LetterObjects() {
+  const letters = "Katamari";
+  const spacing = 1.2;
+
+  return (
+    <>
+      {letters.split("").map((char, index) => (
+        <Letter
+          key={`letter-${index}`}
+          char={char}
+          position={[(index - letters.length / 2) * spacing, 0.5, -10]}
+          fontSize={0.7}
+          color="#FF5733"
+          depth={0.1}
+          id={1000 + index}
+          bevelEnabled={true}
+          bevelThickness={0.05}
+          bevelSize={0.04}
+        />
+      ))}
+    </>
+  );
+}
