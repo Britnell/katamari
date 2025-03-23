@@ -49,18 +49,17 @@ function KatamariBall() {
   const ballRef = useRef<RapierRigidBody>(null);
   const [ballSize] = useState(0.5);
   const [virtualRadius, setVirtualRadius] = useState(0.5);
-  const [totalMass, setTotalMass] = useState(1);
+  const [totalMass, setTotalMass] = useState(3);
   const [rotation, setRotation] = useState(0);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
 
-  const BASE_MOVE_FORCE = 3;
-  const TURN_SPEED = 2.0;
-  const BASE_MAX_VELOCITY = 5;
+  const BASE_MOVE_FORCE = 1.5;
+  const TURN_SPEED = 1.5;
+  const BASE_MAX_VELOCITY = 3;
   const CAMERA_HEIGHT = 2;
   const CAMERA_DISTANCE = 5;
   const CAMERA_SMOOTHING = 0.05;
-  const TORQUE_FACTOR = 2.5;
-  const MAX_ANGULAR_VELOCITY = 3;
+  const MAX_ANGULAR_VELOCITY = 2;
 
   const [_sub, getState] = useKeyboardControls();
   const { camera } = useThree();
@@ -80,42 +79,26 @@ function KatamariBall() {
     const ballBody = ballRef.current;
     const ballPosition = ballBody.translation();
 
-    const angularVelocity = ballBody.angvel();
-    const angularSpeed = Math.sqrt(
-      angularVelocity.x ** 2 + angularVelocity.y ** 2 + angularVelocity.z ** 2
-    );
-    if (angularSpeed > MAX_ANGULAR_VELOCITY) {
-      const scale = MAX_ANGULAR_VELOCITY / angularSpeed;
-      ballBody.setAngvel(
-        {
-          x: angularVelocity.x * scale,
-          y: angularVelocity.y * scale,
-          z: angularVelocity.z * scale,
-        },
-        true
-      );
-    }
-
     const velocity = ballBody.linvel();
     const speed = Math.sqrt(
       velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2
     );
-    const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
-    const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
-    if (keys.left) {
-      setRotation((prev) => prev + effectiveTurnSpeed);
-    }
-    if (keys.right) {
-      setRotation((prev) => prev - effectiveTurnSpeed);
-    }
 
-    direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
+    if (keys.left || keys.right) {
+      const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
+      const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
+      if (keys.left) setRotation((prev) => prev + effectiveTurnSpeed);
+      if (keys.right) setRotation((prev) => prev - effectiveTurnSpeed);
+
+      direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
+    }
 
     const currentMaxVelocity =
       BASE_MAX_VELOCITY * (1 + 0.2 * Math.sqrt(virtualRadius - 0.5));
     const speedFactor = Math.max(0, 1 - (speed / currentMaxVelocity) * 0.8);
     const currentMoveForce =
       BASE_MOVE_FORCE * (1 + 0.3 * Math.sqrt(virtualRadius - 0.5));
+    const TORQUE_FACTOR = 0.8;
 
     if (keys.forward) {
       const upVector = new THREE.Vector3(0, 1, 0);
@@ -147,49 +130,6 @@ function KatamariBall() {
         },
         true
       );
-
-      const moveForce = direction.current
-        .clone()
-        .multiplyScalar(currentMoveForce * delta * 0.3 * speedFactor);
-      ballBody.applyImpulse({ x: moveForce.x, y: 0, z: moveForce.z }, true);
-    }
-
-    if (keys.back) {
-      const upVector = new THREE.Vector3(0, 1, 0);
-      const moveDirection = direction.current.clone().negate();
-      const rotationAxis = new THREE.Vector3()
-        .crossVectors(upVector, moveDirection)
-        .normalize();
-
-      ballBody.applyTorqueImpulse(
-        {
-          x:
-            rotationAxis.x *
-            TORQUE_FACTOR *
-            delta *
-            currentMoveForce *
-            speedFactor,
-          y:
-            rotationAxis.y *
-            TORQUE_FACTOR *
-            delta *
-            currentMoveForce *
-            speedFactor,
-          z:
-            rotationAxis.z *
-            TORQUE_FACTOR *
-            delta *
-            currentMoveForce *
-            speedFactor,
-        },
-        true
-      );
-
-      const moveForce = direction.current
-        .clone()
-        .negate()
-        .multiplyScalar(currentMoveForce * delta * 0.3 * speedFactor);
-      ballBody.applyImpulse({ x: moveForce.x, y: 0, z: moveForce.z }, true);
     }
 
     if (speed > currentMaxVelocity) {
@@ -387,10 +327,10 @@ function KatamariBall() {
       <RigidBody
         ref={ballRef}
         colliders={false}
-        restitution={0.2}
-        friction={0.9}
-        linearDamping={0.5}
-        angularDamping={0.2}
+        restitution={0.1}
+        friction={1.5}
+        linearDamping={0.8}
+        angularDamping={0.5}
         position={[0, ballSize, 0]}
         mass={totalMass}
         onCollisionEnter={onCollision}
@@ -401,7 +341,7 @@ function KatamariBall() {
           <meshStandardMaterial map={texture.current} />
         </mesh>
 
-        <BallCollider args={[virtualRadius]} sensor={false} friction={0.9} />
+        <BallCollider args={[virtualRadius]} sensor={false} friction={1.5} />
 
         <mesh visible={false}>
           <sphereGeometry args={[virtualRadius, 8, 8]} />
@@ -483,7 +423,6 @@ function CollectibleObjects({}) {
       (Math.random() - 0.5) * area,
     ];
 
-    // Random dimensions for each side
     const width = 0.1 + Math.random() * maxSize;
     const height = 0.1 + Math.random() * maxSize;
     const depth = 0.1 + Math.random() * maxSize;
@@ -496,7 +435,7 @@ function CollectibleObjects({}) {
       width,
       height,
       depth,
-      size: maxDimension, // Keep size for backward compatibility
+      size: maxDimension,
       volume,
     };
   });
