@@ -54,11 +54,11 @@ type UserData = {
 };
 
 function KatamariBall() {
-  const initialBallSize = 0.5;
+  const initialRadius = 0.5;
 
   const ballRef = useRef<RapierRigidBody>(null);
-  const [ballSize] = useState(initialBallSize);
-  const [virtualRadius, setVirtualRadius] = useState(initialBallSize);
+  const [ballSize] = useState(initialRadius);
+  const [virtualRadius, setVirtualRadius] = useState(initialRadius);
   const [totalMass, setTotalMass] = useState(3);
   const [rotation, setRotation] = useState(0);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
@@ -97,43 +97,27 @@ function KatamariBall() {
       const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
       if (keys.left) setRotation((prev) => prev + effectiveTurnSpeed);
       if (keys.right) setRotation((prev) => prev - effectiveTurnSpeed);
-
       direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
     }
 
     if (keys.forward) {
-      const TORQUE_FACTOR = 0.8;
-      const BASE_MOVE_FORCE = 1.5;
+      const TORQUE_FACTOR = 0.6;
+      const BASE_MOVE_FORCE = 0.4;
       const speedProportional = Math.max(0, 1 - speed * 0.15);
-      const sizeProportional =
-        BASE_MOVE_FORCE * (1 + 0.3 * (virtualRadius - initialBallSize));
+      const sizeProportional = BASE_MOVE_FORCE * totalMass;
       //
+      const factor =
+        TORQUE_FACTOR * delta * sizeProportional * speedProportional;
       const upVector = new THREE.Vector3(0, 1, 0);
       const moveDirection = direction.current.clone();
       const rotationAxis = new THREE.Vector3()
         .crossVectors(upVector, moveDirection)
         .normalize();
-
       ballBody.applyTorqueImpulse(
         {
-          x:
-            rotationAxis.x *
-            TORQUE_FACTOR *
-            delta *
-            sizeProportional *
-            speedProportional,
-          y:
-            rotationAxis.y *
-            TORQUE_FACTOR *
-            delta *
-            sizeProportional *
-            speedProportional,
-          z:
-            rotationAxis.z *
-            TORQUE_FACTOR *
-            delta *
-            sizeProportional *
-            speedProportional,
+          x: rotationAxis.x * factor,
+          y: rotationAxis.y * factor,
+          z: rotationAxis.z * factor,
         },
         true
       );
@@ -242,7 +226,8 @@ function KatamariBall() {
         (4 / 3) * Math.PI * virtualRadius ** 3 + userData.volume;
       const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
       setVirtualRadius(newRadius);
-      setTotalMass((prev) => prev + userData.volume);
+      const newMass = 3 * (newRadius / initialRadius) ** 3;
+      setTotalMass(newMass);
 
       const attachPoint = calculateAttachmentPoint(otherBody);
 
