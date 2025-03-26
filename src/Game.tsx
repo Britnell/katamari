@@ -7,8 +7,9 @@ import {
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
-import { Letter } from "./components/Letter";
+import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
+import { CollectibleObjects } from "./Squares";
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -31,11 +32,57 @@ export default function Game() {
             <KatamariBall />
             <Ground />
             <CollectibleObjects />
-            <LetterObjects />
+            <Intro />
           </Physics>
         </Canvas>
       </KeyboardControls>
     </div>
+  );
+}
+
+function Intro() {
+  return (
+    <>
+      <Word
+        text="Katamari"
+        position={[-2, 0, 2]}
+        fontSize={0.7}
+        color="#FF5733"
+        spacing={0.1}
+        wordId={1000}
+        directionAngle={0} // No rotation
+      />
+
+      <Word
+        text="Game"
+        position={[-1, 0, 3]}
+        fontSize={0.7}
+        color="#33FF57"
+        spacing={0.1}
+        wordId={1500}
+        directionAngle={Math.PI / 6} // 30 degrees rotation around X axis
+      />
+
+      <Word
+        text="3D"
+        position={[2, 0, 2]}
+        fontSize={0.7}
+        color="#3357FF"
+        spacing={0.1}
+        wordId={2500}
+        directionAngle={-Math.PI / 6} // -30 degrees rotation around X axis
+      />
+
+      <Word
+        text="Letters"
+        position={[0, 0, 4]}
+        fontSize={0.7}
+        color="#FF33A8"
+        spacing={0.1}
+        wordId={3500}
+        directionAngle={Math.PI / 4} // 45 degrees rotation around X axis
+      />
+    </>
   );
 }
 
@@ -74,119 +121,6 @@ function Ground() {
   );
 }
 
-function CollectibleObject({
-  position,
-  width,
-  height,
-  depth,
-  id,
-  type,
-  char,
-  fontSize,
-  color,
-  bevelEnabled,
-  bevelThickness,
-  bevelSize,
-  bevelSegments,
-  curveSegments,
-}: {
-  position: [number, number, number];
-  width: number;
-  height: number;
-  depth: number;
-  id: number;
-  type?: string;
-  char?: string;
-  fontSize?: number;
-  color?: string;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
-}) {
-  const rigidBodyRef = useRef<RapierRigidBody>(null);
-  const [isCollected, setIsCollected] = useState(false);
-  const objectVolume = useMemo(
-    () => width * height * depth,
-    [width, height, depth]
-  );
-  const maxDimension = useMemo(
-    () => Math.max(width, height, depth),
-    [width, height, depth]
-  );
-
-  const adjustedPosition = useMemo(() => {
-    const yPos = -0.5 + height / 2;
-    return [position[0], yPos, position[2]] as [number, number, number];
-  }, [position, height]);
-
-  return (
-    <RigidBody
-      ref={rigidBodyRef}
-      position={adjustedPosition}
-      colliders="cuboid"
-      userData={{
-        id,
-        size: maxDimension,
-        width,
-        height,
-        depth,
-        volume: objectVolume,
-        isCollectable: true,
-        setCollected: setIsCollected,
-        type,
-        char,
-        fontSize,
-        color,
-        bevelEnabled,
-        bevelThickness,
-        bevelSize,
-        bevelSegments,
-        curveSegments,
-      }}
-      sensor={isCollected}
-    >
-      {!isCollected && (
-        <mesh castShadow>
-          <boxGeometry args={[width, height, depth]} />
-          <meshStandardMaterial color="orange" />
-        </mesh>
-      )}
-    </RigidBody>
-  );
-}
-
-function CollectibleObjects() {
-  const count = 500;
-  const area = 60;
-  const maxSize = 0.8;
-
-  const objects = useMemo(() => {
-    return Array.from({ length: count }).map((_, i) => {
-      const position: [number, number, number] = [
-        (Math.random() - 0.5) * area,
-        0,
-        (Math.random() - 0.5) * area,
-      ];
-
-      const width = Math.random() * maxSize + 0.2;
-      const height = Math.random() * maxSize + 0.2;
-      const depth = Math.random() * maxSize + 0.2;
-
-      return { position, width, height, depth, id: i };
-    });
-  }, [count, area, maxSize]);
-
-  return (
-    <>
-      {objects.map((props) => (
-        <CollectibleObject key={props.id} {...props} />
-      ))}
-    </>
-  );
-}
-
 enum Controls {
   forward = "forward",
   back = "back",
@@ -203,29 +137,3 @@ const useKeyboardMap = () =>
     ],
     []
   );
-
-function LetterObjects() {
-  const letters = "Katamari";
-  const spacing = 1.2;
-
-  return (
-    <>
-      {letters.split("").map((char, index) => (
-        <Letter
-          key={`letter-${index}`}
-          char={char}
-          position={[(index - letters.length / 2) * spacing, 0.5, -10]}
-          fontSize={0.7}
-          color="#FF5733"
-          depth={0.1}
-          id={1000 + index}
-          bevelEnabled={true}
-          bevelThickness={0.05}
-          bevelSize={0.04}
-          bevelSegments={4}
-          curveSegments={12}
-        />
-      ))}
-    </>
-  );
-}

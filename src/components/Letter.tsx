@@ -15,6 +15,7 @@ interface LetterProps {
   bevelSize?: number;
   bevelSegments?: number;
   curveSegments?: number;
+  rotation?: [number, number, number];
 }
 
 export function Letter({
@@ -29,6 +30,7 @@ export function Letter({
   bevelSize = 0.02,
   bevelSegments = 4,
   curveSegments = 12,
+  rotation = [0, 0, 0], // Default to no rotation, we'll handle it in the Word component
 }: LetterProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -123,22 +125,127 @@ export function Letter({
     >
       {!isCollected && (
         <Center>
-          <Text3D
-            ref={textRef}
-            font="/fonts/Roboto_Regular.json"
-            size={fontSize}
-            height={depth}
-            curveSegments={curveSegments}
+          <group rotation={rotation}>
+            <Text3D
+              ref={textRef}
+              font="/fonts/Roboto_Regular.json"
+              size={fontSize}
+              height={depth}
+              curveSegments={curveSegments}
+              bevelEnabled={bevelEnabled}
+              bevelThickness={bevelThickness}
+              bevelSize={bevelSize}
+              bevelSegments={bevelSegments}
+            >
+              {char}
+              <meshStandardMaterial color={color} />
+            </Text3D>
+          </group>
+        </Center>
+      )}
+    </RigidBody>
+  );
+}
+
+interface WordProps {
+  text: string;
+  position: [number, number, number];
+  fontSize?: number;
+  color?: string;
+  depth?: number;
+  spacing?: number;
+  wordId?: number;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
+  directionAngle?: number; // Angle in radians to rotate the word around the X axis
+}
+
+export function Word({
+  text,
+  position,
+  fontSize = 1,
+  color = "white",
+  depth = 0.2,
+  spacing = 0.1,
+  wordId = 1000,
+  bevelEnabled = true,
+  bevelThickness = 0.03,
+  bevelSize = 0.02,
+  bevelSegments = 4,
+  curveSegments = 12,
+  directionAngle = 0, // Default is no rotation
+}: WordProps) {
+  const [letterWidths, setLetterWidths] = useState<number[]>([]);
+  const groupRef = useRef(null);
+  const chars = text.split("");
+
+  // Measure the width of each letter - only run this once when the component mounts
+  // or when the text or fontSize changes
+  useEffect(() => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.font = `bold ${100}px Arial`;
+      const widths = chars.map((char) => {
+        const metrics = ctx.measureText(char);
+        return (metrics.width * fontSize) / 100;
+      });
+      setLetterWidths(widths);
+    }
+  }, [text, fontSize]); // Only depend on text and fontSize
+
+  // If we don't have measurements yet, don't render
+  if (letterWidths.length === 0) {
+    return null;
+  }
+
+  // Calculate positions for each letter
+  const letterPositions: [number, number, number][] = [];
+  let currentX = 0;
+
+  // Calculate total width of the word
+  const totalWidth = letterWidths.reduce((sum, width, index) => {
+    if (index < letterWidths.length - 1) {
+      return sum + width + spacing;
+    }
+    return sum + width;
+  }, 0);
+
+  // Start from negative half of the total width to center the word
+  currentX = -totalWidth / 2;
+
+  // Create positions for each letter
+  for (let i = 0; i < chars.length; i++) {
+    letterPositions.push([currentX + letterWidths[i] / 2, 0, 0]);
+    currentX += letterWidths[i] + spacing;
+  }
+
+  // Calculate rotation based on directionAngle
+  const wordRotation: [number, number, number] = [directionAngle, 0, 0];
+
+  return (
+    <group position={position} rotation={wordRotation} ref={groupRef}>
+      <group rotation={[0, Math.PI, 0]}>
+        {chars.map((char, index) => (
+          <Letter
+            key={`letter-${wordId}-${index}`}
+            id={wordId + index}
+            char={char}
+            position={letterPositions[index]}
+            fontSize={fontSize}
+            color={color}
+            depth={depth}
             bevelEnabled={bevelEnabled}
             bevelThickness={bevelThickness}
             bevelSize={bevelSize}
             bevelSegments={bevelSegments}
-          >
-            {char}
-            <meshStandardMaterial color={color} />
-          </Text3D>
-        </Center>
-      )}
-    </RigidBody>
+            curveSegments={curveSegments}
+          />
+        ))}
+      </group>
+    </group>
   );
 }
