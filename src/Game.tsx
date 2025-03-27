@@ -18,7 +18,7 @@ export default function Game() {
     <div style={{ width: "100%", height: "100vh" }}>
       <KeyboardControls map={map}>
         <Canvas shadows>
-          <PerspectiveCamera makeDefault position={[0, 5, 10]} fov={75} />
+          <PerspectiveCamera makeDefault position={[0, 2, -4]} fov={55} />
           <OrbitControls />
           <ambientLight intensity={0.5} />
           <directionalLight
@@ -27,12 +27,11 @@ export default function Game() {
             castShadow
             shadow-mapSize={1024}
           />
-
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
             <Ground />
             {/* <CollectibleObjects /> */}
-            <Intro />
+            <Words />
           </Physics>
         </Canvas>
       </KeyboardControls>
@@ -40,36 +39,165 @@ export default function Game() {
   );
 }
 
-function Intro() {
+function Words() {
   return (
     <>
       <Word
-        text="Katamari"
-        position={[-2, 0, 2]}
+        text="hey"
+        position={[0, 0, 3]}
         fontSize={0.7}
-        color="#FF5733"
-        spacing={0.1}
         id="intro1"
-        directionAngle={0} // No rotation
+        directionAngle={0}
       />
       <Word
-        text="Game"
-        position={[-1, 0, 3]}
-        fontSize={0.7}
-        color="#33FF57"
-        spacing={0.1}
+        text="Im Tommy"
+        position={[0, 0, 7]}
+        fontSize={1.2}
         id="intro2"
-        directionAngle={Math.PI / 6} // 30 degrees rotation around X axis
+        directionAngle={0}
       />
       <Word
-        text="Letters"
-        position={[0, 0, 4]}
-        fontSize={0.7}
-        color="#FF33A8"
-        spacing={0.1}
-        id="intro4"
-        directionAngle={Math.PI / 4} // 45 degrees rotation around X axis
+        text="html"
+        position={[4, 0, 1]}
+        fontSize={0.8}
+        id="intro11"
+        directionAngle={Math.PI * 1}
       />
+      <Word
+        text="CSS"
+        position={[3.5, 0, -2]}
+        fontSize={0.8}
+        id="intro12"
+        directionAngle={Math.PI * 1}
+      />
+
+      {/* ---------------- */}
+      <Word
+        text="javascript"
+        position={[-3.3, 0, 0]}
+        fontSize={1.1}
+        id="intro14"
+        directionAngle={Math.PI * -0.5}
+      />
+      {/* <Word
+        text="javascript"
+        position={[0, 0, -5]}
+        fontSize={1.0}
+        depth={0.1}
+        id="intro14"
+        directionAngle={Math.PI * -1}
+      /> */}
+
+      <Word
+        text="vanilla"
+        position={[0, 0, -4]}
+        fontSize={1.3}
+        id="intro15"
+        directionAngle={Math.PI * -1}
+      />
+      <Word
+        text="typescript"
+        position={[2, 0, -8]}
+        fontSize={1.4}
+        depth={0.5}
+        id="intro16"
+        directionAngle={Math.PI * -1}
+      />
+
+      <Word
+        text="react"
+        position={[-9, 0, -3]}
+        fontSize={1.3}
+        id="intro17"
+        directionAngle={0}
+      />
+
+      {/* ---------------- */}
+
+      <Word
+        text="Web Developer"
+        position={[0, 0, 20]}
+        fontSize={2.4}
+        depth={0.5}
+        id="intro5"
+        directionAngle={0}
+      />
+      <Word
+        text="Creative"
+        position={[7, 0, 2]}
+        fontSize={2.6}
+        id="intro7"
+        directionAngle={Math.PI * 0.5}
+      />
+      <Word
+        text="Technologist"
+        position={[14, 0, 12]}
+        fontSize={2.9}
+        id="intro8"
+        directionAngle={Math.PI * 0.5}
+      />
+      <Word
+        text="frontend"
+        position={[-6, 0, 6]}
+        fontSize={1.4}
+        id="intro9"
+        directionAngle={Math.PI * -0.5}
+      />
+      <Word
+        text="fullstack"
+        position={[-7, 0, -3]}
+        fontSize={2.0}
+        depth={0.6}
+        id="intro10"
+        directionAngle={Math.PI * -0.5}
+      />
+
+      {/* ---------------- */}
+
+      {/*
+      <Word
+        text="vue js"
+        position={[0, 0, -10]}
+        fontSize={1.3}
+        id="intro18"
+        directionAngle={Math.PI}
+      />
+      <Word
+        text="node js"
+        position={[12, 0, 12]}
+        fontSize={1.4}
+        id="intro19"
+        directionAngle={Math.PI / 4}
+      />
+      <Word
+        text="database"
+        position={[-12, 0, 12]}
+        fontSize={1.4}
+        id="intro20"
+        directionAngle={-Math.PI / 4}
+      />
+      <Word
+        text="sql"
+        position={[12, 0, -12]}
+        fontSize={1.4}
+        id="intro21"
+        directionAngle={(Math.PI * 3) / 4}
+      />
+      <Word
+        text="interactive"
+        position={[-12, 0, -12]}
+        fontSize={1.4}
+        id="intro22"
+        directionAngle={(-Math.PI * 3) / 4}
+      /> 
+      <Word
+        text="sass"
+        position={[7, 0, -7]}
+        fontSize={1.2}
+        id="intro13"
+        directionAngle={(Math.PI * 3) / 4}
+      />
+      */}
     </>
   );
 }

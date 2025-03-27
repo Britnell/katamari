@@ -20,8 +20,8 @@ export default function KatamariBall() {
   const ballRef = useRef<RapierRigidBody>(null);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
 
-  const CAMERA_HEIGHT = 2;
-  const CAMERA_DISTANCE = 5;
+  const CAMERA_HEIGHT = 1.6;
+  const CAMERA_DISTANCE = 4;
   const CAMERA_SMOOTHING = 0.05;
 
   const [_sub, getState] = useKeyboardControls();
@@ -49,10 +49,52 @@ export default function KatamariBall() {
     >
   >(new Map());
 
+  // useEffect(() => {
+  //   camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+  //   camera.lookAt(0, 0, 0);
+  // }, [camera]);
+
+  const calculateVolume = (radius: number) => {
+    return (4 / 3) * Math.PI * Math.pow(radius, 3);
+  };
+
+  const formatRadius = (radius: number) => {
+    return (radius * 2).toFixed(1) + "m";
+  };
+
+  const formatVolume = (volume: number) => {
+    return volume.toFixed(1) + "m³";
+  };
+
   useEffect(() => {
-    camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
-    camera.lookAt(0, 0, 0);
-  }, [camera]);
+    const displayElement = document.createElement("div");
+    displayElement.id = "ball-size-display";
+    displayElement.style.position = "absolute";
+    displayElement.style.top = "20px";
+    displayElement.style.left = "20px";
+    displayElement.style.padding = "10px";
+    displayElement.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+    displayElement.style.color = "white";
+    displayElement.style.fontFamily = "Arial, sans-serif";
+    displayElement.style.fontSize = "16px";
+    displayElement.style.borderRadius = "5px";
+    displayElement.style.zIndex = "1000";
+    document.body.appendChild(displayElement);
+
+    return () => {
+      document.body.removeChild(displayElement);
+    };
+  }, []);
+
+  useEffect(() => {
+    const displayElement = document.getElementById("ball-size-display");
+    if (displayElement) {
+      const volume = calculateVolume(virtualRadius);
+      displayElement.innerHTML = `Ball Size: ${formatRadius(
+        virtualRadius
+      )} / ${formatVolume(volume)}`;
+    }
+  }, [virtualRadius]);
 
   useFrame((_state, delta) => {
     if (!ballRef.current) return;
@@ -276,26 +318,14 @@ export default function KatamariBall() {
     ({ other }) => {
       const userData = other.rigidBody?.userData as UserData;
       if (userData?.isCollectable) {
-        const objectVolume = userData.volume;
-        const isColl = isCollectable(
-          userData.size,
-          objectVolume,
-          virtualRadius
-        );
+        const objectVolume = userData.volume * 8;
+        const ballVolume = calculateVolume(virtualRadius);
+        const isColl = objectVolume < ballVolume;
+        console.log({ objectVolume });
         if (isColl && other.rigidBody) collectObject(other.rigidBody, userData);
       }
     },
     [collectObject, virtualRadius]
-  );
-
-  const isCollectable = useCallback(
-    (objectSize: number, objectVolume: number, ballRadius: number): boolean => {
-      const ballVolume = (4 / 3) * Math.PI * Math.pow(ballRadius, 3);
-      const dimensionCheck = objectSize < 2 * ballRadius * 0.9;
-      const volumeCheck = objectVolume < ballVolume / 8;
-      return dimensionCheck && volumeCheck;
-    },
-    []
   );
 
   const renderCollectedObjects = useCallback(() => {

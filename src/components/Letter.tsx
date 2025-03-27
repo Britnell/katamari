@@ -152,23 +152,22 @@ interface WordProps {
   fontSize?: number;
   color?: string;
   depth?: number;
-  spacing?: number;
   id?: string;
   bevelEnabled?: boolean;
   bevelThickness?: number;
   bevelSize?: number;
   bevelSegments?: number;
   curveSegments?: number;
-  directionAngle?: number; // Angle in radians to rotate the word around the X axis
+  directionAngle?: number;
+  spacing?: number;
 }
 
 export function Word({
   text,
   position,
   fontSize = 1,
-  color = "white",
+  color = "#777",
   depth = 0.2,
-  spacing = 0.1,
   id = "w-",
   bevelEnabled = true,
   bevelThickness = 0.03,
@@ -176,10 +175,12 @@ export function Word({
   bevelSegments = 4,
   curveSegments = 12,
   directionAngle = 0,
+  spacing = 1,
 }: WordProps) {
   const [letterWidths, setLetterWidths] = useState<number[]>([]);
   const groupRef = useRef(null);
   const chars = text.split("");
+  const letterSpacing = (fontSize / 8) * spacing;
 
   useEffect(() => {
     const canvas = document.createElement("canvas");
@@ -203,7 +204,7 @@ export function Word({
 
   const totalWidth = letterWidths.reduce((sum, width, index) => {
     if (index < letterWidths.length - 1) {
-      return sum + width + spacing;
+      return sum + width + letterSpacing;
     }
     return sum + width;
   }, 0);
@@ -212,13 +213,13 @@ export function Word({
 
   for (let i = 0; i < chars.length; i++) {
     letterPositions.push([currentX + letterWidths[i] / 2, 0, 0]);
-    currentX += letterWidths[i] + spacing;
+    currentX += letterWidths[i] + letterSpacing;
   }
 
   return (
     <group
       position={position}
-      rotation={[directionAngle, Math.PI, 0]}
+      rotation={[0, directionAngle + Math.PI, 0]}
       ref={groupRef}
     >
       {chars.map((char, index) => (
