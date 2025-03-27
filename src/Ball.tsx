@@ -20,8 +20,8 @@ export default function KatamariBall() {
   const ballRef = useRef<RapierRigidBody>(null);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
 
-  const CAMERA_HEIGHT = 1.6;
-  const CAMERA_DISTANCE = 4;
+  const BASE_CAMERA_HEIGHT = 1.6;
+  const BASE_CAMERA_DISTANCE = 4;
   const CAMERA_SMOOTHING = 0.05;
 
   const [_sub, getState] = useKeyboardControls();
@@ -141,9 +141,11 @@ export default function KatamariBall() {
 
     const lookDirection = direction.current.clone();
     const targetCameraPos = new THREE.Vector3(
-      ballPosition.x - lookDirection.x * CAMERA_DISTANCE,
-      ballPosition.y + CAMERA_HEIGHT + virtualRadius,
-      ballPosition.z - lookDirection.z * CAMERA_DISTANCE
+      ballPosition.x -
+        lookDirection.x * BASE_CAMERA_DISTANCE * (0.5 + virtualRadius),
+      ballPosition.y + BASE_CAMERA_HEIGHT * (0.5 + virtualRadius),
+      ballPosition.z -
+        lookDirection.z * BASE_CAMERA_DISTANCE * (0.5 + virtualRadius)
     );
     camera.position.lerp(targetCameraPos, CAMERA_SMOOTHING);
 
