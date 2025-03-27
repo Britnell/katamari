@@ -104,6 +104,32 @@ function Words() {
         directionAngle={Math.PI * -1.2}
       />
 
+      <Word
+        text="UI UX"
+        position={[9, 0, -10]}
+        fontSize={1.9}
+        id="intro22"
+        directionAngle={Math.PI * 0.5}
+      />
+
+      <Word
+        text="Vue"
+        id="intro18"
+        position={[-4, 0, -8]}
+        fontSize={1.3}
+        depth={1.3}
+        directionAngle={Math.PI * -1.0}
+      />
+
+      <Word
+        text="SQL"
+        position={[-13, 0, -6]}
+        fontSize={3.0}
+        depth={1.2}
+        id="intro21"
+        directionAngle={Math.PI * -0.5}
+      />
+
       {/* ---------------- */}
 
       <Word
@@ -143,44 +169,27 @@ function Words() {
         directionAngle={Math.PI * -0.5}
       />
 
+      <Word
+        text="node"
+        position={[-11, 0, 5]}
+        fontSize={1.9}
+        depth={1.2}
+        id="intro19"
+        directionAngle={Math.PI * 0}
+      />
+
+      <Word
+        text="next"
+        position={[-9, 0, -12]}
+        fontSize={2.8}
+        depth={1.0}
+        id="intro19"
+        directionAngle={Math.PI * -1.0}
+      />
+
       {/* ---------------- */}
 
       {/*
-      <Word
-        text="vue js"
-        position={[0, 0, -10]}
-        fontSize={1.3}
-        id="intro18"
-        directionAngle={Math.PI}
-      />
-      <Word
-        text="node js"
-        position={[12, 0, 12]}
-        fontSize={1.4}
-        id="intro19"
-        directionAngle={Math.PI / 4}
-      />
-      <Word
-        text="database"
-        position={[-12, 0, 12]}
-        fontSize={1.4}
-        id="intro20"
-        directionAngle={-Math.PI / 4}
-      />
-      <Word
-        text="sql"
-        position={[12, 0, -12]}
-        fontSize={1.4}
-        id="intro21"
-        directionAngle={(Math.PI * 3) / 4}
-      />
-      <Word
-        text="interactive"
-        position={[-12, 0, -12]}
-        fontSize={1.4}
-        id="intro22"
-        directionAngle={(-Math.PI * 3) / 4}
-      /> 
       <Word
         text="sass"
         position={[7, 0, -7]}
