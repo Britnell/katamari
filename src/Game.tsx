@@ -65,7 +65,7 @@ function Words() {
       />
       <Word
         text="CSS"
-        position={[3.5, 0, -2]}
+        position={[4, 0, -1.5]}
         fontSize={0.8}
         id="intro12"
         directionAngle={Math.PI * 1}
@@ -76,31 +76,32 @@ function Words() {
         text="javascript"
         position={[-3.3, 0, 0]}
         fontSize={1.1}
+        depth={0.9}
         id="intro14"
         directionAngle={Math.PI * -0.5}
       />
       <Word
         text="vanilla"
         position={[0, 0, -4]}
-        fontSize={1.3}
+        fontSize={1.2}
         id="intro15"
         directionAngle={Math.PI * -1}
       />
       <Word
         text="typescript"
-        position={[2, 0, -10]}
-        fontSize={2.5}
-        depth={1.3}
+        position={[2, 0, -15]}
+        fontSize={1.9}
+        depth={0.8}
         id="intro16"
         directionAngle={Math.PI * -1}
       />
 
       <Word
-        text="react"
-        position={[-9, 0, -3]}
+        text="React"
+        position={[4, 0, -8]}
         fontSize={1.3}
         id="intro17"
-        directionAngle={0}
+        directionAngle={Math.PI * -1.2}
       />
 
       {/* ---------------- */}
@@ -108,15 +109,15 @@ function Words() {
       <Word
         text="Web Developer"
         position={[0, 0, 20]}
-        fontSize={2.4}
-        depth={1.5}
+        fontSize={2.3}
+        depth={1.1}
         id="intro5"
         directionAngle={0}
       />
       <Word
         text="Creative"
         position={[8, 0, 2]}
-        fontSize={2.6}
+        fontSize={2.0}
         id="intro7"
         directionAngle={Math.PI * 0.5}
       />
@@ -130,7 +131,7 @@ function Words() {
       <Word
         text="frontend"
         position={[-6, 0, 6]}
-        fontSize={1.4}
+        fontSize={1.3}
         id="intro9"
         directionAngle={Math.PI * -0.5}
       />

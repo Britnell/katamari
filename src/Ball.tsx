@@ -238,8 +238,7 @@ export default function KatamariBall() {
       const id = userData.id;
       if (collectedObjects.current.has(id)) return;
 
-      const newVolume =
-        (4 / 3) * Math.PI * virtualRadius ** 3 + userData.volume;
+      const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
       const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
       setVirtualRadius(newRadius);
       const newMass = 3 * (newRadius / initialRadius) ** 3;
