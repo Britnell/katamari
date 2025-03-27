@@ -1,5 +1,5 @@
-import { Physics, RigidBody, RapierRigidBody } from "@react-three/rapier";
-import { useState, useRef, useMemo } from "react";
+import { Physics, RigidBody } from "@react-three/rapier";
+import { useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   KeyboardControls,
@@ -9,7 +9,7 @@ import {
 } from "@react-three/drei";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
-import { CollectibleObjects } from "./Squares";
+// import { CollectibleObjects } from "./Squares";
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -49,37 +49,25 @@ function Intro() {
         fontSize={0.7}
         color="#FF5733"
         spacing={0.1}
-        wordId={1000}
+        id="intro1"
         directionAngle={0} // No rotation
       />
-
       <Word
         text="Game"
         position={[-1, 0, 3]}
         fontSize={0.7}
         color="#33FF57"
         spacing={0.1}
-        wordId={1500}
+        id="intro2"
         directionAngle={Math.PI / 6} // 30 degrees rotation around X axis
       />
-
-      <Word
-        text="3D"
-        position={[2, 0, 2]}
-        fontSize={0.7}
-        color="#3357FF"
-        spacing={0.1}
-        wordId={2500}
-        directionAngle={-Math.PI / 6} // -30 degrees rotation around X axis
-      />
-
       <Word
         text="Letters"
         position={[0, 0, 4]}
         fontSize={0.7}
         color="#FF33A8"
         spacing={0.1}
-        wordId={3500}
+        id="intro4"
         directionAngle={Math.PI / 4} // 45 degrees rotation around X axis
       />
     </>
@@ -93,7 +81,7 @@ export type UserData = {
   width: number;
   height: number;
   depth: number;
-  id: number;
+  id: string;
   setCollected: (x: boolean) => void;
   type?: string;
   char?: string;

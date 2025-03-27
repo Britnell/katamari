@@ -9,7 +9,7 @@ interface LetterProps {
   fontSize?: number;
   color?: string;
   depth?: number;
-  id: number;
+  id: string;
   bevelEnabled?: boolean;
   bevelThickness?: number;
   bevelSize?: number;
@@ -60,23 +60,22 @@ export function Letter({
     }
   }, [char, fontSize, depth]);
 
-  useEffect(() => {
-    if (textRef.current) {
-      const timer = setTimeout(() => {
-        const box = new THREE.Box3().setFromObject(textRef.current!);
-        const size = new THREE.Vector3();
-        box.getSize(size);
+  // useEffect(() => {
+  //   if (textRef.current) {
+  //     const timer = setTimeout(() => {
+  //       const box = new THREE.Box3().setFromObject(textRef.current!);
+  //       const size = new THREE.Vector3();
+  //       box.getSize(size);
+  //       setDimensions({
+  //         width: size.x,
+  //         height: size.y,
+  //         depth: size.z,
+  //       });
+  //     }, 100);
 
-        setDimensions({
-          width: size.x,
-          height: size.y,
-          depth: size.z,
-        });
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [char, textRef.current]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [char, textRef.current]);
 
   const objectVolume = useMemo(
     () => dimensions.width * dimensions.height * dimensions.depth,
@@ -154,7 +153,7 @@ interface WordProps {
   color?: string;
   depth?: number;
   spacing?: number;
-  wordId?: number;
+  id?: string;
   bevelEnabled?: boolean;
   bevelThickness?: number;
   bevelSize?: number;
@@ -170,20 +169,18 @@ export function Word({
   color = "white",
   depth = 0.2,
   spacing = 0.1,
-  wordId = 1000,
+  id = "w-",
   bevelEnabled = true,
   bevelThickness = 0.03,
   bevelSize = 0.02,
   bevelSegments = 4,
   curveSegments = 12,
-  directionAngle = 0, // Default is no rotation
+  directionAngle = 0,
 }: WordProps) {
   const [letterWidths, setLetterWidths] = useState<number[]>([]);
   const groupRef = useRef(null);
   const chars = text.split("");
 
-  // Measure the width of each letter - only run this once when the component mounts
-  // or when the text or fontSize changes
   useEffect(() => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -195,18 +192,15 @@ export function Word({
       });
       setLetterWidths(widths);
     }
-  }, [text, fontSize]); // Only depend on text and fontSize
+  }, [text, fontSize]);
 
-  // If we don't have measurements yet, don't render
   if (letterWidths.length === 0) {
     return null;
   }
 
-  // Calculate positions for each letter
   const letterPositions: [number, number, number][] = [];
   let currentX = 0;
 
-  // Calculate total width of the word
   const totalWidth = letterWidths.reduce((sum, width, index) => {
     if (index < letterWidths.length - 1) {
       return sum + width + spacing;
@@ -229,8 +223,8 @@ export function Word({
     >
       {chars.map((char, index) => (
         <Letter
-          key={`letter-${wordId}-${index}`}
-          id={wordId + index}
+          key={`${id}-${index}`}
+          id={`${id}-${index}`}
           char={char}
           position={letterPositions[index]}
           fontSize={fontSize}
