@@ -31,7 +31,7 @@ export default function Game() {
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
             <Ground />
-            <CollectibleObjects />
+            {/* <CollectibleObjects /> */}
             <Intro />
           </Physics>
         </Canvas>

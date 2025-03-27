@@ -50,7 +50,7 @@ export default function KatamariBall() {
   >(new Map());
 
   useEffect(() => {
-    camera.position.set(0, CAMERA_HEIGHT, -CAMERA_DISTANCE);
+    camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
     camera.lookAt(0, 0, 0);
   }, [camera]);
 

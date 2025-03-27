@@ -214,38 +214,35 @@ export function Word({
     return sum + width;
   }, 0);
 
-  // Start from negative half of the total width to center the word
   currentX = -totalWidth / 2;
 
-  // Create positions for each letter
   for (let i = 0; i < chars.length; i++) {
     letterPositions.push([currentX + letterWidths[i] / 2, 0, 0]);
     currentX += letterWidths[i] + spacing;
   }
 
-  // Calculate rotation based on directionAngle
-  const wordRotation: [number, number, number] = [directionAngle, 0, 0];
-
   return (
-    <group position={position} rotation={wordRotation} ref={groupRef}>
-      <group rotation={[0, Math.PI, 0]}>
-        {chars.map((char, index) => (
-          <Letter
-            key={`letter-${wordId}-${index}`}
-            id={wordId + index}
-            char={char}
-            position={letterPositions[index]}
-            fontSize={fontSize}
-            color={color}
-            depth={depth}
-            bevelEnabled={bevelEnabled}
-            bevelThickness={bevelThickness}
-            bevelSize={bevelSize}
-            bevelSegments={bevelSegments}
-            curveSegments={curveSegments}
-          />
-        ))}
-      </group>
+    <group
+      position={position}
+      rotation={[directionAngle, Math.PI, 0]}
+      ref={groupRef}
+    >
+      {chars.map((char, index) => (
+        <Letter
+          key={`letter-${wordId}-${index}`}
+          id={wordId + index}
+          char={char}
+          position={letterPositions[index]}
+          fontSize={fontSize}
+          color={color}
+          depth={depth}
+          bevelEnabled={bevelEnabled}
+          bevelThickness={bevelThickness}
+          bevelSize={bevelSize}
+          bevelSegments={bevelSegments}
+          curveSegments={curveSegments}
+        />
+      ))}
     </group>
   );
 }
