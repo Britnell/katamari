@@ -29,7 +29,7 @@ export function Letter({
   position,
   fontSize = 1,
   color = "white",
-  depth = 0.2,
+  depth = 1,
   id,
   rotation = [0, 0, 0], // Default to no rotation, we'll handle it in the Word component
 }: LetterProps) {
@@ -46,6 +46,8 @@ export function Letter({
     depth: 0,
   });
 
+  const letterDepth = fontSize * 0.15 * depth;
+
   useEffect(() => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -56,7 +58,7 @@ export function Letter({
       setDimensions({
         width: (metrics.width * fontSize) / 100,
         height: (height * fontSize) / 100,
-        depth: depth,
+        depth: letterDepth,
       });
     }
   }, [char, fontSize, depth]);
@@ -130,7 +132,7 @@ export function Letter({
               ref={textRef}
               font="/fonts/Roboto_Regular.json"
               size={fontSize}
-              height={depth}
+              height={letterDepth}
               curveSegments={curveSegments}
               bevelEnabled={bevelEnabled}
               bevelThickness={bevelThickness}
@@ -154,11 +156,6 @@ interface WordProps {
   color?: string;
   depth?: number;
   id?: string;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
   directionAngle?: number;
   spacing?: number;
 }
@@ -168,9 +165,9 @@ export function Word({
   position,
   fontSize = 1,
   color = "#777",
-  depth = 0.2,
+  depth = 1,
   id = "w-",
-  directionAngle,
+  directionAngle = 0,
   spacing = 0,
 }: WordProps) {
   const [letterWidths, setLetterWidths] = useState<number[]>([]);

@@ -79,15 +79,6 @@ function Words() {
         id="intro14"
         directionAngle={Math.PI * -0.5}
       />
-      {/* <Word
-        text="javascript"
-        position={[0, 0, -5]}
-        fontSize={1.0}
-        depth={0.1}
-        id="intro14"
-        directionAngle={Math.PI * -1}
-      /> */}
-
       <Word
         text="vanilla"
         position={[0, 0, -4]}
@@ -97,9 +88,9 @@ function Words() {
       />
       <Word
         text="typescript"
-        position={[2, 0, -8]}
-        fontSize={1.4}
-        depth={0.5}
+        position={[2, 0, -10]}
+        fontSize={2.5}
+        depth={1.3}
         id="intro16"
         directionAngle={Math.PI * -1}
       />
@@ -118,21 +109,21 @@ function Words() {
         text="Web Developer"
         position={[0, 0, 20]}
         fontSize={2.4}
-        depth={0.5}
+        depth={1.5}
         id="intro5"
         directionAngle={0}
       />
       <Word
         text="Creative"
-        position={[7, 0, 2]}
+        position={[8, 0, 2]}
         fontSize={2.6}
         id="intro7"
         directionAngle={Math.PI * 0.5}
       />
       <Word
         text="Technologist"
-        position={[14, 0, 12]}
-        fontSize={2.9}
+        position={[16, 0, 12]}
+        fontSize={3.2}
         id="intro8"
         directionAngle={Math.PI * 0.5}
       />
@@ -147,7 +138,6 @@ function Words() {
         text="fullstack"
         position={[-7, 0, -3]}
         fontSize={2.0}
-        depth={0.6}
         id="intro10"
         directionAngle={Math.PI * -0.5}
       />
