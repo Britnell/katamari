@@ -52,7 +52,7 @@ function Words() {
       <Word
         text="Im Tommy"
         position={[0, 0, 7]}
-        fontSize={1.2}
+        fontSize={1.3}
         id="intro2"
         directionAngle={0}
       />
@@ -75,22 +75,32 @@ function Words() {
       <Word
         text="javascript"
         position={[-3.3, 0, 0]}
-        fontSize={1.1}
+        fontSize={1.0}
         depth={0.9}
         id="intro14"
         directionAngle={Math.PI * -0.5}
       />
-      <Word
+      {/* <Word
         text="vanilla"
         position={[0, 0, -4]}
         fontSize={1.2}
         id="intro15"
         directionAngle={Math.PI * -1}
+      /> */}
+
+      <Word
+        text="node"
+        position={[0, 0, -4]}
+        fontSize={1.6}
+        depth={1}
+        id="intro19"
+        directionAngle={Math.PI * -1}
       />
+
       <Word
         text="typescript"
         position={[2, 0, -15]}
-        fontSize={1.9}
+        fontSize={1.8}
         depth={0.8}
         id="intro16"
         directionAngle={Math.PI * -1}
@@ -99,7 +109,8 @@ function Words() {
       <Word
         text="React"
         position={[4, 0, -8]}
-        fontSize={1.3}
+        fontSize={1.2}
+        depth={0.9}
         id="intro17"
         directionAngle={Math.PI * -1.2}
       />
@@ -107,7 +118,7 @@ function Words() {
       <Word
         text="UI UX"
         position={[9, 0, -10]}
-        fontSize={1.9}
+        fontSize={2.9}
         id="intro22"
         directionAngle={Math.PI * 0.5}
       />
@@ -115,9 +126,9 @@ function Words() {
       <Word
         text="Vue"
         id="intro18"
-        position={[-4, 0, -8]}
-        fontSize={1.3}
-        depth={1.3}
+        position={[-1, 0, -7]}
+        fontSize={1.6}
+        depth={1}
         directionAngle={Math.PI * -1.0}
       />
 
@@ -158,6 +169,7 @@ function Words() {
         text="frontend"
         position={[-6, 0, 6]}
         fontSize={1.3}
+        depth={0.9}
         id="intro9"
         directionAngle={Math.PI * -0.5}
       />
@@ -169,6 +181,7 @@ function Words() {
         directionAngle={Math.PI * -0.5}
       />
 
+      {/* 
       <Word
         text="node"
         position={[-11, 0, 5]}
@@ -176,15 +189,23 @@ function Words() {
         depth={1.2}
         id="intro19"
         directionAngle={Math.PI * 0}
-      />
+      /> */}
 
       <Word
         text="next"
-        position={[-9, 0, -12]}
-        fontSize={2.8}
+        position={[-4, 0, -11]}
+        fontSize={1.6}
         depth={1.0}
         id="intro19"
         directionAngle={Math.PI * -1.0}
+      />
+
+      <Word
+        text="ally"
+        position={[-8, 0, -13]}
+        fontSize={1.3}
+        id="intro9"
+        directionAngle={Math.PI * -0.75}
       />
 
       {/* ---------------- */}
