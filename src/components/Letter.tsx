@@ -18,6 +18,12 @@ interface LetterProps {
   rotation?: [number, number, number];
 }
 
+const bevelEnabled = true;
+const bevelThickness = 0.03;
+const bevelSize = 0.02;
+const bevelSegments = 4;
+const curveSegments = 12;
+
 export function Letter({
   char,
   position,
@@ -25,11 +31,6 @@ export function Letter({
   color = "white",
   depth = 0.2,
   id,
-  bevelEnabled = true,
-  bevelThickness = 0.03,
-  bevelSize = 0.02,
-  bevelSegments = 4,
-  curveSegments = 12,
   rotation = [0, 0, 0], // Default to no rotation, we'll handle it in the Word component
 }: LetterProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
@@ -169,18 +170,13 @@ export function Word({
   color = "#777",
   depth = 0.2,
   id = "w-",
-  bevelEnabled = true,
-  bevelThickness = 0.03,
-  bevelSize = 0.02,
-  bevelSegments = 4,
-  curveSegments = 12,
-  directionAngle = 0,
-  spacing = 1,
+  directionAngle,
+  spacing = 0,
 }: WordProps) {
   const [letterWidths, setLetterWidths] = useState<number[]>([]);
   const groupRef = useRef(null);
   const chars = text.split("");
-  const letterSpacing = (fontSize / 8) * spacing;
+  const letterSpacing = fontSize / 8 + spacing;
 
   useEffect(() => {
     const canvas = document.createElement("canvas");
@@ -231,11 +227,6 @@ export function Word({
           fontSize={fontSize}
           color={color}
           depth={depth}
-          bevelEnabled={bevelEnabled}
-          bevelThickness={bevelThickness}
-          bevelSize={bevelSize}
-          bevelSegments={bevelSegments}
-          curveSegments={curveSegments}
         />
       ))}
     </group>
