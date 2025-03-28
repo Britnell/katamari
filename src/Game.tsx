@@ -10,7 +10,10 @@ import {
 import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
+import { ModelObject } from "./components/ModelObject";
 // import { CollectibleObjects } from "./Squares";
+
+const pi = Math.PI;
 
 export default function Game() {
   const map = useKeyboardMap();
@@ -57,6 +60,13 @@ export default function Game() {
             <Ground />
             {/* <CollectibleObjects /> */}
             <Words />
+            <ModelObject
+              modelPath="/3d/gameboy/scene.gltf"
+              position={[6, -2, 8]}
+              scale={0.5}
+              rotation={[0, pi * -0.3, 0]}
+              id="gameboy"
+            />
           </Physics>
         </Canvas>
       </KeyboardControls>
