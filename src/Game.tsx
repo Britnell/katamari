@@ -7,6 +7,7 @@ import {
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
+import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 // import { CollectibleObjects } from "./Squares";
@@ -17,15 +18,39 @@ export default function Game() {
   return (
     <div style={{ width: "100%", height: "100vh" }}>
       <KeyboardControls map={map}>
-        <Canvas shadows>
+        <Canvas
+          shadows
+          gl={{
+            antialias: true,
+          }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.enabled = true;
+            gl.shadowMap.type = THREE.PCFSoftShadowMap;
+            gl.shadowMap.autoUpdate = true;
+          }}
+        >
           <PerspectiveCamera makeDefault position={[0, 2, -4]} fov={55} />
           <OrbitControls />
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.6} color="#f0f8ff" />
           <directionalLight
-            position={[10, 10, 5]}
-            intensity={1}
+            position={[10, 15, 10]}
+            intensity={1.2}
             castShadow
-            shadow-mapSize={1024}
+            shadow-mapSize={[4096, 4096]}
+            shadow-camera-left={-30}
+            shadow-camera-right={30}
+            shadow-camera-top={30}
+            shadow-camera-bottom={-30}
+            shadow-camera-near={0.1}
+            shadow-camera-far={100}
+            shadow-bias={-0.00001}
+            shadow-normalBias={0.01}
+            shadow-radius={3}
+          />
+          <hemisphereLight
+            intensity={0.4}
+            color="#87ceeb"
+            groundColor="#8a5a44"
           />
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
@@ -252,7 +277,12 @@ function Ground() {
         receiveShadow
       >
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="lightblue" />
+        <meshStandardMaterial
+          color="#a3d9ff"
+          roughness={0.8}
+          metalness={0.1}
+          envMapIntensity={0.5}
+        />
       </mesh>
     </RigidBody>
   );

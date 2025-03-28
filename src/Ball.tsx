@@ -364,9 +364,10 @@ export default function KatamariBall() {
                   bevelThickness={bevelThickness}
                   bevelSize={bevelSize}
                   bevelSegments={bevelSegments}
+                  castShadow
                 >
                   {char}
-                  <meshStandardMaterial color={color} />
+                  <meshStandardMaterial color={color} castShadow />
                 </Text3D>
               </Center>
             </group>
@@ -378,7 +379,12 @@ export default function KatamariBall() {
             key={`collected-${id}`}
             position={[position.x, position.y, position.z]}
           >
-            <mesh position={[0, 0, 0]} quaternion={rotation} scale={[1, 1, 1]}>
+            <mesh
+              position={[0, 0, 0]}
+              quaternion={rotation}
+              scale={[1, 1, 1]}
+              castShadow
+            >
               <boxGeometry args={geometry} />
               <meshStandardMaterial color="orange" />
             </mesh>
@@ -402,10 +408,17 @@ export default function KatamariBall() {
         onCollisionEnter={onCollision}
         canSleep={false}
       >
-        <mesh castShadow>
-          <sphereGeometry args={[initialRadius, 32, 32]} />
-          <meshStandardMaterial map={texture.current} />
-        </mesh>
+        <group>
+          <mesh castShadow>
+            <sphereGeometry args={[initialRadius, 32, 32]} />
+            <meshStandardMaterial
+              map={texture.current}
+              transparent={false}
+              opacity={1}
+              side={THREE.FrontSide}
+            />
+          </mesh>
+        </group>
 
         <BallCollider args={[virtualRadius]} sensor={false} friction={1.5} />
 
@@ -431,16 +444,17 @@ function createBallTexture() {
   canvas.height = 512;
   const context = canvas.getContext("2d");
   if (!context) return;
-  context.fillStyle = "green";
+  context.fillStyle = "#4caf50";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  for (let i = 0; i < 10; i++) {
-    context.fillStyle = "white";
+  for (let i = 0; i < 20; i++) {
+    context.fillStyle = i % 2 === 0 ? "#a5d6a7" : "#2e7d32";
+    const size = Math.random() * 40 + 10;
     context.fillRect(
       Math.random() * canvas.width,
       Math.random() * canvas.height,
-      10,
-      10
+      size,
+      size
     );
   }
   return new THREE.CanvasTexture(canvas);

@@ -138,6 +138,7 @@ export function Letter({
               bevelThickness={bevelThickness}
               bevelSize={bevelSize}
               bevelSegments={bevelSegments}
+              castShadow
             >
               {char}
               <meshStandardMaterial color={color} />
