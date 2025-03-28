@@ -135,7 +135,7 @@ function Words() {
       <Word
         text="typescript"
         position={[2, 0, -15]}
-        fontSize={1.8}
+        fontSize={1.6}
         depth={0.8}
         id="intro16"
         directionAngle={Math.PI * -1}
@@ -229,9 +229,9 @@ function Words() {
       <Word
         text="next"
         position={[-4, 0, -11]}
-        fontSize={1.6}
+        fontSize={1.3}
         depth={1.0}
-        id="intro19"
+        id="intro20"
         directionAngle={Math.PI * -1.0}
       />
 
