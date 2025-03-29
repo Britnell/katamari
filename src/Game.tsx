@@ -80,7 +80,11 @@ export default function Game() {
   );
 }
 
-function Words({ collectedObjects }: { collectedObjects: React.RefObject<Map<string, CollectibleObject>> }) {
+function Words({
+  collectedObjects,
+}: {
+  collectedObjects: React.RefObject<Map<string, CollectibleObject>>;
+}) {
   return (
     <>
       <Word
@@ -234,19 +238,10 @@ function Words({ collectedObjects }: { collectedObjects: React.RefObject<Map<str
         position={[-7, 0, -3]}
         fontSize={2.0}
         id="intro10"
+        depth={0.9}
         directionAngle={Math.PI * -0.5}
         collectedObjects={collectedObjects}
       />
-
-      {/* 
-      <Word
-        text="node"
-        position={[-11, 0, 5]}
-        fontSize={1.9}
-        depth={1.2}
-        id="intro19"
-        directionAngle={Math.PI * 0}
-      /> */}
 
       <Word
         text="next"
@@ -268,16 +263,6 @@ function Words({ collectedObjects }: { collectedObjects: React.RefObject<Map<str
       />
 
       {/* ---------------- */}
-
-      {/*
-      <Word
-        text="sass"
-        position={[7, 0, -7]}
-        fontSize={1.2}
-        id="intro13"
-        directionAngle={(Math.PI * 3) / 4}
-      />
-      */}
     </>
   );
 }
