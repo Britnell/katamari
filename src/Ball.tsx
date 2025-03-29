@@ -33,18 +33,6 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
   const { rapier, world } = useRapier();
   const texture = useRef(createBallTexture());
 
-  const calculateVolume = (radius: number) => {
-    return (4 / 3) * Math.PI * Math.pow(radius, 3);
-  };
-
-  const formatRadius = (radius: number) => {
-    return (radius * 2).toFixed(1) + "m";
-  };
-
-  const formatVolume = (volume: number) => {
-    return volume.toFixed(1) + "m³";
-  };
-
   useEffect(() => {
     const displayElement = document.createElement("div");
     displayElement.id = "ball-size-display";
@@ -141,39 +129,6 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
     camera.lookAt(targetLookAt);
   });
 
-  const calculateAttachmentPoint = useCallback(
-    (objectBody: RapierRigidBody) => {
-      if (!ballRef.current) return new THREE.Vector3(0, 0, 0);
-
-      const ballPos = ballRef.current.translation();
-      const ballRot = ballRef.current.rotation();
-      const objPos = objectBody.translation();
-
-      const ballQuaternion = new THREE.Quaternion(
-        ballRot.x,
-        ballRot.y,
-        ballRot.z,
-        ballRot.w
-      );
-
-      const worldDirection = new THREE.Vector3(
-        objPos.x - ballPos.x,
-        objPos.y - ballPos.y,
-        objPos.z - ballPos.z
-      ).normalize();
-
-      const inverseRotation = ballQuaternion.clone().invert();
-      const localDirection = worldDirection
-        .clone()
-        .applyQuaternion(inverseRotation);
-
-      const localAttachPoint = localDirection.multiplyScalar(virtualRadius);
-
-      return localAttachPoint;
-    },
-    [virtualRadius, ballRef]
-  );
-
   const addCompoundCollider = useCallback(
     (
       _otherRigidBody: RapierRigidBody,
@@ -216,11 +171,16 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
     [ballRef, rapier, world]
   );
 
-  const collectObject = useCallback(
-    (otherBody: RapierRigidBody, userData: UserData) => {
-      if (!ballRef.current) return;
+  const onCollision: CollisionEnterHandler = useCallback(
+    ({ other }) => {
+      const otherBody = other.rigidBody;
+      if (!otherBody) return;
 
+      const userData = otherBody.userData as UserData;
+      if (!userData?.isCollectable) return;
       if (collectedObjects.current.has(userData.id)) return;
+      if (!isBiggerThanObj(userData, virtualRadius)) return;
+      if (!ballRef.current) return;
 
       const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
       const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
@@ -228,29 +188,13 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
       const newMass = 3 * (newRadius / initialRadius) ** 3;
       setTotalMass(newMass);
 
-      const attachPoint = calculateAttachmentPoint(otherBody);
-
-      const ballRot = ballRef.current.rotation();
-      const objRot = otherBody.rotation();
-
-      const ballQuaternion = new THREE.Quaternion(
-        ballRot.x,
-        ballRot.y,
-        ballRot.z,
-        ballRot.w
+      const attachPoint = calcAttachmentPoint(
+        otherBody,
+        ballRef.current,
+        virtualRadius
       );
 
-      const objectQuaternion = new THREE.Quaternion(
-        objRot.x,
-        objRot.y,
-        objRot.z,
-        objRot.w
-      );
-
-      const inverseRotation = ballQuaternion.clone().invert();
-      const relativeRotation = objectQuaternion
-        .clone()
-        .multiply(inverseRotation);
+      const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
 
       const objectDimensions: [number, number, number] = [
         userData.width,
@@ -283,27 +227,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
         userData.setCollected(true);
       }
     },
-    [
-      virtualRadius,
-      calculateAttachmentPoint,
-      setVirtualRadius,
-      setTotalMass,
-      addCompoundCollider,
-    ]
-  );
-
-  const onCollision: CollisionEnterHandler = useCallback(
-    ({ other }) => {
-      const userData = other.rigidBody?.userData as UserData;
-      if (userData?.isCollectable) {
-        const objectVolume = userData.volume * 8;
-        const ballVolume = calculateVolume(virtualRadius);
-        const isColl = objectVolume < ballVolume;
-        console.log({ objectVolume });
-        if (isColl && other.rigidBody) collectObject(other.rigidBody, userData);
-      }
-    },
-    [collectObject, virtualRadius]
+    [virtualRadius, setVirtualRadius, setTotalMass, addCompoundCollider]
   );
 
   return (
@@ -371,3 +295,78 @@ function createBallTexture() {
   }
   return new THREE.CanvasTexture(canvas);
 }
+
+const calcRelativeRotation = (
+  ballObj: RapierRigidBody,
+  obj: RapierRigidBody
+) => {
+  const ballRot = ballObj.rotation();
+  const objRot = obj.rotation();
+  const ballQuaternion = new THREE.Quaternion(
+    ballRot.x,
+    ballRot.y,
+    ballRot.z,
+    ballRot.w
+  );
+  const objectQuaternion = new THREE.Quaternion(
+    objRot.x,
+    objRot.y,
+    objRot.z,
+    objRot.w
+  );
+  const inverseRotation = ballQuaternion.clone().invert();
+  const relativeRotation = objectQuaternion.clone().multiply(inverseRotation);
+  return relativeRotation;
+};
+
+const calcAttachmentPoint = (
+  objectBody: RapierRigidBody,
+  ballBody: RapierRigidBody,
+  radius: number
+) => {
+  const ballPos = ballBody.translation();
+  const ballRot = ballBody.rotation();
+  const objPos = objectBody.translation();
+
+  const ballQuaternion = new THREE.Quaternion(
+    ballRot.x,
+    ballRot.y,
+    ballRot.z,
+    ballRot.w
+  );
+
+  const worldDirection = new THREE.Vector3(
+    objPos.x - ballPos.x,
+    objPos.y - ballPos.y,
+    objPos.z - ballPos.z
+  ).normalize();
+
+  const inverseRotation = ballQuaternion.clone().invert();
+  const localDirection = worldDirection
+    .clone()
+    .applyQuaternion(inverseRotation);
+
+  const localAttachPoint = localDirection.multiplyScalar(radius);
+
+  return localAttachPoint;
+};
+
+const isBiggerThanObj = (userData: UserData, radius: number) => {
+  const objectVolume = userData.volume * 8;
+  const ballVolume = calculateVolume(radius);
+  const isColl = objectVolume < ballVolume;
+  console.log({ objectVolume });
+  return isColl;
+};
+
+const calculateVolume = (radius: number) => {
+  return (4 / 3) * Math.PI * Math.pow(radius, 3);
+};
+
+const formatRadius = (radius: number) => {
+  return (radius * 2).toFixed(1) + "m";
+};
+
+const formatVolume = (volume: number) => {
+  return volume.toFixed(1) + "m³";
+};
