@@ -1,8 +1,7 @@
-import { useRef, useState, useEffect, useMemo, RefObject } from "react";
-import { RapierRigidBody, RigidBody } from "@react-three/rapier";
+import { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Text3D, Center } from "@react-three/drei";
-import { CollectibleObject } from "../Game";
+import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 
 interface LetterProps {
   char: string;
@@ -17,7 +16,7 @@ interface LetterProps {
   bevelSegments?: number;
   curveSegments?: number;
   rotation?: [number, number, number];
-  collectedObjects?: RefObject<Map<string, CollectibleObject>>;
+  collectedObjects?: any;
 }
 
 const bevelEnabled = true;
@@ -34,11 +33,9 @@ export function Letter({
   depth = 1,
   id,
   rotation = [0, 0, 0],
-  collectedObjects,
 }: LetterProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
-  const textRef = useRef<THREE.Mesh>(null);
   const [dimensions, setDimensions] = useState<{
     width: number;
     height: number;
@@ -112,25 +109,18 @@ export function Letter({
       sensor={isCollected}
     >
       {!isCollected && (
-        <Center>
-          <group rotation={rotation}>
-            <Text3D
-              ref={textRef}
-              font="/fonts/Roboto_Regular.json"
-              size={fontSize}
-              height={letterDepth}
-              curveSegments={curveSegments}
-              bevelEnabled={bevelEnabled}
-              bevelThickness={bevelThickness}
-              bevelSize={bevelSize}
-              bevelSegments={bevelSegments}
-              castShadow
-            >
-              {char}
-              <meshStandardMaterial color={color} />
-            </Text3D>
-          </group>
-        </Center>
+        <LetterShape
+          char={char}
+          fontSize={fontSize}
+          color={color}
+          depth={depth}
+          bevelEnabled={bevelEnabled}
+          bevelThickness={bevelThickness}
+          bevelSize={bevelSize}
+          bevelSegments={bevelSegments}
+          curveSegments={curveSegments}
+          rotation={rotation}
+        />
       )}
     </RigidBody>
   );
@@ -145,7 +135,7 @@ interface WordProps {
   id?: string;
   directionAngle?: number;
   spacing?: number;
-  collectedObjects?: RefObject<Map<string, CollectibleObject>>;
+  collectedObjects?: any;
 }
 
 export function Word({
@@ -216,6 +206,67 @@ export function Word({
           collectedObjects={collectedObjects}
         />
       ))}
+    </group>
+  );
+}
+
+interface DrawLetterProps {
+  char: string;
+  fontSize?: number;
+  color?: string;
+  depth?: number;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
+  rotation?: [number, number, number];
+  position?: [number, number, number];
+  quaternion?: THREE.Quaternion;
+  scale?: [number, number, number];
+  castShadow?: boolean;
+}
+
+export function LetterShape({
+  char,
+  fontSize = 1,
+  color = "white",
+  depth = 0.15,
+  bevelEnabled = true,
+  bevelThickness = 0.03,
+  bevelSize = 0.02,
+  bevelSegments = 4,
+  curveSegments = 12,
+  rotation = [0, 0, 0],
+  position,
+  quaternion,
+  scale = [1, 1, 1],
+  castShadow = true,
+}: DrawLetterProps) {
+  const textRef = useRef<THREE.Mesh>(null);
+  const letterDepth = fontSize * depth;
+
+  return (
+    <group position={position} quaternion={quaternion}>
+      <Center scale={scale}>
+        <group rotation={rotation}>
+          <Text3D
+            ref={textRef}
+            font="/fonts/Roboto_Regular.json"
+            size={fontSize}
+            height={letterDepth}
+            curveSegments={curveSegments}
+            bevelEnabled={bevelEnabled}
+            bevelThickness={bevelThickness}
+            bevelSize={bevelSize}
+            bevelSegments={bevelSegments}
+            castShadow={castShadow}
+          >
+            {char}
+            <meshStandardMaterial color={color} castShadow={castShadow} />
+          </Text3D>
+        </group>
+      </Center>
     </group>
   );
 }

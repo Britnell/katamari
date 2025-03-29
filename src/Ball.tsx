@@ -3,13 +3,13 @@ import {
   useRapier,
   RapierRigidBody,
   CollisionEnterHandler,
-  BallCollider,
 } from "@react-three/rapier";
-import { useState, useRef, useEffect, useCallback, RefObject } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useKeyboardControls, Text3D, Center } from "@react-three/drei";
+import { useKeyboardControls } from "@react-three/drei";
 import { CollectibleObject, UserData } from "./Game";
+import { LetterShape } from "./components/Letter";
 
 const initialRadius = 0.5;
 const BASE_CAMERA_HEIGHT = 1.6;
@@ -325,28 +325,21 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
           } = object;
 
           return (
-            <group
+            <LetterShape
               key={`collected-${id}`}
+              char={char || ""}
+              fontSize={fontSize}
+              color={color || "white"}
+              depth={geometry[2] / fontSize}
+              bevelEnabled={bevelEnabled}
+              bevelThickness={bevelThickness}
+              bevelSize={bevelSize}
+              bevelSegments={bevelSegments}
+              curveSegments={curveSegments}
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
-            >
-              <Center scale={[0.8, 0.8, 0.8]}>
-                <Text3D
-                  font="/fonts/Roboto_Regular.json"
-                  size={fontSize}
-                  height={geometry[2]}
-                  curveSegments={curveSegments}
-                  bevelEnabled={bevelEnabled}
-                  bevelThickness={bevelThickness}
-                  bevelSize={bevelSize}
-                  bevelSegments={bevelSegments}
-                  castShadow
-                >
-                  {char}
-                  <meshStandardMaterial color={color} castShadow />
-                </Text3D>
-              </Center>
-            </group>
+              scale={[0.8, 0.8, 0.8]} // Makes collected objects 20% smaller to fit better on the ball
+            />
           );
         }
 
