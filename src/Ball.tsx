@@ -5,54 +5,32 @@ import {
   CollisionEnterHandler,
   BallCollider,
 } from "@react-three/rapier";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, RefObject } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useKeyboardControls, Text3D, Center } from "@react-three/drei";
-import { UserData } from "./Game";
+import { CollectibleObject, UserData } from "./Game";
 
 const initialRadius = 0.5;
+const BASE_CAMERA_HEIGHT = 1.6;
+const BASE_CAMERA_DISTANCE = 4;
+const CAMERA_SMOOTHING = 0.05;
 
-export default function KatamariBall() {
+interface KatamariBallProps {
+  collectedObjects: RefObject<Map<string, CollectibleObject>>;
+}
+
+export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
   const [totalMass, setTotalMass] = useState(3);
-  const [rotation, setRotation] = useState(0);
   const [virtualRadius, setVirtualRadius] = useState(initialRadius);
   const ballRef = useRef<RapierRigidBody>(null);
+  const rotationAngle = useRef(0);
   const direction = useRef(new THREE.Vector3(0, 0, 1));
-
-  const BASE_CAMERA_HEIGHT = 1.6;
-  const BASE_CAMERA_DISTANCE = 4;
-  const CAMERA_SMOOTHING = 0.05;
 
   const [_sub, getState] = useKeyboardControls();
   const { camera } = useThree();
   const { rapier, world } = useRapier();
   const texture = useRef(createBallTexture());
-
-  const collectedObjects = useRef<
-    Map<
-      number,
-      {
-        position: THREE.Vector3;
-        rotation: THREE.Quaternion;
-        geometry: [number, number, number];
-        type: string;
-        char?: string;
-        fontSize?: number;
-        color?: string;
-        bevelEnabled?: boolean;
-        bevelThickness?: number;
-        bevelSize?: number;
-        bevelSegments?: number;
-        curveSegments?: number;
-      }
-    >
-  >(new Map());
-
-  // useEffect(() => {
-  //   camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
-  //   camera.lookAt(0, 0, 0);
-  // }, [camera]);
 
   const calculateVolume = (radius: number) => {
     return (4 / 3) * Math.PI * Math.pow(radius, 3);
@@ -112,14 +90,18 @@ export default function KatamariBall() {
       const TURN_SPEED = 1.5;
       const turnCoefficient = 1.0 / (1.0 + speed * 0.2);
       const effectiveTurnSpeed = TURN_SPEED * turnCoefficient * delta;
-      if (keys.left) setRotation((prev) => prev + effectiveTurnSpeed);
-      if (keys.right) setRotation((prev) => prev - effectiveTurnSpeed);
-      direction.current.set(Math.sin(rotation), 0, Math.cos(rotation));
+      if (keys.left) rotationAngle.current += effectiveTurnSpeed;
+      if (keys.right) rotationAngle.current -= effectiveTurnSpeed;
+      direction.current.set(
+        Math.sin(rotationAngle.current),
+        0,
+        Math.cos(rotationAngle.current)
+      );
     }
 
     if (keys.forward) {
       const TORQUE_FACTOR = 0.6;
-      const BASE_MOVE_FORCE = 0.4;
+      const BASE_MOVE_FORCE = 0.5;
       const speedProportional = Math.max(0, 1 - speed * 0.15);
       const sizeProportional = BASE_MOVE_FORCE * totalMass;
       const factor =
@@ -237,8 +219,7 @@ export default function KatamariBall() {
     (otherBody: RapierRigidBody, userData: UserData) => {
       if (!ballRef.current) return;
 
-      const id = userData.id;
-      if (collectedObjects.current.has(id)) return;
+      if (collectedObjects.current.has(userData.id)) return;
 
       const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
       const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
@@ -283,7 +264,7 @@ export default function KatamariBall() {
         objectDimensions
       );
 
-      collectedObjects.current.set(id, {
+      collectedObjects.current.set(userData.id, {
         position: attachPoint,
         rotation: relativeRotation,
         geometry: objectDimensions,
@@ -292,11 +273,6 @@ export default function KatamariBall() {
           char: userData.char,
           fontSize: userData.fontSize,
           color: userData.color,
-          bevelEnabled: userData.bevelEnabled,
-          bevelThickness: userData.bevelThickness,
-          bevelSize: userData.bevelSize,
-          bevelSegments: userData.bevelSegments,
-          curveSegments: userData.curveSegments,
         }),
       });
 

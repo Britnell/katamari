@@ -1,5 +1,5 @@
 import { Physics, RigidBody } from "@react-three/rapier";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   KeyboardControls,
@@ -13,10 +13,9 @@ import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
 // import { CollectibleObjects } from "./Squares";
 
-const pi = Math.PI;
-
 export default function Game() {
   const map = useKeyboardMap();
+  const collectedObjects = useRef(new Map<string, CollectibleObject>());
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
@@ -56,7 +55,7 @@ export default function Game() {
             groundColor="#8a5a44"
           />
           <Physics interpolate={true} timeStep={1 / 60}>
-            <KatamariBall />
+            <KatamariBall collectedObjects={collectedObjects} />
             <Ground />
             {/* <CollectibleObjects /> */}
             <Words />
@@ -265,26 +264,6 @@ function Words() {
   );
 }
 
-export type UserData = {
-  isCollectable: boolean;
-  volume: number;
-  size: number;
-  width: number;
-  height: number;
-  depth: number;
-  id: string;
-  setCollected: (x: boolean) => void;
-  type?: string;
-  char?: string;
-  fontSize?: number;
-  color?: string;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
-};
-
 function Ground() {
   return (
     <RigidBody type="fixed" name="ground" friction={0.9} restitution={0.0}>
@@ -321,3 +300,40 @@ const useKeyboardMap = () =>
     ],
     []
   );
+
+export type UserData = {
+  isCollectable: boolean;
+  volume: number;
+  size: number;
+  width: number;
+  height: number;
+  depth: number;
+  id: string;
+  setCollected: (x: boolean) => void;
+  type?: string;
+  char?: string;
+  fontSize?: number;
+  color?: string;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
+};
+
+export const pi = Math.PI;
+
+export type CollectibleObject = {
+  position: THREE.Vector3;
+  rotation: THREE.Quaternion;
+  geometry: [number, number, number];
+  type: string;
+  char?: string;
+  fontSize?: number;
+  color?: string;
+  bevelEnabled?: boolean;
+  bevelThickness?: number;
+  bevelSize?: number;
+  bevelSegments?: number;
+  curveSegments?: number;
+};
