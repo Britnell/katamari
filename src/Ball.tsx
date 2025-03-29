@@ -33,47 +33,37 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
   useDisplay(virtualRadius);
   useKeyboardSteering(ballRef, virtualRadius, totalMass);
 
-  const addCompoundCollider = useCallback(
-    (
-      _otherRigidBody: RapierRigidBody,
-      attachPoint: THREE.Vector3,
-      relativeRotation: THREE.Quaternion,
-      objectSize: [number, number, number]
-    ) => {
-      if (!ballRef.current || !world) return;
+  function addCompoundCollider(
+    attachPoint: THREE.Vector3,
+    relativeRotation: THREE.Quaternion,
+    objectSize: [number, number, number]
+  ) {
+    if (!ballRef.current || !world) return;
 
-      try {
-        const ballRigidBodyHandle = ballRef.current.handle;
+    try {
+      const colliderDesc = rapier.ColliderDesc.cuboid(
+        objectSize[0] / 2,
+        objectSize[1] / 2,
+        objectSize[2] / 2
+      );
 
-        const colliderDesc = rapier.ColliderDesc.cuboid(
-          objectSize[0] / 2,
-          objectSize[1] / 2,
-          objectSize[2] / 2
-        );
+      colliderDesc.setTranslation(attachPoint.x, attachPoint.y, attachPoint.z);
+      colliderDesc.setRotation({
+        x: relativeRotation.x,
+        y: relativeRotation.y,
+        z: relativeRotation.z,
+        w: relativeRotation.w,
+      });
 
-        colliderDesc.setTranslation(
-          attachPoint.x,
-          attachPoint.y,
-          attachPoint.z
-        );
-        colliderDesc.setRotation({
-          x: relativeRotation.x,
-          y: relativeRotation.y,
-          z: relativeRotation.z,
-          w: relativeRotation.w,
-        });
+      colliderDesc.setFriction(1.5);
+      colliderDesc.setRestitution(0.1);
 
-        colliderDesc.setFriction(1.5);
-        colliderDesc.setRestitution(0.1);
-
-        const rigidBodyHandle = ballRigidBodyHandle as unknown as any;
-        world.createCollider(colliderDesc, rigidBodyHandle);
-      } catch (error) {
-        console.error("Error creating compound collider:", error);
-      }
-    },
-    [ballRef, rapier, world]
-  );
+      const rigidBodyHandle = ballRef.current.handle as unknown as any;
+      world.createCollider(colliderDesc, rigidBodyHandle);
+    } catch (error) {
+      console.error("Error creating compound collider:", error);
+    }
+  }
 
   const onCollision: CollisionEnterHandler = useCallback(
     ({ other }) => {
@@ -106,12 +96,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
         userData.depth,
       ];
 
-      addCompoundCollider(
-        otherBody,
-        attachPoint,
-        relativeRotation,
-        objectDimensions
-      );
+      addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
 
       collectedObjects.current.set(userData.id, {
         position: attachPoint,
@@ -127,9 +112,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
 
       otherBody.setEnabled(false);
 
-      if (userData.setCollected) {
-        userData.setCollected(true);
-      }
+      userData.setCollected && userData.setCollected(true);
     },
     [virtualRadius, setVirtualRadius, setTotalMass, addCompoundCollider]
   );
