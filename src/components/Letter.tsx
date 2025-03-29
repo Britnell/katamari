@@ -52,7 +52,7 @@ export function Letter({
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      ctx.font = `bold ${100}px Arial`;
+      ctx.font = `bold ${100}px monospace`;
       const metrics = ctx.measureText(char);
       const height = 100;
       setDimensions({
@@ -86,6 +86,7 @@ export function Letter({
     <RigidBody
       ref={rigidBodyRef}
       position={adjustedPosition}
+      rotation={rotation}
       colliders="cuboid"
       userData={{
         id,
@@ -119,7 +120,6 @@ export function Letter({
           bevelSize={bevelSize}
           bevelSegments={bevelSegments}
           curveSegments={curveSegments}
-          rotation={rotation}
         />
       )}
     </RigidBody>
@@ -175,10 +175,10 @@ export function Word({
           id={`${id}-${index}`}
           char={char}
           position={calcPos(index)}
+          rotation={[0, wordAngle + 0 * Math.PI, 0]}
           fontSize={fontSize}
           color={color}
           depth={depth}
-          rotation={[0, wordAngle + Math.PI, 0]}
           collectedObjects={collectedObjects}
         />
       ))}
