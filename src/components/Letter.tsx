@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect, useMemo, RefObject } from "react";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
 import { Text3D, Center } from "@react-three/drei";
+import { CollectibleObject } from "../Game";
 
 interface LetterProps {
   char: string;
@@ -16,6 +17,7 @@ interface LetterProps {
   bevelSegments?: number;
   curveSegments?: number;
   rotation?: [number, number, number];
+  collectedObjects?: RefObject<Map<string, CollectibleObject>>;
 }
 
 const bevelEnabled = true;
@@ -31,7 +33,8 @@ export function Letter({
   color = "white",
   depth = 1,
   id,
-  rotation = [0, 0, 0], // Default to no rotation, we'll handle it in the Word component
+  rotation = [0, 0, 0],
+  collectedObjects,
 }: LetterProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -62,23 +65,6 @@ export function Letter({
       });
     }
   }, [char, fontSize, depth]);
-
-  // useEffect(() => {
-  //   if (textRef.current) {
-  //     const timer = setTimeout(() => {
-  //       const box = new THREE.Box3().setFromObject(textRef.current!);
-  //       const size = new THREE.Vector3();
-  //       box.getSize(size);
-  //       setDimensions({
-  //         width: size.x,
-  //         height: size.y,
-  //         depth: size.z,
-  //       });
-  //     }, 100);
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [char, textRef.current]);
 
   const objectVolume = useMemo(
     () => dimensions.width * dimensions.height * dimensions.depth,
@@ -159,6 +145,7 @@ interface WordProps {
   id?: string;
   directionAngle?: number;
   spacing?: number;
+  collectedObjects?: RefObject<Map<string, CollectibleObject>>;
 }
 
 export function Word({
@@ -170,6 +157,7 @@ export function Word({
   id = "w-",
   directionAngle = 0,
   spacing = 0,
+  collectedObjects,
 }: WordProps) {
   const [letterWidths, setLetterWidths] = useState<number[]>([]);
   const groupRef = useRef(null);
@@ -225,6 +213,7 @@ export function Word({
           fontSize={fontSize}
           color={color}
           depth={depth}
+          collectedObjects={collectedObjects}
         />
       ))}
     </group>

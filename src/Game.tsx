@@ -58,7 +58,7 @@ export default function Game() {
             <KatamariBall collectedObjects={collectedObjects} />
             <Ground />
             {/* <CollectibleObjects /> */}
-            <Words />
+            <Words collectedObjects={collectedObjects} />
             <ModelObject
               modelPath="/3d/gameboy/scene.gltf"
               position={[6, -2, 8]}
@@ -80,7 +80,7 @@ export default function Game() {
   );
 }
 
-function Words() {
+function Words({ collectedObjects }: { collectedObjects: React.RefObject<Map<string, CollectibleObject>> }) {
   return (
     <>
       <Word
@@ -89,6 +89,7 @@ function Words() {
         fontSize={0.7}
         id="intro1"
         directionAngle={0}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="Im Tommy"
@@ -96,6 +97,7 @@ function Words() {
         fontSize={1.3}
         id="intro2"
         directionAngle={0}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="html"
@@ -103,6 +105,7 @@ function Words() {
         fontSize={0.8}
         id="intro11"
         directionAngle={Math.PI * 1}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="CSS"
@@ -110,6 +113,7 @@ function Words() {
         fontSize={0.8}
         id="intro12"
         directionAngle={Math.PI * 1}
+        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
@@ -120,6 +124,7 @@ function Words() {
         depth={0.9}
         id="intro14"
         directionAngle={Math.PI * -0.5}
+        collectedObjects={collectedObjects}
       />
       {/* <Word
         text="vanilla"
@@ -136,6 +141,7 @@ function Words() {
         depth={1}
         id="intro19"
         directionAngle={Math.PI * -1}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -145,6 +151,7 @@ function Words() {
         depth={0.8}
         id="intro16"
         directionAngle={Math.PI * -1}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -154,6 +161,7 @@ function Words() {
         depth={0.9}
         id="intro17"
         directionAngle={Math.PI * -1.2}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -162,6 +170,7 @@ function Words() {
         fontSize={2.9}
         id="intro22"
         directionAngle={Math.PI * 0.5}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -171,6 +180,7 @@ function Words() {
         fontSize={1.6}
         depth={1}
         directionAngle={Math.PI * -1.0}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -180,6 +190,7 @@ function Words() {
         depth={1.2}
         id="intro21"
         directionAngle={Math.PI * -0.5}
+        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
@@ -191,6 +202,7 @@ function Words() {
         depth={1.1}
         id="intro5"
         directionAngle={0}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="Creative"
@@ -198,6 +210,7 @@ function Words() {
         fontSize={2.0}
         id="intro7"
         directionAngle={Math.PI * 0.5}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="Technologist"
@@ -205,6 +218,7 @@ function Words() {
         fontSize={3.2}
         id="intro8"
         directionAngle={Math.PI * 0.5}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="frontend"
@@ -213,6 +227,7 @@ function Words() {
         depth={0.9}
         id="intro9"
         directionAngle={Math.PI * -0.5}
+        collectedObjects={collectedObjects}
       />
       <Word
         text="fullstack"
@@ -220,6 +235,7 @@ function Words() {
         fontSize={2.0}
         id="intro10"
         directionAngle={Math.PI * -0.5}
+        collectedObjects={collectedObjects}
       />
 
       {/* 
@@ -239,6 +255,7 @@ function Words() {
         depth={1.0}
         id="intro20"
         directionAngle={Math.PI * -1.0}
+        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -247,6 +264,7 @@ function Words() {
         fontSize={1.3}
         id="intro9"
         directionAngle={Math.PI * -0.75}
+        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
