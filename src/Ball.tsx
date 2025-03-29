@@ -3,6 +3,7 @@ import {
   useRapier,
   RapierRigidBody,
   CollisionEnterHandler,
+  BallCollider,
 } from "@react-three/rapier";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
@@ -360,7 +361,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
           </group>
         );
       }
-    );
+    ) as React.ReactNode[];
   }, []);
 
   return (

@@ -113,7 +113,7 @@ export function Letter({
           char={char}
           fontSize={fontSize}
           color={color}
-          depth={depth}
+          depth={letterDepth}
           bevelEnabled={bevelEnabled}
           bevelThickness={bevelThickness}
           bevelSize={bevelSize}
