@@ -97,15 +97,26 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
     addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
 
     collectedObjects.current.set(userData.id, {
+      type: userData.type || "box",
+      ...userData,
+      // ...(userData.type === "letter" && {
+      //   char: userData.char,
+      //   fontSize: userData.fontSize,
+      //   color: userData.color,
+      //   bevelEnabled: userData.bevelEnabled,
+      //   bevelThickness: userData.bevelThickness,
+      //   bevelSize: userData.bevelSize,
+      //   bevelSegments: userData.bevelSegments,
+      //   curveSegments: userData.curveSegments,
+      // }),
+      // ...(userData.type === "model" && {
+      //   modelPath: userData.modelPath,
+      //   scale: userData.scale,
+      //   color: userData.color,
+      // }),
       position: attachPoint,
       rotation: relativeRotation,
       geometry: objectDimensions,
-      type: userData.type || "box",
-      ...(userData.type === "letter" && {
-        char: userData.char,
-        fontSize: userData.fontSize,
-        color: userData.color,
-      }),
     });
 
     otherBody.setEnabled(false);

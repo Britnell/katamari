@@ -1,6 +1,7 @@
 import { RefObject } from "react";
 import { CollectibleObject } from "../Game";
 import { LetterShape } from "./Letter";
+import { ModelShape } from "./ModelObject";
 
 interface CollectedItemsProps {
   collectedObjects: RefObject<Map<string, CollectibleObject>>;
@@ -40,7 +41,20 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
               curveSegments={curveSegments}
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
-              scale={[0.8, 0.8, 0.8]} // Makes collected objects 20% smaller to fit better on the ball
+            />
+          );
+        }
+
+        if (type === "model") {
+          const { modelPath, scale } = object;
+
+          return (
+            <ModelShape
+              key={`collected-${id}`}
+              modelPath={modelPath ?? ""}
+              scale={scale}
+              position={[position.x, position.y, position.z]}
+              quaternion={rotation}
             />
           );
         }
@@ -50,12 +64,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
             key={`collected-${id}`}
             position={[position.x, position.y, position.z]}
           >
-            <mesh
-              position={[0, 0, 0]}
-              quaternion={rotation}
-              scale={[1, 1, 1]}
-              castShadow
-            >
+            <mesh position={[0, 0, 0]} quaternion={rotation} castShadow>
               <boxGeometry args={geometry} />
               <meshStandardMaterial color="orange" />
             </mesh>

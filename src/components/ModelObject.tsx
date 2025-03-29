@@ -3,6 +3,9 @@ import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useGLTF, Clone } from "@react-three/drei";
 import * as THREE from "three";
 
+useGLTF.preload("/3d/gameboy/scene.gltf");
+useGLTF.preload("/3d/diskette/scene.gltf");
+
 interface ModelObjectProps {
   modelPath: string;
   position: [number, number, number];
@@ -90,26 +93,47 @@ export function ModelObject({
         isCollectable: true,
         setCollected: setIsCollected,
         type: "model",
+        modelPath,
+        scale,
+        rotation,
       }}
       sensor={isCollected}
     >
       {!isCollected && (
-        <group ref={modelRef} rotation={rotation} scale={[scale, scale, scale]}>
-          <Clone object={scene} castShadow receiveShadow>
-            {color && (
-              <meshStandardMaterial
-                color={color}
-                roughness={0.8}
-                metalness={0.1}
-                attach="material"
-              />
-            )}
-          </Clone>
+        <group ref={modelRef}>
+          <ModelShape modelPath={modelPath} scale={scale} rotation={rotation} />
         </group>
       )}
     </RigidBody>
   );
 }
 
-useGLTF.preload("/3d/gameboy/scene.gltf");
-useGLTF.preload("/3d/diskette/scene.gltf");
+interface ModelShapeProps {
+  modelPath: string;
+  scale?: number;
+  rotation?: [number, number, number];
+  position?: [number, number, number];
+  quaternion?: THREE.Quaternion;
+  castShadow?: boolean;
+  receiveShadow?: boolean;
+}
+
+export function ModelShape({
+  modelPath,
+  scale = 1,
+  rotation = [0, 0, 0],
+  position,
+  quaternion,
+}: ModelShapeProps) {
+  const { scene } = useGLTF(modelPath);
+
+  return (
+    <group position={position} quaternion={quaternion}>
+      <group rotation={rotation} scale={[scale, scale, scale]}>
+        <Clone object={scene} castShadow={true}>
+          <meshStandardMaterial attach="material" />
+        </Clone>
+      </group>
+    </group>
+  );
+}

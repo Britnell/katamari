@@ -69,7 +69,7 @@ export default function Game() {
             <ModelObject
               modelPath="/3d/diskette/scene.gltf"
               position={[4, 0, 6]}
-              scale={1}
+              scale={0.8}
               rotation={[0, pi * 0.2, 0]}
               id="diskette"
             />
@@ -322,6 +322,9 @@ export type UserData = {
   bevelSize?: number;
   bevelSegments?: number;
   curveSegments?: number;
+  modelPath?: string;
+  scale?: number;
+  rotation?: [number, number, number];
 };
 
 export const pi = Math.PI;
@@ -331,6 +334,7 @@ export type CollectibleObject = {
   rotation: THREE.Quaternion;
   geometry: [number, number, number];
   type: string;
+  // Letter-specific properties
   char?: string;
   fontSize?: number;
   color?: string;
@@ -339,4 +343,7 @@ export type CollectibleObject = {
   bevelSize?: number;
   bevelSegments?: number;
   curveSegments?: number;
+  // Model-specific properties
+  modelPath?: string;
+  scale?: number;
 };
