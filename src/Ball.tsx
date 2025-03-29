@@ -65,57 +65,53 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
     }
   }
 
-  const onCollision: CollisionEnterHandler = useCallback(
-    ({ other }) => {
-      const otherBody = other.rigidBody;
-      if (!otherBody) return;
+  function onCollision(otherBody: RapierRigidBody | undefined): void {
+    if (!otherBody) return;
 
-      const userData = otherBody.userData as UserData;
-      if (!userData?.isCollectable) return;
-      if (collectedObjects.current.has(userData.id)) return;
-      if (!isBiggerThanObj(userData, virtualRadius)) return;
-      if (!ballRef.current) return;
+    const userData = otherBody.userData as UserData;
+    if (!userData?.isCollectable) return;
+    if (collectedObjects.current.has(userData.id)) return;
+    if (!isBiggerThanObj(userData, virtualRadius)) return;
+    if (!ballRef.current) return;
 
-      const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
-      const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
-      setVirtualRadius(newRadius);
-      const newMass = 3 * (newRadius / initialRadius) ** 3;
-      setTotalMass(newMass);
+    const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
+    const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
+    setVirtualRadius(newRadius);
+    const newMass = 3 * (newRadius / initialRadius) ** 3;
+    setTotalMass(newMass);
 
-      const attachPoint = calcAttachmentPoint(
-        otherBody,
-        ballRef.current,
-        virtualRadius
-      );
+    const attachPoint = calcAttachmentPoint(
+      otherBody,
+      ballRef.current,
+      virtualRadius
+    );
 
-      const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
+    const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
 
-      const objectDimensions: [number, number, number] = [
-        userData.width,
-        userData.height,
-        userData.depth,
-      ];
+    const objectDimensions: [number, number, number] = [
+      userData.width,
+      userData.height,
+      userData.depth,
+    ];
 
-      addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
+    addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
 
-      collectedObjects.current.set(userData.id, {
-        position: attachPoint,
-        rotation: relativeRotation,
-        geometry: objectDimensions,
-        type: userData.type || "box",
-        ...(userData.type === "letter" && {
-          char: userData.char,
-          fontSize: userData.fontSize,
-          color: userData.color,
-        }),
-      });
+    collectedObjects.current.set(userData.id, {
+      position: attachPoint,
+      rotation: relativeRotation,
+      geometry: objectDimensions,
+      type: userData.type || "box",
+      ...(userData.type === "letter" && {
+        char: userData.char,
+        fontSize: userData.fontSize,
+        color: userData.color,
+      }),
+    });
 
-      otherBody.setEnabled(false);
+    otherBody.setEnabled(false);
 
-      userData.setCollected && userData.setCollected(true);
-    },
-    [virtualRadius, setVirtualRadius, setTotalMass, addCompoundCollider]
-  );
+    userData.setCollected && userData.setCollected(true);
+  }
 
   return (
     <>
@@ -128,7 +124,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
         angularDamping={0.5}
         position={[0, initialRadius, 0]}
         mass={totalMass}
-        onCollisionEnter={onCollision}
+        onCollisionEnter={({ other }) => onCollision(other.rigidBody)}
         canSleep={false}
       >
         <group>
