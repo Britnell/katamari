@@ -92,7 +92,7 @@ function Words({
         position={[0, 0, 3]}
         fontSize={0.7}
         id="intro1"
-        directionAngle={0}
+        wordAngle={0}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -100,7 +100,7 @@ function Words({
         position={[0, 0, 7]}
         fontSize={1.3}
         id="intro2"
-        directionAngle={0}
+        wordAngle={0}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -108,7 +108,7 @@ function Words({
         position={[4, 0, 1]}
         fontSize={0.8}
         id="intro11"
-        directionAngle={Math.PI * 1}
+        wordAngle={Math.PI * 1}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -116,7 +116,7 @@ function Words({
         position={[4, 0, -1.5]}
         fontSize={0.8}
         id="intro12"
-        directionAngle={Math.PI * 1}
+        wordAngle={Math.PI * 1}
         collectedObjects={collectedObjects}
       />
 
@@ -127,7 +127,7 @@ function Words({
         fontSize={1.0}
         depth={0.9}
         id="intro14"
-        directionAngle={Math.PI * -0.5}
+        wordAngle={Math.PI * -0.5}
         collectedObjects={collectedObjects}
       />
       {/* <Word
@@ -135,7 +135,7 @@ function Words({
         position={[0, 0, -4]}
         fontSize={1.2}
         id="intro15"
-        directionAngle={Math.PI * -1}
+        wordAngle={Math.PI * -1}
       /> */}
 
       <Word
@@ -144,7 +144,7 @@ function Words({
         fontSize={1.6}
         depth={1}
         id="intro19"
-        directionAngle={Math.PI * -1}
+        wordAngle={Math.PI * -1}
         collectedObjects={collectedObjects}
       />
 
@@ -154,7 +154,7 @@ function Words({
         fontSize={1.6}
         depth={0.8}
         id="intro16"
-        directionAngle={Math.PI * -1}
+        wordAngle={Math.PI * -1}
         collectedObjects={collectedObjects}
       />
 
@@ -164,7 +164,7 @@ function Words({
         fontSize={1.2}
         depth={0.9}
         id="intro17"
-        directionAngle={Math.PI * -1.2}
+        wordAngle={Math.PI * -1.2}
         collectedObjects={collectedObjects}
       />
 
@@ -173,7 +173,7 @@ function Words({
         position={[9, 0, -10]}
         fontSize={2.9}
         id="intro22"
-        directionAngle={Math.PI * 0.5}
+        wordAngle={Math.PI * 0.5}
         collectedObjects={collectedObjects}
       />
 
@@ -183,7 +183,7 @@ function Words({
         position={[-1, 0, -7]}
         fontSize={1.6}
         depth={1}
-        directionAngle={Math.PI * -1.0}
+        wordAngle={Math.PI * -1.0}
         collectedObjects={collectedObjects}
       />
 
@@ -193,7 +193,7 @@ function Words({
         fontSize={3.0}
         depth={1.2}
         id="intro21"
-        directionAngle={Math.PI * -0.5}
+        wordAngle={Math.PI * -0.5}
         collectedObjects={collectedObjects}
       />
 
@@ -205,7 +205,7 @@ function Words({
         fontSize={2.3}
         depth={1.1}
         id="intro5"
-        directionAngle={0}
+        wordAngle={0}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -213,7 +213,7 @@ function Words({
         position={[8, 0, 2]}
         fontSize={2.0}
         id="intro7"
-        directionAngle={Math.PI * 0.5}
+        wordAngle={Math.PI * 0.5}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -221,7 +221,7 @@ function Words({
         position={[16, 0, 12]}
         fontSize={3.2}
         id="intro8"
-        directionAngle={Math.PI * 0.5}
+        wordAngle={Math.PI * 0.5}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -230,7 +230,7 @@ function Words({
         fontSize={1.3}
         depth={0.9}
         id="intro9"
-        directionAngle={Math.PI * -0.5}
+        wordAngle={Math.PI * -0.5}
         collectedObjects={collectedObjects}
       />
       <Word
@@ -239,7 +239,7 @@ function Words({
         fontSize={2.0}
         id="intro10"
         depth={0.9}
-        directionAngle={Math.PI * -0.5}
+        wordAngle={Math.PI * -0.5}
         collectedObjects={collectedObjects}
       />
 
@@ -249,7 +249,7 @@ function Words({
         fontSize={1.3}
         depth={1.0}
         id="intro20"
-        directionAngle={Math.PI * -1.0}
+        wordAngle={Math.PI * -1.0}
         collectedObjects={collectedObjects}
       />
 
@@ -258,7 +258,7 @@ function Words({
         position={[-8, 0, -13]}
         fontSize={1.3}
         id="intro9"
-        directionAngle={Math.PI * -0.75}
+        wordAngle={Math.PI * -0.75}
         collectedObjects={collectedObjects}
       />
 

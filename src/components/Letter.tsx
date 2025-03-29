@@ -133,7 +133,7 @@ interface WordProps {
   color?: string;
   depth?: number;
   id?: string;
-  directionAngle?: number;
+  wordAngle?: number;
   spacing?: number;
   collectedObjects?: any;
 }
@@ -145,68 +145,44 @@ export function Word({
   color = "#777",
   depth = 1,
   id = "w-",
-  directionAngle = 0,
-  spacing = 0,
+  wordAngle = 0,
+  spacing = 1,
   collectedObjects,
 }: WordProps) {
-  const [letterWidths, setLetterWidths] = useState<number[]>([]);
-  const groupRef = useRef(null);
   const chars = text.split("");
-  const letterSpacing = fontSize / 8 + spacing;
+  const letterSpacing = fontSize * 0.125 * spacing;
+  const letterWidth = fontSize * 0.8;
 
-  useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.font = `bold ${100}px Arial`;
-      const widths = chars.map((char) => {
-        const metrics = ctx.measureText(char);
-        return (metrics.width * fontSize) / 100;
-      });
-      setLetterWidths(widths);
-    }
-  }, [text, fontSize]);
-
-  if (letterWidths.length === 0) {
-    return null;
-  }
-
-  const letterPositions: [number, number, number][] = [];
-  let currentX = 0;
-
-  const totalWidth = letterWidths.reduce((sum, width, index) => {
-    if (index < letterWidths.length - 1) {
-      return sum + width + letterSpacing;
-    }
-    return sum + width;
-  }, 0);
-
-  currentX = -totalWidth / 2;
-
-  for (let i = 0; i < chars.length; i++) {
-    letterPositions.push([currentX + letterWidths[i] / 2, 0, 0]);
-    currentX += letterWidths[i] + letterSpacing;
-  }
-
+  const calcPos = (index: number) => {
+    const pos = new THREE.Vector3(...position);
+    const directionVector = new THREE.Vector3(
+      Math.cos(wordAngle),
+      0,
+      Math.sin(wordAngle)
+    );
+    pos.add(
+      directionVector.multiplyScalar(
+        (chars.length / 2 - index) * (letterWidth + letterSpacing)
+      )
+    );
+    return [pos.x, pos.y, pos.z] as [number, number, number];
+  };
   return (
-    <group
-      position={position}
-      rotation={[0, directionAngle + Math.PI, 0]}
-      ref={groupRef}
-    >
+    <>
       {chars.map((char, index) => (
         <Letter
           key={`${id}-${index}`}
           id={`${id}-${index}`}
           char={char}
-          position={letterPositions[index]}
+          position={calcPos(index)}
           fontSize={fontSize}
           color={color}
           depth={depth}
+          rotation={[0, wordAngle + Math.PI, 0]}
           collectedObjects={collectedObjects}
         />
       ))}
-    </group>
+    </>
   );
 }
 
@@ -252,7 +228,7 @@ export function LetterShape({
         <group rotation={rotation}>
           <Text3D
             ref={textRef}
-            font="/fonts/Roboto_Regular.json"
+            font="/fonts/Courier_Prime_Regular.json"
             size={fontSize}
             height={letterDepth}
             curveSegments={curveSegments}
