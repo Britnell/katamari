@@ -5,12 +5,12 @@ import {
   CollisionEnterHandler,
   BallCollider,
 } from "@react-three/rapier";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, RefObject } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useKeyboardControls } from "@react-three/drei";
 import { CollectibleObject, UserData } from "./Game";
-import { LetterShape } from "./components/Letter";
+import { CollectedItems } from "./components/CollectedItems";
 
 const initialRadius = 0.5;
 const BASE_CAMERA_HEIGHT = 1.6;
@@ -306,64 +306,6 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
     [collectObject, virtualRadius]
   );
 
-  const renderCollectedObjects = useCallback(() => {
-    if (!ballRef.current) return null;
-
-    return Array.from(collectedObjects.current.entries()).map(
-      ([id, object]) => {
-        const { position, rotation, geometry, type } = object;
-
-        if (type === "letter") {
-          const {
-            char,
-            fontSize = 1,
-            color = "white",
-            bevelEnabled = true,
-            bevelThickness = 0.03,
-            bevelSize = 0.02,
-            bevelSegments = 4,
-            curveSegments = 12,
-          } = object;
-
-          return (
-            <LetterShape
-              key={`collected-${id}`}
-              char={char || ""}
-              fontSize={fontSize}
-              color={color || "white"}
-              depth={geometry[2] / fontSize}
-              bevelEnabled={bevelEnabled}
-              bevelThickness={bevelThickness}
-              bevelSize={bevelSize}
-              bevelSegments={bevelSegments}
-              curveSegments={curveSegments}
-              position={[position.x, position.y, position.z]}
-              quaternion={rotation}
-              scale={[0.8, 0.8, 0.8]} // Makes collected objects 20% smaller to fit better on the ball
-            />
-          );
-        }
-
-        return (
-          <group
-            key={`collected-${id}`}
-            position={[position.x, position.y, position.z]}
-          >
-            <mesh
-              position={[0, 0, 0]}
-              quaternion={rotation}
-              scale={[1, 1, 1]}
-              castShadow
-            >
-              <boxGeometry args={geometry} />
-              <meshStandardMaterial color="orange" />
-            </mesh>
-          </group>
-        );
-      }
-    ) as React.ReactNode[];
-  }, []);
-
   return (
     <>
       <RigidBody
@@ -402,7 +344,7 @@ export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
           />
         </mesh>
 
-        {renderCollectedObjects()}
+        <CollectedItems collectedObjects={collectedObjects} />
       </RigidBody>
     </>
   );
