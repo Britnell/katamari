@@ -112,3 +112,4 @@ export function ModelObject({
 }
 
 useGLTF.preload("/3d/gameboy/scene.gltf");
+useGLTF.preload("/3d/diskette/scene.gltf");

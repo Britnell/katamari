@@ -67,6 +67,13 @@ export default function Game() {
               rotation={[0, pi * -0.3, 0]}
               id="gameboy"
             />
+            <ModelObject
+              modelPath="/3d/diskette/scene.gltf"
+              position={[4, 0, 6]}
+              scale={1}
+              rotation={[0, pi * 0.2, 0]}
+              id="diskette"
+            />
           </Physics>
         </Canvas>
       </KeyboardControls>
