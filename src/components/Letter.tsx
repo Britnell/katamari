@@ -4,6 +4,68 @@ import { Text3D, Center } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { pi } from "../Game";
 
+interface WordProps {
+  text: string;
+  position: [number, number, number];
+  fontSize?: number;
+  color?: string;
+  depth?: number;
+  id?: string;
+  wordAngle?: number;
+  spacing?: number;
+  collectedObjects?: any;
+}
+
+export function Word({
+  text,
+  position,
+  fontSize = 1,
+  color = "#777",
+  depth = 1,
+  id = "w-",
+  wordAngle = 0,
+  spacing = 1,
+  collectedObjects,
+}: WordProps) {
+  const chars = text.split("");
+  const letterSpacing = fontSize * 0.125 * spacing;
+  const letterWidth = fontSize * 0.8;
+  wordAngle += pi;
+
+  const calcPos = (index: number) => {
+    const pos = new THREE.Vector3(...position);
+    const directionVector = new THREE.Vector3(
+      Math.cos(wordAngle),
+      0,
+      Math.sin(wordAngle)
+    );
+    pos.add(
+      directionVector.multiplyScalar(
+        (index - chars.length / 2) * (letterWidth + letterSpacing)
+      )
+    );
+    return [pos.x, pos.y, pos.z] as [number, number, number];
+  };
+
+  return (
+    <>
+      {chars.map((char, index) => (
+        <Letter
+          key={`${id}-${index}`}
+          id={`${id}-${index}`}
+          char={char}
+          position={calcPos(index)}
+          rotation={[0, -wordAngle, 0]}
+          fontSize={fontSize}
+          color={color}
+          depth={depth}
+          collectedObjects={collectedObjects}
+        />
+      ))}
+    </>
+  );
+}
+
 interface LetterProps {
   char: string;
   position: [number, number, number];
@@ -104,68 +166,6 @@ export function Letter({
         />
       )}
     </RigidBody>
-  );
-}
-
-interface WordProps {
-  text: string;
-  position: [number, number, number];
-  fontSize?: number;
-  color?: string;
-  depth?: number;
-  id?: string;
-  wordAngle?: number;
-  spacing?: number;
-  collectedObjects?: any;
-}
-
-export function Word({
-  text,
-  position,
-  fontSize = 1,
-  color = "#777",
-  depth = 1,
-  id = "w-",
-  wordAngle = 0,
-  spacing = 1,
-  collectedObjects,
-}: WordProps) {
-  const chars = text.split("");
-  const letterSpacing = fontSize * 0.125 * spacing;
-  const letterWidth = fontSize * 0.8;
-  wordAngle += pi;
-
-  const calcPos = (index: number) => {
-    const pos = new THREE.Vector3(...position);
-    const directionVector = new THREE.Vector3(
-      Math.cos(wordAngle),
-      0,
-      Math.sin(wordAngle)
-    );
-    pos.add(
-      directionVector.multiplyScalar(
-        (index - chars.length / 2) * (letterWidth + letterSpacing)
-      )
-    );
-    return [pos.x, pos.y, pos.z] as [number, number, number];
-  };
-
-  return (
-    <>
-      {chars.map((char, index) => (
-        <Letter
-          key={`${id}-${index}`}
-          id={`${id}-${index}`}
-          char={char}
-          position={calcPos(index)}
-          rotation={[0, -wordAngle, 0]}
-          fontSize={fontSize}
-          color={color}
-          depth={depth}
-          collectedObjects={collectedObjects}
-        />
-      ))}
-    </>
   );
 }
 
