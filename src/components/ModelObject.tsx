@@ -43,7 +43,6 @@ export function ModelObject({
       const box = new THREE.Box3().setFromObject(clonedScene);
       const size = new THREE.Vector3();
       box.getSize(size);
-
       const center = new THREE.Vector3();
       box.getCenter(center);
 

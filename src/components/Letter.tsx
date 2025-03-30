@@ -1,8 +1,10 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
-import { Text3D, Center } from "@react-three/drei";
+import { Text3D, Center, useFont } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { pi } from "../Game";
+
+const fontUrl = "/fonts/Courier_Prime_Bold.json";
 
 interface WordProps {
   text: string;
@@ -86,6 +88,8 @@ export function Letter({
   id,
   rotation = [0, 0, 0],
 }: LetterProps) {
+  const letterDepth = fontSize * 0.15 * depth;
+  const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
   const [dimensions, setDimensions] = useState<{
@@ -93,36 +97,38 @@ export function Letter({
     height: number;
     depth: number;
   }>({
-    width: 0,
-    height: 0,
-    depth: 0,
+    width: fontSize,
+    height: fontSize,
+    depth: letterDepth,
   });
 
-  const letterDepth = fontSize * 0.15 * depth;
+  type Font = {
+    ascender: number;
+    descender: number;
+    resolution: number;
+    glyphs: Record<string, { x_max: number; x_min: number }>;
+  };
 
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.font = `bold ${100}px monospace`;
-      const metrics = ctx.measureText(char);
-      const height = 100;
-      setDimensions({
-        width: (metrics.width * fontSize) / 100,
-        height: (height * fontSize) / 100,
-        depth: letterDepth,
-      });
-    }
-  }, [char, fontSize, depth]);
+    const data = font.data as any as Font;
+    const glyph = data.glyphs[char ?? "x"];
+    if (!glyph) return;
+    const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
+    const height =
+      ((data.ascender - data.descender) / data.resolution) * fontSize;
 
-  const objectVolume = useMemo(
-    () => dimensions.width * dimensions.height * dimensions.depth,
-    [dimensions]
-  );
+    setDimensions({
+      width,
+      height,
+      depth: letterDepth,
+    });
+  }, [font, char, fontSize, letterDepth]);
 
-  const maxDimension = useMemo(
-    () => Math.max(dimensions.width, dimensions.height, dimensions.depth),
-    [dimensions]
+  const objectVolume = dimensions.width * dimensions.height * dimensions.depth;
+  const maxDimension = Math.max(
+    dimensions.width,
+    dimensions.height,
+    dimensions.depth
   );
 
   const adjustedPosition = useMemo(() => {
@@ -199,7 +205,7 @@ export function LetterShape({
         <group rotation={rotation}>
           <Text3D
             ref={textRef}
-            font="/fonts/Courier_Prime_Bold.json"
+            font={fontUrl}
             size={fontSize}
             height={letterDepth}
             bevelEnabled={true}
