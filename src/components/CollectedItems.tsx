@@ -2,7 +2,6 @@ import { RefObject } from "react";
 import { CollectibleObject } from "../Game";
 import { LetterShape } from "./Letter";
 import { ModelShape } from "./ModelObject";
-import * as THREE from "three";
 
 interface CollectedItemsProps {
   collectedObjects: RefObject<Map<string, CollectibleObject>>;
@@ -24,17 +23,22 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
             initialRotation,
           } = object;
 
-          let combinedQuaternion = rotation.clone();
           if (initialRotation) {
-            const initialQuat = new THREE.Quaternion().setFromEuler(
-              new THREE.Euler(
-                initialRotation[0],
-                initialRotation[1],
-                initialRotation[2],
-                "XYZ"
-              )
+            return (
+              <group
+                key={`collected-${id}`}
+                position={[position.x, position.y, position.z]}
+                quaternion={rotation}
+              >
+                <LetterShape
+                  char={char || ""}
+                  fontSize={fontSize}
+                  color={color || "white"}
+                  depth={geometry[2] / fontSize}
+                  rotation={initialRotation}
+                />
+              </group>
             );
-            combinedQuaternion = initialQuat.clone().multiply(rotation);
           }
 
           return (
@@ -45,7 +49,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
               color={color || "white"}
               depth={geometry[2] / fontSize}
               position={[position.x, position.y, position.z]}
-              quaternion={combinedQuaternion}
+              quaternion={rotation}
             />
           );
         }
@@ -57,24 +61,14 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
             <ModelShape
               key={`collected-${id}`}
               modelPath={modelPath ?? ""}
-              scale={scale}
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
+              scale={scale}
             />
           );
         }
 
-        return (
-          <group
-            key={`collected-${id}`}
-            position={[position.x, position.y, position.z]}
-          >
-            <mesh position={[0, 0, 0]} quaternion={rotation} castShadow>
-              <boxGeometry args={geometry} />
-              <meshStandardMaterial color="orange" />
-            </mesh>
-          </group>
-        );
+        return null;
       })}
     </>
   );

@@ -172,13 +172,13 @@ function createBallTexture() {
   return new THREE.CanvasTexture(canvas);
 }
 
-const calcRelativeRotation = (
+export const calcRelativeRotation = (
   ballObj: RapierRigidBody,
   obj: RapierRigidBody
 ) => {
   const ballRot = ballObj.rotation();
   const objRot = obj.rotation();
-  // const userData = obj.userData as UserData;
+  const userData = obj.userData as UserData;
 
   const ballQuaternion = new THREE.Quaternion(
     ballRot.x,
@@ -186,6 +186,7 @@ const calcRelativeRotation = (
     ballRot.z,
     ballRot.w
   );
+
   const objectQuaternion = new THREE.Quaternion(
     objRot.x,
     objRot.y,
@@ -193,22 +194,19 @@ const calcRelativeRotation = (
     objRot.w
   );
 
-  // if (userData.initialRotation && userData.type === "letter") {
-  //   const initialEuler = new THREE.Euler(
-  //     userData.initialRotation[0],
-  //     userData.initialRotation[1],
-  //     userData.initialRotation[2],
-  //     "XYZ" // Ensure consistent rotation order
-  //   );
-  //   const initialQuaternion = new THREE.Quaternion().setFromEuler(initialEuler);
-  //   const combinedQuaternion = objectQuaternion.clone();
-  //   combinedQuaternion.premultiply(initialQuaternion);
-  //   objectQuaternion.copy(combinedQuaternion);
-  // }
-
+  if (userData.initialRotation) {
+    const initialEuler = new THREE.Euler(
+      userData.initialRotation[0],
+      userData.initialRotation[1],
+      userData.initialRotation[2],
+      "XYZ"
+    );
+    const initialQuaternion = new THREE.Quaternion().setFromEuler(initialEuler);
+    const inverseInitialQuaternion = initialQuaternion.clone().invert();
+    objectQuaternion.multiply(inverseInitialQuaternion);
+  }
   const inverseRotation = ballQuaternion.clone().invert();
   const relativeRotation = objectQuaternion.clone().multiply(inverseRotation);
-
   return relativeRotation;
 };
 

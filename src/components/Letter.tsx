@@ -190,7 +190,6 @@ interface DrawLetterProps {
   rotation?: [number, number, number];
   position?: [number, number, number];
   quaternion?: THREE.Quaternion;
-  scale?: [number, number, number];
 }
 
 export function LetterShape({
@@ -201,7 +200,6 @@ export function LetterShape({
   rotation = [0, 0, 0],
   position,
   quaternion,
-  scale = [1, 1, 1],
 }: DrawLetterProps) {
   const textRef = useRef<THREE.Mesh>(null);
   const letterDepth = fontSize * depth;
@@ -211,7 +209,6 @@ export function LetterShape({
       position={position}
       quaternion={quaternion}
       rotation={quaternion ? undefined : rotation}
-      scale={scale}
     >
       <Center>
         <Text3D
