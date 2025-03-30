@@ -1,0 +1,11 @@
+Model Information:
+* title:	Gameboy
+* source:	https://sketchfab.com/3d-models/gameboy-e5c4165dd8bf4acc876505a097f6794e
+* author:	Survi (https://sketchfab.com/survi_6756)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Gameboy" (https://sketchfab.com/3d-models/gameboy-e5c4165dd8bf4acc876505a097f6794e) by Survi (https://sketchfab.com/survi_6756) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
