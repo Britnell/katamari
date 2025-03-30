@@ -62,10 +62,40 @@ export default function Game() {
             />
             <ModelObject
               modelPath="/3d/diskette/scene.gltf"
-              position={[4, 0, 5]}
+              position={[-10, 0, 6]}
               scale={0.8}
               rotation={[pi * -0.5, pi * 0, 0]}
-              id="diskette"
+              id="floppy"
+            />
+
+            <ModelObject
+              modelPath="/3d/minecraft_poppy_flower/scene.gltf"
+              position={[5, 0, 3]}
+              scale={1}
+              rotation={[0, 0, 0]}
+              id="poppy1"
+            />
+            <ModelObject
+              modelPath="/3d/minecraft_poppy_flower/scene.gltf"
+              position={[-5, 0, -5]}
+              scale={1.2}
+              rotation={[0, 0, 0]}
+              id="poppy2"
+            />
+            <ModelObject
+              modelPath="/3d/retro_computer/scene.gltf"
+              position={[9, 0, 11]}
+              scale={2.0}
+              rotation={[0, pi * 1.0, 0]}
+              id="computer"
+            />
+
+            <ModelObject
+              modelPath="/3d/foliage/scene.gltf"
+              position={[2, 10, 2]}
+              scale={1.0}
+              rotation={[0, pi * 1.0, 0]}
+              id="computer"
             />
           </Physics>
         </Canvas>
@@ -86,7 +116,7 @@ function Words() {
       />
       <Word
         text="Im Tommy"
-        position={[0, 0, 7]}
+        position={[1, 0, 7]}
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
@@ -110,11 +140,21 @@ function Words() {
       {/* ---------------- */}
       <Word
         text="javascript"
-        position={[-3.3, 0, 0]}
-        fontSize={0.7}
+        position={[-3.5, 0, 1]}
+        fontSize={0.9}
         depth={0.9}
         id="intro14"
         wordAngle={Math.PI * 0.5}
+        letterAngle={pi * 0.1}
+      />
+
+      <Word
+        text="frontend"
+        position={[-6, 0, 6]}
+        fontSize={1.1}
+        depth={0.9}
+        id="intro9"
+        wordAngle={Math.PI * -0.5}
       />
       {/* <Word
         text="vanilla"
@@ -145,10 +185,11 @@ function Words() {
       <Word
         text="React"
         position={[4, 0, -8]}
-        fontSize={1.2}
-        depth={0.9}
+        fontSize={1.0}
+        // depth={0.9}
         id="intro17"
-        wordAngle={Math.PI * -1.2}
+        wordAngle={Math.PI * -1.3}
+        letterAngle={pi * -0.2}
       />
 
       <Word
@@ -202,16 +243,8 @@ function Words() {
         wordAngle={Math.PI * 0.5}
       />
       <Word
-        text="frontend"
-        position={[-6, 0, 6]}
-        fontSize={1.3}
-        depth={0.9}
-        id="intro9"
-        wordAngle={Math.PI * -0.5}
-      />
-      <Word
         text="fullstack"
-        position={[-7, 0, -3]}
+        position={[-8, 0, -3]}
         fontSize={2.0}
         id="intro10"
         depth={0.9}
@@ -228,11 +261,11 @@ function Words() {
       />
 
       <Word
-        text="ally"
+        text="a11y"
         position={[-8, 0, -13]}
         fontSize={1.3}
         id="intro23"
-        wordAngle={Math.PI * -0.75}
+        wordAngle={Math.PI * 0.75}
       />
 
       {/* ---------------- */}
