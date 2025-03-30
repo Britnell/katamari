@@ -15,7 +15,6 @@ interface WordProps {
   id?: string;
   wordAngle?: number;
   spacing?: number;
-  collectedObjects?: any;
 }
 
 export function Word({
@@ -27,7 +26,6 @@ export function Word({
   id = "w-",
   wordAngle = 0,
   spacing = 1,
-  collectedObjects,
 }: WordProps) {
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
@@ -35,7 +33,11 @@ export function Word({
   wordAngle += pi;
 
   const calcPos = (index: number) => {
-    const pos = new THREE.Vector3(...position);
+    const pos = new THREE.Vector3(
+      position[0],
+      position[1] - fontSize * 0.8,
+      position[2]
+    );
     const directionVector = new THREE.Vector3(
       Math.cos(wordAngle),
       0,
@@ -61,7 +63,6 @@ export function Word({
           fontSize={fontSize}
           color={color}
           depth={depth}
-          collectedObjects={collectedObjects}
         />
       ))}
     </>
@@ -76,7 +77,6 @@ interface LetterProps {
   depth?: number;
   id: string;
   rotation?: [number, number, number];
-  collectedObjects?: any;
 }
 
 export function Letter({
