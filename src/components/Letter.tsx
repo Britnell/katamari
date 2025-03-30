@@ -4,7 +4,7 @@ import { Text3D, Center, useFont } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { pi } from "../Game";
 
-const fontUrl = "/fonts/Courier_Prime_Bold.json";
+const fontUrl = "/fonts/Roboto Slab_Regular.json";
 
 interface WordProps {
   text: string;

@@ -11,6 +11,6 @@
 
 fonts
 - https://gero3.github.io/facetype.js/
-  - `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`
+  - `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ?!&/`
 
   
