@@ -201,7 +201,6 @@ interface DrawLetterProps {
   position?: [number, number, number];
   quaternion?: THREE.Quaternion;
   scale?: [number, number, number];
-  castShadow?: boolean;
 }
 
 export function LetterShape({
@@ -218,7 +217,6 @@ export function LetterShape({
   position,
   quaternion,
   scale = [1, 1, 1],
-  castShadow = true,
 }: DrawLetterProps) {
   const textRef = useRef<THREE.Mesh>(null);
   const letterDepth = fontSize * depth;
@@ -237,10 +235,10 @@ export function LetterShape({
             bevelThickness={bevelThickness}
             bevelSize={bevelSize}
             bevelSegments={bevelSegments}
-            castShadow={castShadow}
+            castShadow
           >
             {char}
-            <meshStandardMaterial color={color} castShadow={castShadow} />
+            <meshStandardMaterial color={color} />
           </Text3D>
         </group>
       </Center>

@@ -130,7 +130,7 @@ export function ModelShape({
   return (
     <group position={position} quaternion={quaternion}>
       <group rotation={rotation} scale={[scale, scale, scale]}>
-        <Clone object={scene} castShadow={true}>
+        <Clone object={scene} castShadow>
           <meshStandardMaterial attach="material" />
         </Clone>
       </group>
