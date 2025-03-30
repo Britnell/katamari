@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useGLTF, Clone } from "@react-three/drei";
+import { useGLTF, Clone, Center } from "@react-three/drei";
 import * as THREE from "three";
 
 useGLTF.preload("/3d/gameboy/scene.gltf");
@@ -94,16 +94,11 @@ export function ModelObject({
         type: "model",
         modelPath,
         scale,
-        rotation,
         center: dimensions.center,
       }}
       sensor={isCollected}
     >
-      {!isCollected && (
-        <group>
-          <ModelShape modelPath={modelPath} scale={scale} />
-        </group>
-      )}
+      {!isCollected && <ModelShape modelPath={modelPath} scale={scale} />}
     </RigidBody>
   );
 }
@@ -131,11 +126,11 @@ export function ModelShape({
       quaternion={quaternion}
       rotation={quaternion ? undefined : rotation}
     >
-      <group scale={[scale, scale, scale]}>
+      <Center scale={[scale, scale, scale]}>
         <Clone object={scene} castShadow>
           <meshStandardMaterial attach="material" />
         </Clone>
-      </group>
+      </Center>
     </group>
   );
 }

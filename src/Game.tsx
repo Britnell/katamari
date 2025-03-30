@@ -61,8 +61,8 @@ export default function Game() {
             <Words collectedObjects={collectedObjects} />
             <ModelObject
               modelPath="/3d/gameboy/scene.gltf"
-              position={[6, -2, 8]}
-              scale={0.5}
+              position={[6, -1, 8]}
+              scale={0.6}
               rotation={[0, pi * -0.3, 0]}
               id="gameboy"
             />
@@ -257,7 +257,7 @@ function Words({
         text="ally"
         position={[-8, 0, -13]}
         fontSize={1.3}
-        id="intro9"
+        id="intro23"
         wordAngle={Math.PI * -0.75}
         collectedObjects={collectedObjects}
       />

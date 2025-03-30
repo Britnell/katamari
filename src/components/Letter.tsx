@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Text3D, Center } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
+import { pi } from "../Game";
 
 interface LetterProps {
   char: string;
@@ -132,6 +133,7 @@ export function Word({
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
   const letterWidth = fontSize * 0.8;
+  wordAngle += pi;
 
   const calcPos = (index: number) => {
     const pos = new THREE.Vector3(...position);
@@ -142,11 +144,12 @@ export function Word({
     );
     pos.add(
       directionVector.multiplyScalar(
-        (chars.length / 2 - index) * (letterWidth + letterSpacing)
+        (index - chars.length / 2) * (letterWidth + letterSpacing)
       )
     );
     return [pos.x, pos.y, pos.z] as [number, number, number];
   };
+
   return (
     <>
       {chars.map((char, index) => (
@@ -155,7 +158,7 @@ export function Word({
           id={`${id}-${index}`}
           char={char}
           position={calcPos(index)}
-          rotation={[0, wordAngle + 1 * Math.PI, 0]}
+          rotation={[0, -wordAngle, 0]}
           fontSize={fontSize}
           color={color}
           depth={depth}
