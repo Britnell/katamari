@@ -27,12 +27,24 @@ export function Word({
   wordAngle = 0,
   spacing = 1,
 }: WordProps) {
+  const font = useFont(fontUrl);
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
-  const letterWidth = fontSize * 0.8;
   wordAngle += pi;
 
-  const calcPos = (index: number) => {
+  const widths = chars.map((char) => {
+    const data = font.data as any as Font;
+    const glyph = data.glyphs[char];
+    const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
+    return width;
+  });
+  const cumWidth = widths.reduce(
+    (acc: number[], w) => [...acc, (acc[acc.length - 1] ?? 0) + w],
+    [0]
+  );
+  const totalWidth = widths.reduce((acc, w) => acc + w, 0);
+
+  function calcPos(index: number) {
     const pos = new THREE.Vector3(
       position[0],
       position[1] - fontSize * 0.8,
@@ -43,13 +55,17 @@ export function Word({
       0,
       Math.sin(wordAngle)
     );
+
     pos.add(
       directionVector.multiplyScalar(
-        (index - chars.length / 2) * (letterWidth + letterSpacing)
+        cumWidth[index] +
+          widths[index] / 2 +
+          (index - 1) * letterSpacing -
+          totalWidth / 2
       )
     );
     return [pos.x, pos.y, pos.z] as [number, number, number];
-  };
+  }
 
   return (
     <>
@@ -88,7 +104,7 @@ export function Letter({
   id,
   rotation = [0, 0, 0],
 }: LetterProps) {
-  const letterDepth = fontSize * 0.15 * depth;
+  const letterDepth = fontSize * 0.13 * depth;
   const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -111,7 +127,7 @@ export function Letter({
 
   useEffect(() => {
     const data = font.data as any as Font;
-    const glyph = data.glyphs[char ?? "x"];
+    const glyph = data.glyphs[char];
     if (!glyph) return;
     const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
     const height =
