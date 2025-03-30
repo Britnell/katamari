@@ -55,16 +55,19 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
         }
 
         if (type === "model") {
-          const { modelPath, scale } = object;
-
+          const { modelPath, scale, initialRotation, center } = object;
           return (
-            <ModelShape
+            <group
               key={`collected-${id}`}
-              modelPath={modelPath ?? ""}
-              position={[position.x, position.y, position.z]}
+              position={center}
               quaternion={rotation}
-              scale={scale}
-            />
+            >
+              <ModelShape
+                modelPath={modelPath ?? ""}
+                rotation={initialRotation || undefined}
+                scale={scale}
+              />
+            </group>
           );
         }
 
