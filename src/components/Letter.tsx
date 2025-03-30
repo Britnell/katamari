@@ -143,13 +143,6 @@ export function Letter({
     dimensions.depth
   );
 
-  const adjustedPosition = useMemo(() => {
-    // The letter should be positioned so that its bottom is at the floor level
-    // Since the origin of the 3D text is at its center, we need to ensure
-    // the bottom of the letter is at the specified Y position
-    return [position[0], position[1], position[2]] as [number, number, number];
-  }, [position]);
-
   if (dimensions.width === 0) {
     return null;
   }
@@ -157,7 +150,7 @@ export function Letter({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={adjustedPosition}
+      position={position}
       rotation={rotation}
       colliders="cuboid"
       userData={{

@@ -94,7 +94,7 @@ function Words() {
       <Word
         text="html"
         position={[4, 0, 1]}
-        fontSize={0.8}
+        fontSize={0.7}
         id="intro11"
         wordAngle={Math.PI * 1}
       />
@@ -102,6 +102,7 @@ function Words() {
         text="CSS"
         position={[4, 0, -1.5]}
         fontSize={0.8}
+        depth={0.9}
         id="intro12"
         wordAngle={Math.PI * 1}
       />
@@ -110,7 +111,7 @@ function Words() {
       <Word
         text="javascript"
         position={[-3.3, 0, 0]}
-        fontSize={1.0}
+        fontSize={0.9}
         depth={0.9}
         id="intro14"
         wordAngle={Math.PI * -0.5}
