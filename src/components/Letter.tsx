@@ -45,11 +45,7 @@ export function Word({
   const totalWidth = widths.reduce((acc, w) => acc + w, 0);
 
   function calcPos(index: number) {
-    const pos = new THREE.Vector3(
-      position[0],
-      position[1] - fontSize * 0.8,
-      position[2]
-    );
+    const pos = new THREE.Vector3(position[0], position[1], position[2]);
     const directionVector = new THREE.Vector3(
       Math.cos(wordAngle),
       0,
@@ -95,6 +91,13 @@ interface LetterProps {
   rotation?: [number, number, number];
 }
 
+type Font = {
+  ascender: number;
+  descender: number;
+  resolution: number;
+  glyphs: Record<string, { x_max: number; x_min: number }>;
+};
+
 export function Letter({
   char,
   position,
@@ -117,13 +120,6 @@ export function Letter({
     height: fontSize,
     depth: letterDepth,
   });
-
-  type Font = {
-    ascender: number;
-    descender: number;
-    resolution: number;
-    glyphs: Record<string, { x_max: number; x_min: number }>;
-  };
 
   useEffect(() => {
     const data = font.data as any as Font;
@@ -148,9 +144,11 @@ export function Letter({
   );
 
   const adjustedPosition = useMemo(() => {
-    const yPos = position[1] + dimensions.height / 2;
-    return [position[0], yPos, position[2]] as [number, number, number];
-  }, [position, dimensions.height]);
+    // The letter should be positioned so that its bottom is at the floor level
+    // Since the origin of the 3D text is at its center, we need to ensure
+    // the bottom of the letter is at the specified Y position
+    return [position[0], position[1], position[2]] as [number, number, number];
+  }, [position]);
 
   if (dimensions.width === 0) {
     return null;
