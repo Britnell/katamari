@@ -125,7 +125,7 @@ export function ModelShape({
       quaternion={quaternion}
       rotation={quaternion ? undefined : rotation}
     >
-      <Center scale={[scale, scale, scale]}>
+      <Center scale={scale}>
         <Clone object={scene} castShadow>
           <meshStandardMaterial attach="material" />
         </Clone>

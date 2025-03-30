@@ -30,7 +30,7 @@ export function Word({
   const font = useFont(fontUrl);
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
-  const letterAngle = wordAngle + 0 * pi;
+  const letterAngle = wordAngle + 1 * pi;
 
   const widths = chars.map((char) => {
     const data = font.data as any as Font;
