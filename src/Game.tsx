@@ -93,7 +93,6 @@ function Words({
         fontSize={0.7}
         id="intro1"
         wordAngle={0}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="Im Tommy"
@@ -101,7 +100,6 @@ function Words({
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="html"
@@ -109,7 +107,6 @@ function Words({
         fontSize={0.8}
         id="intro11"
         wordAngle={Math.PI * 1}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="CSS"
@@ -117,7 +114,6 @@ function Words({
         fontSize={0.8}
         id="intro12"
         wordAngle={Math.PI * 1}
-        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
@@ -128,7 +124,6 @@ function Words({
         depth={0.9}
         id="intro14"
         wordAngle={Math.PI * -0.5}
-        collectedObjects={collectedObjects}
       />
       {/* <Word
         text="vanilla"
@@ -145,7 +140,6 @@ function Words({
         depth={1}
         id="intro19"
         wordAngle={Math.PI * -1}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -155,7 +149,6 @@ function Words({
         depth={0.8}
         id="intro16"
         wordAngle={Math.PI * -1}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -165,7 +158,6 @@ function Words({
         depth={0.9}
         id="intro17"
         wordAngle={Math.PI * -1.2}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -174,7 +166,6 @@ function Words({
         fontSize={2.9}
         id="intro22"
         wordAngle={Math.PI * 0.5}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -184,7 +175,6 @@ function Words({
         fontSize={1.6}
         depth={1}
         wordAngle={Math.PI * -1.0}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -194,7 +184,6 @@ function Words({
         depth={1.2}
         id="intro21"
         wordAngle={Math.PI * -0.5}
-        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
@@ -206,7 +195,6 @@ function Words({
         depth={1.1}
         id="intro5"
         wordAngle={0}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="Creative"
@@ -214,7 +202,6 @@ function Words({
         fontSize={2.0}
         id="intro7"
         wordAngle={Math.PI * 0.5}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="Technologist"
@@ -222,7 +209,6 @@ function Words({
         fontSize={3.2}
         id="intro8"
         wordAngle={Math.PI * 0.5}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="frontend"
@@ -231,7 +217,6 @@ function Words({
         depth={0.9}
         id="intro9"
         wordAngle={Math.PI * -0.5}
-        collectedObjects={collectedObjects}
       />
       <Word
         text="fullstack"
@@ -240,7 +225,6 @@ function Words({
         id="intro10"
         depth={0.9}
         wordAngle={Math.PI * -0.5}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -250,7 +234,6 @@ function Words({
         depth={1.0}
         id="intro20"
         wordAngle={Math.PI * -1.0}
-        collectedObjects={collectedObjects}
       />
 
       <Word
@@ -259,7 +242,6 @@ function Words({
         fontSize={1.3}
         id="intro23"
         wordAngle={Math.PI * -0.75}
-        collectedObjects={collectedObjects}
       />
 
       {/* ---------------- */}
