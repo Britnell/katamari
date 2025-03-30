@@ -89,14 +89,6 @@ export default function Game() {
               rotation={[0, pi * 1.0, 0]}
               id="computer"
             />
-
-            <ModelObject
-              modelPath="/3d/foliage/scene.gltf"
-              position={[2, 10, 2]}
-              scale={1.0}
-              rotation={[0, pi * 1.0, 0]}
-              id="computer"
-            />
           </Physics>
         </Canvas>
       </KeyboardControls>
