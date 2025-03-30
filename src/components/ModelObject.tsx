@@ -43,14 +43,18 @@ export function ModelObject({
       const box = new THREE.Box3().setFromObject(clonedScene);
       const size = new THREE.Vector3();
       box.getSize(size);
-      const center = new THREE.Vector3();
-      box.getCenter(center);
 
+      const center = new THREE.Vector3();
+      center.set(
+        (box.min.x + box.max.x) / 2,
+        (box.min.y + box.max.y) / 2,
+        (box.min.z + box.max.z) / 2
+      );
       setDimensions({
         width: size.x * scale,
         height: size.y * scale,
         depth: size.z * scale,
-        center: center.multiplyScalar(scale),
+        center: center,
       });
     }
   }, [scene, scale]);
@@ -77,15 +81,13 @@ export function ModelObject({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={adjustedPosition}
+      position={position}
       rotation={rotation}
       colliders="cuboid"
       userData={{
+        ...dimensions,
         id,
         size: maxDimension,
-        width: dimensions.width,
-        height: dimensions.height,
-        depth: dimensions.depth,
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
@@ -93,7 +95,6 @@ export function ModelObject({
         type: "model",
         modelPath,
         scale,
-        center: dimensions.center,
       }}
       sensor={isCollected}
     >

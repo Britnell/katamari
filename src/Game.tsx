@@ -313,6 +313,7 @@ export interface CollectibleObject {
   modelPath?: string;
   scale?: number;
   initialRotation?: [number, number, number];
+  center?: THREE.Vector3;
 }
 
 export const pi = Math.PI;
