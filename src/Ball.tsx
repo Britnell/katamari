@@ -18,14 +18,13 @@ import {
 
 const initialRadius = 0.5;
 
-interface KatamariBallProps {
-  collectedObjects: RefObject<Map<string, CollectibleObject>>;
-}
+// interface KatamariBallProps {}
 
-export default function KatamariBall({ collectedObjects }: KatamariBallProps) {
+export default function KatamariBall() {
   const [totalMass, setTotalMass] = useState(3);
   const [virtualRadius, setVirtualRadius] = useState(initialRadius);
   const ballRef = useRef<RapierRigidBody>(null);
+  const collectedObjects = useRef(new Map<string, CollectibleObject>());
 
   const { rapier, world } = useRapier();
   const texture = useRef(createBallTexture());

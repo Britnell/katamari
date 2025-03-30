@@ -1,9 +1,7 @@
 import { Physics, RigidBody } from "@react-three/rapier";
-import { useMemo, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   KeyboardControls,
-  KeyboardControlsEntry,
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
@@ -11,15 +9,11 @@ import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
-// import { CollectibleObjects } from "./Squares";
 
 export default function Game() {
-  const map = useKeyboardMap();
-  const collectedObjects = useRef(new Map<string, CollectibleObject>());
-
   return (
     <div style={{ width: "100%", height: "100vh" }}>
-      <KeyboardControls map={map}>
+      <KeyboardControls map={keyboardMap}>
         <Canvas
           shadows
           gl={{
@@ -55,10 +49,10 @@ export default function Game() {
             groundColor="#8a5a44"
           />
           <Physics interpolate={true} timeStep={1 / 60}>
-            <KatamariBall collectedObjects={collectedObjects} />
+            <KatamariBall />
             <Ground />
             {/* <CollectibleObjects /> */}
-            <Words collectedObjects={collectedObjects} />
+            <Words />
             <ModelObject
               modelPath="/3d/gameboy/scene.gltf"
               position={[6, -1, 8]}
@@ -271,16 +265,12 @@ enum Controls {
   left = "left",
   right = "right",
 }
-const useKeyboardMap = () =>
-  useMemo<KeyboardControlsEntry<Controls>[]>(
-    () => [
-      { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
-      { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
-      { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
-      { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
-    ],
-    []
-  );
+const keyboardMap = [
+  { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
+  { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
+  { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
+  { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
+];
 
 export type UserData = {
   isCollectable: boolean;
