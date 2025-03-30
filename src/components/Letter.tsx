@@ -10,20 +10,9 @@ interface LetterProps {
   color?: string;
   depth?: number;
   id: string;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
   rotation?: [number, number, number];
   collectedObjects?: any;
 }
-
-const bevelEnabled = true;
-const bevelThickness = 0.03;
-const bevelSize = 0.02;
-const bevelSegments = 4;
-const curveSegments = 12;
 
 export function Letter({
   char,
@@ -102,11 +91,6 @@ export function Letter({
         char,
         fontSize,
         color,
-        bevelEnabled,
-        bevelThickness,
-        bevelSize,
-        bevelSegments,
-        curveSegments,
       }}
       sensor={isCollected}
     >
@@ -116,11 +100,6 @@ export function Letter({
           fontSize={fontSize}
           color={color}
           depth={letterDepth}
-          bevelEnabled={bevelEnabled}
-          bevelThickness={bevelThickness}
-          bevelSize={bevelSize}
-          bevelSegments={bevelSegments}
-          curveSegments={curveSegments}
         />
       )}
     </RigidBody>
@@ -192,11 +171,6 @@ interface DrawLetterProps {
   fontSize?: number;
   color?: string;
   depth?: number;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
   rotation?: [number, number, number];
   position?: [number, number, number];
   quaternion?: THREE.Quaternion;
@@ -208,11 +182,6 @@ export function LetterShape({
   fontSize = 1,
   color = "white",
   depth = 0.15,
-  bevelEnabled = true,
-  bevelThickness = 0.03,
-  bevelSize = 0.02,
-  bevelSegments = 4,
-  curveSegments = 12,
   rotation = [0, 0, 0],
   position,
   quaternion,
@@ -230,11 +199,11 @@ export function LetterShape({
             font="/fonts/Courier_Prime_Regular.json"
             size={fontSize}
             height={letterDepth}
-            curveSegments={curveSegments}
-            bevelEnabled={bevelEnabled}
-            bevelThickness={bevelThickness}
-            bevelSize={bevelSize}
-            bevelSegments={bevelSegments}
+            bevelEnabled={true}
+            bevelThickness={0.03}
+            bevelSize={0.02}
+            bevelSegments={4}
+            curveSegments={12}
             castShadow
           >
             {char}

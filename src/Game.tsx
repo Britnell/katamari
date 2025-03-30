@@ -68,9 +68,9 @@ export default function Game() {
             />
             <ModelObject
               modelPath="/3d/diskette/scene.gltf"
-              position={[4, 0, 6]}
+              position={[4, 0, 5]}
               scale={0.8}
-              rotation={[0, pi * 0.2, 0]}
+              rotation={[pi * -0.5, pi * 0, 0]}
               id="diskette"
             />
           </Physics>

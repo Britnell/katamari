@@ -12,7 +12,6 @@ interface ModelObjectProps {
   scale?: number;
   rotation?: [number, number, number];
   id: string;
-  color?: string;
 }
 
 export function ModelObject({
@@ -21,11 +20,9 @@ export function ModelObject({
   scale = 1,
   rotation = [0, 0, 0],
   id,
-  color,
 }: ModelObjectProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
-  const modelRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState<{
     width: number;
     height: number;
@@ -82,6 +79,7 @@ export function ModelObject({
     <RigidBody
       ref={rigidBodyRef}
       position={adjustedPosition}
+      rotation={rotation}
       colliders="cuboid"
       userData={{
         id,
@@ -92,6 +90,7 @@ export function ModelObject({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
+        // initialRotation: rotation,
         type: "model",
         modelPath,
         scale,
@@ -100,8 +99,8 @@ export function ModelObject({
       sensor={isCollected}
     >
       {!isCollected && (
-        <group ref={modelRef}>
-          <ModelShape modelPath={modelPath} scale={scale} rotation={rotation} />
+        <group>
+          <ModelShape modelPath={modelPath} scale={scale} />
         </group>
       )}
     </RigidBody>
@@ -114,8 +113,6 @@ interface ModelShapeProps {
   rotation?: [number, number, number];
   position?: [number, number, number];
   quaternion?: THREE.Quaternion;
-  castShadow?: boolean;
-  receiveShadow?: boolean;
 }
 
 export function ModelShape({
@@ -128,8 +125,8 @@ export function ModelShape({
   const { scene } = useGLTF(modelPath);
 
   return (
-    <group position={position} quaternion={quaternion}>
-      <group rotation={rotation} scale={[scale, scale, scale]}>
+    <group position={position} quaternion={quaternion} rotation={rotation}>
+      <group scale={[scale, scale, scale]}>
         <Clone object={scene} castShadow>
           <meshStandardMaterial attach="material" />
         </Clone>
