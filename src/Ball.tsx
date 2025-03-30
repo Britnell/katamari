@@ -2,10 +2,9 @@ import {
   RigidBody,
   useRapier,
   RapierRigidBody,
-  CollisionEnterHandler,
   BallCollider,
 } from "@react-three/rapier";
-import { useState, useRef, useCallback, RefObject } from "react";
+import { useState, useRef } from "react";
 import * as THREE from "three";
 import { CollectibleObject, UserData } from "./Game";
 import { CollectedItems } from "./components/CollectedItems";
@@ -17,8 +16,6 @@ import {
 } from "./hooks";
 
 const initialRadius = 0.5;
-
-// interface KatamariBallProps {}
 
 export default function KatamariBall() {
   const [totalMass, setTotalMass] = useState(3);
