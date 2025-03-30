@@ -199,7 +199,7 @@ export function LetterShape({
         <group rotation={rotation}>
           <Text3D
             ref={textRef}
-            font="/fonts/Courier_Prime_Regular.json"
+            font="/fonts/Courier_Prime_Bold.json"
             size={fontSize}
             height={letterDepth}
             bevelEnabled={true}
