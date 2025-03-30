@@ -30,7 +30,7 @@ export function Word({
   const font = useFont(fontUrl);
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
-  wordAngle += pi;
+  const letterAngle = wordAngle + pi;
 
   const widths = chars.map((char) => {
     const data = font.data as any as Font;
@@ -47,9 +47,9 @@ export function Word({
   function calcPos(index: number) {
     const pos = new THREE.Vector3(position[0], position[1], position[2]);
     const directionVector = new THREE.Vector3(
-      Math.cos(wordAngle),
+      Math.cos(letterAngle),
       0,
-      Math.sin(wordAngle)
+      Math.sin(letterAngle)
     );
 
     pos.add(
@@ -71,7 +71,7 @@ export function Word({
           id={`${id}-${index}`}
           char={char}
           position={calcPos(index)}
-          rotation={[0, -wordAngle, 0]}
+          rotation={[0, -letterAngle, 0]}
           fontSize={fontSize}
           color={color}
           depth={depth}
