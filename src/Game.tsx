@@ -80,11 +80,7 @@ export default function Game() {
   );
 }
 
-function Words({
-  collectedObjects,
-}: {
-  collectedObjects: React.RefObject<Map<string, CollectibleObject>>;
-}) {
+function Words() {
   return (
     <>
       <Word
