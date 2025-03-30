@@ -318,6 +318,7 @@ export type UserData = {
   fontSize?: number;
   color?: string;
   bevelEnabled?: boolean;
+  initialRotation?: [number, number, number];
   bevelThickness?: number;
   bevelSize?: number;
   bevelSegments?: number;

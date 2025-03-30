@@ -196,6 +196,8 @@ const calcRelativeRotation = (
 ) => {
   const ballRot = ballObj.rotation();
   const objRot = obj.rotation();
+  const userData = obj.userData as UserData;
+
   const ballQuaternion = new THREE.Quaternion(
     ballRot.x,
     ballRot.y,
@@ -208,6 +210,18 @@ const calcRelativeRotation = (
     objRot.z,
     objRot.w
   );
+
+  if (userData.initialRotation) {
+    const initialQuaternion = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(
+        userData.initialRotation[0],
+        userData.initialRotation[1],
+        userData.initialRotation[2]
+      )
+    );
+    objectQuaternion.multiply(initialQuaternion);
+  }
+
   const inverseRotation = ballQuaternion.clone().invert();
   const relativeRotation = objectQuaternion.clone().multiply(inverseRotation);
   return relativeRotation;

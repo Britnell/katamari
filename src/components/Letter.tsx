@@ -97,6 +97,7 @@ export function Letter({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
+        initialRotation: rotation,
         type: "letter",
         char,
         fontSize,
@@ -175,7 +176,7 @@ export function Word({
           id={`${id}-${index}`}
           char={char}
           position={calcPos(index)}
-          rotation={[0, wordAngle + 0 * Math.PI, 0]}
+          rotation={[0, wordAngle + 1 * Math.PI, 0]}
           fontSize={fontSize}
           color={color}
           depth={depth}
