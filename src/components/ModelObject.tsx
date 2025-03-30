@@ -90,11 +90,12 @@ export function ModelObject({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
-        // initialRotation: rotation,
+        initialRotation: rotation,
         type: "model",
         modelPath,
         scale,
         rotation,
+        center: dimensions.center,
       }}
       sensor={isCollected}
     >
@@ -125,7 +126,11 @@ export function ModelShape({
   const { scene } = useGLTF(modelPath);
 
   return (
-    <group position={position} quaternion={quaternion} rotation={rotation}>
+    <group
+      position={position}
+      quaternion={quaternion}
+      rotation={quaternion ? undefined : rotation}
+    >
       <group scale={[scale, scale, scale]}>
         <Clone object={scene} castShadow>
           <meshStandardMaterial attach="material" />

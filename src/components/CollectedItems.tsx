@@ -16,16 +16,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
         const { position, rotation, geometry, type } = object;
 
         if (type === "letter") {
-          const {
-            char,
-            fontSize = 1,
-            color = "white",
-            bevelEnabled = true,
-            bevelThickness = 0.03,
-            bevelSize = 0.02,
-            bevelSegments = 4,
-            curveSegments = 12,
-          } = object;
+          const { char, fontSize = 1, color = "white" } = object;
 
           return (
             <LetterShape
@@ -34,11 +25,6 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
               fontSize={fontSize}
               color={color || "white"}
               depth={geometry[2] / fontSize}
-              bevelEnabled={bevelEnabled}
-              bevelThickness={bevelThickness}
-              bevelSize={bevelSize}
-              bevelSegments={bevelSegments}
-              curveSegments={curveSegments}
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
             />
