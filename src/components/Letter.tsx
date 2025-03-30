@@ -218,7 +218,7 @@ export function LetterShape({
             bevelEnabled={true}
             bevelThickness={0.03}
             bevelSize={0.02}
-            bevelSegments={4}
+            bevelSegments={1}
             curveSegments={12}
             castShadow
           >
