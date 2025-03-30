@@ -297,14 +297,11 @@ export type UserData = {
   rotation?: [number, number, number];
 };
 
-export const pi = Math.PI;
-
-export type CollectibleObject = {
+export interface CollectibleObject {
   position: THREE.Vector3;
   rotation: THREE.Quaternion;
   geometry: [number, number, number];
   type: string;
-  // Letter-specific properties
   char?: string;
   fontSize?: number;
   color?: string;
@@ -313,7 +310,9 @@ export type CollectibleObject = {
   bevelSize?: number;
   bevelSegments?: number;
   curveSegments?: number;
-  // Model-specific properties
   modelPath?: string;
   scale?: number;
-};
+  initialRotation?: [number, number, number];
+}
+
+export const pi = Math.PI;

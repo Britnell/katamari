@@ -2,6 +2,7 @@ import { RefObject } from "react";
 import { CollectibleObject } from "../Game";
 import { LetterShape } from "./Letter";
 import { ModelShape } from "./ModelObject";
+import * as THREE from "three";
 
 interface CollectedItemsProps {
   collectedObjects: RefObject<Map<string, CollectibleObject>>;
@@ -16,7 +17,25 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
         const { position, rotation, geometry, type } = object;
 
         if (type === "letter") {
-          const { char, fontSize = 1, color = "white" } = object;
+          const {
+            char,
+            fontSize = 1,
+            color = "white",
+            initialRotation,
+          } = object;
+
+          let combinedQuaternion = rotation.clone();
+          if (initialRotation) {
+            const initialQuat = new THREE.Quaternion().setFromEuler(
+              new THREE.Euler(
+                initialRotation[0],
+                initialRotation[1],
+                initialRotation[2],
+                "XYZ"
+              )
+            );
+            combinedQuaternion = initialQuat.clone().multiply(rotation);
+          }
 
           return (
             <LetterShape
@@ -26,7 +45,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
               color={color || "white"}
               depth={geometry[2] / fontSize}
               position={[position.x, position.y, position.z]}
-              quaternion={rotation}
+              quaternion={combinedQuaternion}
             />
           );
         }

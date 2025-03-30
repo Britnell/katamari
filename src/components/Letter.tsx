@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Text3D, Center, useFont } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
@@ -30,7 +30,7 @@ export function Word({
   const font = useFont(fontUrl);
   const chars = text.split("");
   const letterSpacing = fontSize * 0.125 * spacing;
-  const letterAngle = wordAngle + pi;
+  const letterAngle = wordAngle + 0 * pi;
 
   const widths = chars.map((char) => {
     const data = font.data as any as Font;
@@ -207,25 +207,28 @@ export function LetterShape({
   const letterDepth = fontSize * depth;
 
   return (
-    <group position={position} quaternion={quaternion}>
-      <Center scale={scale}>
-        <group rotation={rotation}>
-          <Text3D
-            ref={textRef}
-            font={fontUrl}
-            size={fontSize}
-            height={letterDepth}
-            bevelEnabled={true}
-            bevelThickness={0.03}
-            bevelSize={0.02}
-            bevelSegments={1}
-            curveSegments={12}
-            castShadow
-          >
-            {char}
-            <meshStandardMaterial color={color} />
-          </Text3D>
-        </group>
+    <group
+      position={position}
+      quaternion={quaternion}
+      rotation={quaternion ? undefined : rotation}
+      scale={scale}
+    >
+      <Center>
+        <Text3D
+          ref={textRef}
+          font={fontUrl}
+          size={fontSize}
+          height={letterDepth}
+          bevelEnabled={true}
+          bevelThickness={0.03}
+          bevelSize={0.02}
+          bevelSegments={1}
+          curveSegments={12}
+          castShadow
+        >
+          {char}
+          <meshStandardMaterial color={color} />
+        </Text3D>
       </Center>
     </group>
   );
