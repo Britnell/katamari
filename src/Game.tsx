@@ -39,6 +39,7 @@ export default function Game() {
           <Physics interpolate={true} timeStep={1 / 60}>
             <group position={[0, 0, 0]}>
               <KatamariBall />
+              <Box position={[2, 0, 2]} dim={[0.59, 1, 0.3]} />
               <Ground />
               <Words />
               <Objects />
@@ -320,7 +321,6 @@ export type UserData = {
   isCollectable: boolean;
   volume: number;
   size: number;
-  dim: [number, number, number];
   id: string;
   setCollected: (x: boolean) => void;
   type?: string;
@@ -342,7 +342,6 @@ export interface CollectibleObject {
   position: THREE.Vector3;
   rotation: THREE.Quaternion;
   geometry: [number, number, number];
-  dim: [number, number, number];
   type: string;
   char?: string;
   fontSize?: number;

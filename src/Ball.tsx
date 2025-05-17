@@ -85,7 +85,7 @@ export default function KatamariBall() {
     if (!isBiggerThanObj(userData, virtualRadius)) return;
     if (!ballRef.current) return;
 
-    const objectVolume = userData.dim[0] * userData.dim[1] * userData.dim[2];
+    const objectVolume = userData.volume;
     const newVolume = getBallVolume(virtualRadius) + objectVolume * 0.7;
     const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
     setVirtualRadius(newRadius);

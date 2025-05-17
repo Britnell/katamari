@@ -140,6 +140,8 @@ export function Letter({
       userData={{
         id,
         dim: dimensions,
+        volume: dimensions[0] * dimensions[1] * dimensions[2] * 0.5, // adjust letters aren't squares
+        size: Math.max(...dimensions),
         isCollectable: true,
         setCollected: setIsCollected,
         initialRotation: rotation,

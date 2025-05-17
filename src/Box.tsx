@@ -29,7 +29,9 @@ export function Box({
       userData={{
         type: "box",
         id: `box-${position.join("-")}-${id ?? "."}`,
-        dim: dim,
+        dim,
+        volume: dim[0] * dim[1] * dim[2],
+        size: Math.max(...dim),
         isCollectable: true,
         setCollected: setIsCollected,
         color,
