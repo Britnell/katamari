@@ -28,7 +28,7 @@ export function Box({
       colliders="cuboid"
       userData={{
         type: "box",
-        id: `box-${position.join("-")}-${id ?? "."}`,
+        id: `box-${position.join(",")}-${id ?? "."}`,
         dim,
         volume: dim[0] * dim[1] * dim[2],
         size: Math.max(...dim),
@@ -92,14 +92,15 @@ const Tiles: React.FC<TilesProps> = ({
   checkered = false,
 }) => {
   const [cols, rows] = matrix;
-  const [w, h, d] = dim;
+  const [w, _h, d] = dim;
   const tiles = [];
   for (let x = 0; x < cols; x++) {
     for (let z = 0; z < rows; z++) {
       if (!checkered || (x + z) % 2 === 0) {
         tiles.push(
           <Box
-            key={`box-${position.join(",")}-${x},${z}`}
+            id={`${x}-${z}`}
+            key={["box", x, z].join(",")}
             position={[(w + gap) * x, 0, (d + gap) * z]}
             dim={dim}
             color={color}

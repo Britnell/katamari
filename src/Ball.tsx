@@ -80,10 +80,10 @@ export default function KatamariBall() {
     if (!otherBody) return;
 
     const userData = otherBody.userData as UserData;
+    if (!ballRef.current) return;
     if (!userData?.isCollectable) return;
     if (collectedObjects.current.has(userData.id)) return;
     if (!isBiggerThanObj(userData, virtualRadius)) return;
-    if (!ballRef.current) return;
 
     const objectVolume = userData.volume;
     const newVolume = getBallVolume(virtualRadius) + objectVolume * 0.8;

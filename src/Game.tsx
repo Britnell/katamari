@@ -171,7 +171,7 @@ function Words() {
       <Word
         text="typescript"
         position={[2, 0, -16]}
-        fontSize={1.6}
+        fontSize={1.4}
         depth={0.8}
         id="intro16"
         wordAngle={Math.PI * -1}
@@ -315,6 +315,7 @@ export type UserData = {
   isCollectable: boolean;
   volume: number;
   size: number;
+  dim: [number, number, number];
   id: string;
   setCollected: (x: boolean) => void;
   type?: string;
