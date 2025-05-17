@@ -32,7 +32,7 @@ export function Box({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={position}
+      position={[position[0], position[1] - height / 2, position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
@@ -91,31 +91,34 @@ export function BoxShape({
   );
 }
 
-interface CheckeredProps {
-  thickness: number;
-  position?: [number, number, number];
-  gridSize: number;
+interface TilesProps {
+  dim: [number, number, number];
   matrix: [number, number];
+  gap?: number;
+  position?: [number, number, number];
   color?: string;
+  checkered?: boolean;
 }
 
-const Checkered: React.FC<CheckeredProps> = ({
-  thickness,
-  position = [0, 0, 0],
-  gridSize,
+const Tiles: React.FC<TilesProps> = ({
+  dim,
   matrix,
+  gap = 0,
+  position = [0, 0, 0],
   color = "#124",
+  checkered = false,
 }) => {
   const [cols, rows] = matrix;
+  const [w, h, d] = dim;
   const tiles = [];
   for (let x = 0; x < cols; x++) {
     for (let z = 0; z < rows; z++) {
-      if ((x + z) % 2 === 0) {
+      if (!checkered || (x + z) % 2 === 0) {
         tiles.push(
           <Box
-            key={`${x},${z}`}
-            position={[x * gridSize, 0, z * gridSize]}
-            dim={[gridSize, thickness, gridSize]}
+            key={`box-${position.join(",")}-${x},${z}`}
+            position={[(w + gap) * x, 0, (d + gap) * z]}
+            dim={dim}
             color={color}
           />
         );
@@ -125,4 +128,4 @@ const Checkered: React.FC<CheckeredProps> = ({
   return <group position={position}>{tiles}</group>;
 };
 
-export default Checkered;
+export default Tiles;

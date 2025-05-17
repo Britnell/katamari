@@ -10,7 +10,7 @@ import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
-import Checkered, { Box } from "./Box";
+import Tiles, { Box } from "./Box";
 
 export default function Game() {
   return (
@@ -27,31 +27,26 @@ export default function Game() {
             gl.shadowMap.autoUpdate = true;
           }}
         >
-          <PerspectiveCamera makeDefault position={[0, 2, -4]} fov={55} />
+          <PerspectiveCamera
+            makeDefault
+            position={[0, 2, 0 - 4]}
+            fov={55}
+            manual={false}
+          />
           <OrbitControls />
 
           <Lights />
           <Physics interpolate={true} timeStep={1 / 60}>
-            <KatamariBall />
-            <Ground />
-
-            <Boxes />
-            <Words />
-            <Objects />
+            <group position={[0, 0, 0]}>
+              <KatamariBall />
+              <Ground />
+              <Words />
+              <Objects />
+            </group>
           </Physics>
         </Canvas>
       </KeyboardControls>
     </div>
-  );
-}
-
-function Boxes() {
-  return (
-    <>
-      <Box position={[0, 0, -2]} dim={[1, 0.3, 0.3]} />
-      <Box position={[1, 0, -2]} dim={[1, 0.3, 0.3]} />
-      <Box position={[-1, 0, -2]} dim={[1, 0.3, 0.3]} />
-    </>
   );
 }
 
@@ -110,16 +105,20 @@ function Words() {
       />
 
       {/* stage */}
-      <Box position={[1, 0, 9]} dim={[11, 0.2, 6]} color="#aaa" />
+      <Tiles
+        position={[-3, 0, 6]}
+        dim={[1.5, 0.2, 1.5]}
+        matrix={[7, 4]}
+        color="#aaa"
+      />
 
       <Word
         text="Im Tommy"
-        position={[1, 0.2, 7]}
+        position={[1, 0.4, 7.5]}
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
       />
-      <Box position={[4.5, 0, 4.5]} dim={[0.5, 0.6, 0.4]} />
 
       <Word
         text="html"
@@ -164,6 +163,9 @@ function Words() {
         wordAngle={Math.PI * -1}
       /> */}
 
+      {/* border */}
+      <Tiles position={[-1.5, 0, -2]} dim={[1.2, 0.2, 0.2]} matrix={[4, 1]} />
+
       <Word
         text="node"
         position={[0, 0, -4]}
@@ -181,11 +183,11 @@ function Words() {
         id="intro16"
         wordAngle={Math.PI * -1}
       />
-      <Checkered
+      <Tiles
         position={[-1, 0, -13]}
-        gridSize={0.8}
-        thickness={0.05}
+        dim={[0.8, 0.05, 0.8]}
         matrix={[6, 4]}
+        checkered={true}
         color="#124"
       />
 
