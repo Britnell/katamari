@@ -5,7 +5,6 @@ import { useKeyboardControls } from "@react-three/drei";
 import { useRef, useEffect, RefObject } from "react";
 import { UserData } from "./Game";
 import { RapierRigidBody } from "@react-three/rapier";
-import { log } from "three/tsl";
 
 const BASE_CAMERA_HEIGHT = 1.6;
 const BASE_CAMERA_DISTANCE = 4;

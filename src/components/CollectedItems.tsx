@@ -14,7 +14,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
   return (
     <>
       {Array.from(collectedObjects.current.entries()).map(([id, object]) => {
-        const { position, rotation, geometry, type } = object;
+        const { position, rotation, dim, type } = object;
 
         if (type === "letter") {
           const {
@@ -34,7 +34,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
                 char={char || ""}
                 fontSize={fontSize}
                 color={color || "white"}
-                depth={geometry[2] / fontSize}
+                depth={dim[2]}
                 rotation={initialRotation}
               />
             </group>

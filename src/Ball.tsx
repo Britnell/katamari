@@ -100,16 +100,14 @@ export default function KatamariBall() {
 
     const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
 
-    const objectDimensions = userData.dim;
-
-    addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
+    addCompoundCollider(attachPoint, relativeRotation, userData.dim);
 
     collectedObjects.current.set(userData.id, {
       type: userData.type || "box",
       ...userData,
       position: attachPoint,
       rotation: relativeRotation,
-      geometry: objectDimensions,
+      dim: userData.dim,
       initialRotation: userData.initialRotation,
     });
 

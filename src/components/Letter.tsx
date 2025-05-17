@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
-import { Text3D, Center, useFont } from "@react-three/drei";
+import { Text3D, useFont } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { pi } from "../Game";
 
@@ -31,7 +31,6 @@ export function Word({
 }: WordProps) {
   const font = useFont(fontUrl);
   const chars = text.split("");
-  const letterSpacing = fontSize * 0.125 * spacing;
   const _wordAngle = wordAngle + 1 * pi;
 
   const widths = chars.map((char) => {
@@ -195,7 +194,6 @@ export function LetterShape({
       quaternion={quaternion}
       rotation={quaternion ? undefined : rotation}
     >
-      {/* <Center> */}
       <Text3D
         ref={textRef}
         font={fontUrl}
@@ -211,7 +209,6 @@ export function LetterShape({
         {char}
         <meshStandardMaterial color={color} />
       </Text3D>
-      {/* </Center> */}
     </group>
   );
 }

@@ -10,7 +10,7 @@ import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
-import Tiles, { Box } from "./Box";
+import Tiles from "./Box";
 
 export default function Game() {
   return (
@@ -336,7 +336,7 @@ export type UserData = {
 export interface CollectibleObject {
   position: THREE.Vector3;
   rotation: THREE.Quaternion;
-  geometry: [number, number, number];
+  dim: [number, number, number];
   type: string;
   char?: string;
   fontSize?: number;
