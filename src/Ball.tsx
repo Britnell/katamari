@@ -4,7 +4,7 @@ import {
   RapierRigidBody,
   BallCollider,
 } from "@react-three/rapier";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as THREE from "three";
 import { CollectibleObject, UserData } from "./Game";
 import { CollectedItems } from "./components/CollectedItems";
@@ -26,8 +26,23 @@ export default function KatamariBall() {
   const { rapier, world } = useRapier();
   const texture = useRef(createBallTexture());
 
+  const [disable, setDisable] = useState(false);
+
   useDisplay(virtualRadius);
-  useKeyboardSteering(ballRef, virtualRadius, totalMass);
+  useKeyboardSteering(ballRef, virtualRadius, totalMass, disable);
+
+  useEffect(() => {
+    const onkey = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        setDisable(!disable);
+      }
+    };
+
+    window.addEventListener("keydown", onkey);
+    return () => {
+      window.removeEventListener("keydown", onkey);
+    };
+  }, [disable]);
 
   function addCompoundCollider(
     attachPoint: THREE.Vector3,

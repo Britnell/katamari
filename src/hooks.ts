@@ -45,7 +45,8 @@ export const useDisplay = (radius: number) => {
 export const useKeyboardSteering = (
   ballRef: RefObject<RapierRigidBody | null>,
   radius: number,
-  totalMass: number
+  totalMass: number,
+  disable: boolean = false
 ) => {
   const [_, getState] = useKeyboardControls();
   const { camera } = useThree();
@@ -106,7 +107,6 @@ export const useKeyboardSteering = (
       ballPosition.y + BASE_CAMERA_HEIGHT * (0.5 + radius),
       ballPosition.z - lookDirection.z * BASE_CAMERA_DISTANCE * (0.5 + radius)
     );
-    camera.position.lerp(targetCameraPos, CAMERA_SMOOTHING);
 
     const targetLookAt = new THREE.Vector3(
       ballPosition.x + lookDirection.x,
@@ -114,7 +114,10 @@ export const useKeyboardSteering = (
       ballPosition.z + lookDirection.z
     );
 
-    camera.lookAt(targetLookAt);
+    if (!disable) {
+      camera.position.lerp(targetCameraPos, CAMERA_SMOOTHING);
+      camera.lookAt(targetLookAt);
+    }
     // useframe
   });
 };

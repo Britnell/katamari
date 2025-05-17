@@ -1,5 +1,6 @@
 import { Physics, RigidBody } from "@react-three/rapier";
 import { Canvas } from "@react-three/fiber";
+
 import {
   KeyboardControls,
   OrbitControls,
@@ -9,7 +10,7 @@ import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
-import { Box } from "./Box";
+import Checkered, { Box } from "./Box";
 
 export default function Game() {
   return (
@@ -88,8 +89,8 @@ function Objects() {
       />
       <ModelObject
         modelPath="/3d/retro_computer/scene.gltf"
-        position={[9, 0, 11]}
-        scale={2.0}
+        position={[9, 0.3, 11]}
+        scale={2.8}
         rotation={[0, pi * 1.0, 0]}
         id="computer"
       />
@@ -107,9 +108,13 @@ function Words() {
         id="intro1"
         wordAngle={0}
       />
+
+      {/* stage */}
+      <Box position={[1, 0, 9]} dim={[11, 0.2, 6]} color="#aaa" />
+
       <Word
         text="Im Tommy"
-        position={[1, 0, 7]}
+        position={[1, 0.2, 7]}
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
@@ -170,28 +175,19 @@ function Words() {
 
       <Word
         text="typescript"
-        position={[2, 0, -15]}
+        position={[2, 0, -16]}
         fontSize={1.6}
         depth={0.8}
         id="intro16"
         wordAngle={Math.PI * -1}
       />
-      <group position={[-2, 0, 0]}>
-        <Box position={[1.4, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
-
-        <Box position={[2.2, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
-        <Box position={[2.2, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
-
-        <Box position={[3.0, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
-
-        <Box position={[3.8, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
-        <Box position={[3.8, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
-
-        <Box position={[4.6, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
-
-        <Box position={[5.2, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
-        <Box position={[5.2, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
-      </group>
+      <Checkered
+        position={[-1, 0, -13]}
+        gridSize={0.8}
+        thickness={0.05}
+        matrix={[6, 4]}
+        color="#124"
+      />
 
       <Word
         text="React"
