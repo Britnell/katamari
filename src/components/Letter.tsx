@@ -109,29 +109,23 @@ export function Letter({
   id,
   rotation = [0, 0, 0],
 }: LetterProps) {
-  const letterDepth = fontSize * 0.13 * depth;
+  const letterDepth = fontSize * depth * 0.1; // depth is a relative factor, generally depth = 0.1 of fontsize
   const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
   const [dimensions, setDimensions] = useState<[number, number, number]>([
-    fontSize,
-    fontSize,
-    letterDepth,
+    0, 0, 0,
   ]);
 
   useEffect(() => {
     const data = font.data as any as Font;
     const glyph = data.glyphs[char];
     if (!glyph) return;
-    const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
-    const height =
-      ((data.ascender - data.descender) / data.resolution) * fontSize;
+    const width = (glyph.x_max / data.resolution) * fontSize;
+    const height = (data.ascender / data.resolution) * fontSize;
 
     setDimensions([width, height, letterDepth]);
   }, [font, char, fontSize, letterDepth]);
-
-  const objectVolume = dimensions[0] * dimensions[1] * dimensions[2];
-  const maxDimension = Math.max(...dimensions);
 
   if (dimensions[0] === 0) {
     return null;
@@ -188,7 +182,6 @@ export function LetterShape({
   quaternion,
 }: DrawLetterProps) {
   const textRef = useRef<THREE.Mesh>(null);
-  const letterDepth = fontSize * depth;
 
   return (
     <group
@@ -201,7 +194,7 @@ export function LetterShape({
           ref={textRef}
           font={fontUrl}
           size={fontSize}
-          height={letterDepth}
+          height={depth}
           bevelEnabled={true}
           bevelThickness={0.03}
           bevelSize={0.02}
