@@ -37,7 +37,8 @@ export function Word({
   const widths = chars.map((char) => {
     const data = font.data as any as Font;
     const glyph = data.glyphs[char];
-    const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
+    const width = (glyph.x_max / data.resolution) * fontSize;
+    if (width === 0) return fontSize / 2;
     return width;
   });
 
@@ -57,10 +58,12 @@ export function Word({
 
     pos.add(
       directionVector.multiplyScalar(
-        cumWidth[index] +
-          widths[index] / 2 +
-          (index - 1) * letterSpacing -
-          totalWidth / 2
+        // letter position
+        cumWidth[index] -
+          // render at center of word
+          totalWidth / 2 +
+          // add spacing
+          fontSize * 0.125 * spacing
       )
     );
     return [pos.x, pos.y, pos.z] as [number, number, number];
@@ -135,7 +138,7 @@ export function Letter({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={[position[0] + dimensions[0] / 2, position[1], position[2]]}
+      position={[position[0], position[1], position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
