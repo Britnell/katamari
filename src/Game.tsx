@@ -71,14 +71,14 @@ export default function Game() {
             <ModelObject
               modelPath="/3d/minecraft_poppy_flower/scene.gltf"
               position={[5, 0, 3]}
-              scale={1}
+              scale={[1.2, 1.2, 2]}
               rotation={[0, 0, 0]}
               id="poppy1"
             />
             <ModelObject
               modelPath="/3d/minecraft_poppy_flower/scene.gltf"
               position={[-5, 0, -5]}
-              scale={1.2}
+              scale={[1.8, 1.8, 2]}
               rotation={[0, 0, 0]}
               id="poppy2"
             />
