@@ -1,5 +1,5 @@
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as THREE from "three";
 
 export function Box({

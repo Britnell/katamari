@@ -109,7 +109,8 @@ export function Letter({
   id,
   rotation = [0, 0, 0],
 }: LetterProps) {
-  const letterDepth = fontSize * depth * 0.1; // depth is a relative factor, generally depth = 0.1 of fontsize
+  // depth & fontSize are relative factors
+  const letterDepth = fontSize * depth * 0.1; // generally depth = 0.1 of fontsize
   const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -122,8 +123,7 @@ export function Letter({
     const glyph = data.glyphs[char];
     if (!glyph) return;
     const width = (glyph.x_max / data.resolution) * fontSize;
-    const height = (data.ascender / data.resolution) * fontSize;
-
+    const height = (data.ascender / data.resolution) * fontSize * 0.8; // letters dont reach ascender?
     setDimensions([width, height, letterDepth]);
   }, [font, char, fontSize, letterDepth]);
 
