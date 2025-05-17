@@ -232,7 +232,7 @@ function Words() {
 
       <Word
         text="Web Developer"
-        position={[0, 0, 20]}
+        position={[0, 0, 25]}
         fontSize={2.3}
         depth={1.1}
         id="intro5"

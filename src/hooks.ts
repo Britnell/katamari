@@ -135,7 +135,6 @@ export const isBiggerThanObj = (userData: UserData, radius: number) => {
   const ballVolume = calculateVolume(radius);
   const isBiggerVolume = userData.volume * 8 < ballVolume;
   const isBiggerSize = userData.size < radius * 2;
-  console.log({ radius, s: userData.size });
   return isBiggerVolume && isBiggerSize;
 };
 

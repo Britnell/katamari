@@ -148,17 +148,6 @@ export default function KatamariBall() {
         </group>
 
         <BallCollider args={[virtualRadius]} sensor={false} friction={1.5} />
-
-        <mesh visible={false}>
-          <sphereGeometry args={[virtualRadius, 8, 8]} />
-          <meshBasicMaterial
-            color="red"
-            wireframe={true}
-            transparent
-            opacity={0.2}
-          />
-        </mesh>
-
         <CollectedItems collectedObjects={collectedObjects} />
       </RigidBody>
     </>
