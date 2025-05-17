@@ -100,14 +100,14 @@ function Words() {
       {/* stage */}
       <Tiles
         position={[-3, 0, 6]}
-        dim={[1.5, 0.2, 1.5]}
+        dim={[1.5, 0.15, 1.5]}
         matrix={[7, 4]}
         color="#aaa"
       />
-
       <Word
         text="Im Tommy"
-        position={[1, 0.2, 7.5]}
+        position={[1, 0.15, 7.5]}
+        depth={0.9}
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
