@@ -23,34 +23,20 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
             initialRotation,
           } = object;
 
-          if (initialRotation) {
-            return (
-              <group
-                key={`collected-${id}`}
-                position={[position.x, position.y, position.z]}
-                quaternion={rotation}
-              >
-                <LetterShape
-                  char={char || ""}
-                  fontSize={fontSize}
-                  color={color || "white"}
-                  depth={geometry[2] / fontSize}
-                  rotation={initialRotation}
-                />
-              </group>
-            );
-          }
-
           return (
-            <LetterShape
+            <group
               key={`collected-${id}`}
-              char={char || ""}
-              fontSize={fontSize}
-              color={color || "white"}
-              depth={geometry[2] / fontSize}
               position={[position.x, position.y, position.z]}
               quaternion={rotation}
-            />
+            >
+              <LetterShape
+                char={char || ""}
+                fontSize={fontSize}
+                color={color || "white"}
+                depth={geometry[2] / fontSize}
+                rotation={initialRotation}
+              />
+            </group>
           );
         }
 

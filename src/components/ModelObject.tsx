@@ -5,7 +5,7 @@ import * as THREE from "three";
 
 useGLTF.preload("/3d/gameboy/scene.gltf");
 useGLTF.preload("/3d/diskette/scene.gltf");
-useGLTF.preload("/3d/foliage/scene.gltf");
+// useGLTF.preload("/3d/foliage/scene.gltf");
 
 interface ModelObjectProps {
   modelPath: string;
