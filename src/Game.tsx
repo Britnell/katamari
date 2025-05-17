@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
+import { Box } from "./Box";
 
 export default function Game() {
   return (
@@ -51,47 +52,65 @@ export default function Game() {
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
             <Ground />
-            <Words />
-            <ModelObject
-              modelPath="/3d/gameboy/scene.gltf"
-              position={[6, -1, 8]}
-              scale={0.6}
-              rotation={[0, pi * -0.3, 0]}
-              id="gameboy"
-            />
-            <ModelObject
-              modelPath="/3d/diskette/scene.gltf"
-              position={[-10, 0, 6]}
-              scale={0.8}
-              rotation={[pi * -0.5, pi * 0, 0]}
-              id="floppy"
-            />
 
-            <ModelObject
-              modelPath="/3d/minecraft_poppy_flower/scene.gltf"
-              position={[5, 0, 3]}
-              scale={[1.2, 1.2, 2]}
-              rotation={[0, 0, 0]}
-              id="poppy1"
-            />
-            <ModelObject
-              modelPath="/3d/minecraft_poppy_flower/scene.gltf"
-              position={[-5, 0, -5]}
-              scale={[1.8, 1.8, 2]}
-              rotation={[0, 0, 0]}
-              id="poppy2"
-            />
-            <ModelObject
-              modelPath="/3d/retro_computer/scene.gltf"
-              position={[9, 0, 11]}
-              scale={2.0}
-              rotation={[0, pi * 1.0, 0]}
-              id="computer"
-            />
+            <Boxes />
+            <Words />
+            <Objects />
           </Physics>
         </Canvas>
       </KeyboardControls>
     </div>
+  );
+}
+
+function Boxes() {
+  return (
+    <>
+      <Box position={[1, 0, 1]} dim={[0.3, 0.3, 0.3]} id="box 1" />
+    </>
+  );
+}
+
+function Objects() {
+  return (
+    <>
+      <ModelObject
+        modelPath="/3d/gameboy/scene.gltf"
+        position={[6, -1, 8]}
+        scale={0.6}
+        rotation={[0, pi * -0.3, 0]}
+        id="gameboy"
+      />
+      <ModelObject
+        modelPath="/3d/diskette/scene.gltf"
+        position={[-10, 0, 6]}
+        scale={0.8}
+        rotation={[pi * -0.5, pi * 0, 0]}
+        id="floppy"
+      />
+
+      <ModelObject
+        modelPath="/3d/minecraft_poppy_flower/scene.gltf"
+        position={[5, 0, 3]}
+        scale={[1.2, 1.2, 2]}
+        rotation={[0, 0, 0]}
+        id="poppy1"
+      />
+      <ModelObject
+        modelPath="/3d/minecraft_poppy_flower/scene.gltf"
+        position={[-5, 0, -5]}
+        scale={[1.8, 1.8, 2]}
+        rotation={[0, 0, 0]}
+        id="poppy2"
+      />
+      <ModelObject
+        modelPath="/3d/retro_computer/scene.gltf"
+        position={[9, 0, 11]}
+        scale={2.0}
+        rotation={[0, pi * 1.0, 0]}
+        id="computer"
+      />
+    </>
   );
 }
 

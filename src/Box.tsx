@@ -1,39 +1,26 @@
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
-export function CollectibleObject({
+export function Box({
   position,
-  width,
-  height,
-  depth,
   id,
-  type,
-  char,
-  fontSize,
-  color,
-  bevelEnabled,
-  bevelThickness,
-  bevelSize,
-  bevelSegments,
-  curveSegments,
+  dim,
+  color = "red",
+  rotation = [0, 0, 0],
+  quaternion,
 }: {
   position: [number, number, number];
-  width: number;
-  height: number;
-  depth: number;
-  id: number;
-  type?: string;
-  char?: string;
-  fontSize?: number;
+  dim: [number, number, number];
+  id: string;
   color?: string;
-  bevelEnabled?: boolean;
-  bevelThickness?: number;
-  bevelSize?: number;
-  bevelSegments?: number;
-  curveSegments?: number;
+  rotation?: [number, number, number];
+  quaternion?: THREE.Quaternion;
 }) {
+  const [width, height, depth] = dim;
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
+
   const objectVolume = useMemo(
     () => width * height * depth,
     [width, height, depth]
@@ -42,18 +29,14 @@ export function CollectibleObject({
     () => Math.max(width, height, depth),
     [width, height, depth]
   );
-
-  const adjustedPosition = useMemo(() => {
-    const yPos = -0.5 + height / 2;
-    return [position[0], yPos, position[2]] as [number, number, number];
-  }, [position, height]);
-
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={adjustedPosition}
+      position={position}
+      rotation={rotation}
       colliders="cuboid"
       userData={{
+        type: "box",
         id,
         size: maxDimension,
         width,
@@ -62,24 +45,17 @@ export function CollectibleObject({
         volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
-        type,
-        char,
-        fontSize,
         color,
-        bevelEnabled,
-        bevelThickness,
-        bevelSize,
-        bevelSegments,
-        curveSegments,
+        initialRotation: rotation,
       }}
       sensor={isCollected}
     >
-      {!isCollected && (
+      <group rotation={rotation} quaternion={quaternion}>
         <mesh castShadow>
           <boxGeometry args={[width, height, depth]} />
-          <meshStandardMaterial color="orange" />
+          <meshStandardMaterial color={color} roughness={0.8} metalness={0.1} />
         </mesh>
-      )}
+      </group>
     </RigidBody>
   );
 }

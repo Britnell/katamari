@@ -57,6 +57,8 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
           );
         }
 
+        console.log(object);
+
         return null;
       })}
     </>
