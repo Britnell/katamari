@@ -5,6 +5,7 @@ import { useKeyboardControls } from "@react-three/drei";
 import { useRef, useEffect, RefObject } from "react";
 import { UserData } from "./Game";
 import { RapierRigidBody } from "@react-three/rapier";
+import { log } from "three/tsl";
 
 const BASE_CAMERA_HEIGHT = 1.6;
 const BASE_CAMERA_DISTANCE = 4;
@@ -131,11 +132,11 @@ export const formatVolume = (volume: number) => {
 };
 
 export const isBiggerThanObj = (userData: UserData, radius: number) => {
-  const objectVolume = userData.volume * 8;
   const ballVolume = calculateVolume(radius);
-  const isColl = objectVolume < ballVolume;
-  console.log({ objectVolume });
-  return isColl;
+  const isBiggerVolume = userData.volume * 8 < ballVolume;
+  const isBiggerSize = userData.size < radius * 2;
+  console.log({ radius, s: userData.size });
+  return isBiggerVolume && isBiggerSize;
 };
 
 export const calculateVolume = (radius: number) => {
