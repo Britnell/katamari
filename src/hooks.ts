@@ -35,7 +35,7 @@ export const useDisplay = (radius: number) => {
   useEffect(() => {
     const displayElement = document.getElementById("ball-size-display");
     if (displayElement) {
-      const volume = calculateVolume(radius);
+      const volume = getBallVolume(radius);
       displayElement.innerHTML = `Ball Size: ${formatRadius(
         radius
       )} / ${formatVolume(volume)}`;
@@ -132,12 +132,15 @@ export const formatVolume = (volume: number) => {
 };
 
 export const isBiggerThanObj = (userData: UserData, radius: number) => {
-  const ballVolume = calculateVolume(radius);
-  const isBiggerVolume = userData.volume * 8 < ballVolume;
-  const isBiggerSize = userData.size < radius * 2;
+  const ballVolume = getBallVolume(radius);
+  const objectVolume = userData.dim[0] * userData.dim[1] * userData.dim[2];
+  const objectSize = Math.max(...userData.dim);
+  const isBiggerVolume = objectVolume < ballVolume / 8;
+  const isBiggerSize = objectSize < radius * 2;
+  // console.log(userData);
   return isBiggerVolume && isBiggerSize;
 };
 
-export const calculateVolume = (radius: number) => {
+export const getBallVolume = (radius: number) => {
   return (4 / 3) * Math.PI * Math.pow(radius, 3);
 };

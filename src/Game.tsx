@@ -320,9 +320,7 @@ export type UserData = {
   isCollectable: boolean;
   volume: number;
   size: number;
-  width: number;
-  height: number;
-  depth: number;
+  dim: [number, number, number];
   id: string;
   setCollected: (x: boolean) => void;
   type?: string;
@@ -344,6 +342,7 @@ export interface CollectibleObject {
   position: THREE.Vector3;
   rotation: THREE.Quaternion;
   geometry: [number, number, number];
+  dim: [number, number, number];
   type: string;
   char?: string;
   fontSize?: number;

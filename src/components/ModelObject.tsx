@@ -24,17 +24,9 @@ export function ModelObject({
 }: ModelObjectProps) {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
-  const [dimensions, setDimensions] = useState<{
-    width: number;
-    height: number;
-    depth: number;
-    center: THREE.Vector3;
-  }>({
-    width: 0,
-    height: 0,
-    depth: 0,
-    center: new THREE.Vector3(),
-  });
+  const [dimensions, setDimensions] = useState<[number, number, number]>([
+    0, 0, 0,
+  ]);
 
   const { scene } = useGLTF(modelPath);
 
@@ -45,37 +37,20 @@ export function ModelObject({
       const size = new THREE.Vector3();
       box.getSize(size);
 
-      const center = new THREE.Vector3();
-      center.set(
-        (box.min.x + box.max.x) / 2,
-        (box.min.y + box.max.y) / 2,
-        (box.min.z + box.max.z) / 2
-      );
-      setDimensions({
-        width: size.x * (scale[0] ?? scale),
-        height: size.y * (scale[1] ?? scale),
-        depth: size.z * (scale[2] ?? scale),
-        center: center,
-      });
+      setDimensions([
+        size.x * (Array.isArray(scale) ? Number(scale[0]) : Number(scale)),
+        size.y * (Array.isArray(scale) ? Number(scale[1]) : Number(scale)),
+        size.z * (Array.isArray(scale) ? Number(scale[2]) : Number(scale)),
+      ]);
     }
   }, [scene, scale]);
 
-  const objectVolume = useMemo(
-    () => dimensions.width * dimensions.height * dimensions.depth,
-    [dimensions]
-  );
+  // const adjustedPosition = useMemo(() => {
+  //   const yPos = position[1] + dimensions[1] / 2;
+  //   return [position[0], yPos, position[2]] as [number, number, number];
+  // }, [position, dimensions.height]);
 
-  const maxDimension = useMemo(
-    () => Math.max(dimensions.width, dimensions.height, dimensions.depth),
-    [dimensions]
-  );
-
-  const adjustedPosition = useMemo(() => {
-    const yPos = position[1] + dimensions.height / 2;
-    return [position[0], yPos, position[2]] as [number, number, number];
-  }, [position, dimensions.height]);
-
-  if (dimensions.width === 0) {
+  if (dimensions[0] === 0) {
     return null;
   }
 
@@ -86,10 +61,8 @@ export function ModelObject({
       rotation={rotation}
       colliders="cuboid"
       userData={{
-        ...dimensions,
         id,
-        size: maxDimension,
-        volume: objectVolume,
+        dim: dimensions,
         isCollectable: true,
         setCollected: setIsCollected,
         initialRotation: rotation,
@@ -310,10 +283,7 @@ function ExtractedModelObject({
       rotation={rotation}
       colliders="cuboid"
       userData={{
-        ...dimensions,
         id,
-        size: maxDimension,
-        volume: objectVolume,
         isCollectable: true,
         setCollected: setIsCollected,
         initialRotation: rotation,

@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { CollectibleObject, UserData } from "./Game";
 import { CollectedItems } from "./components/CollectedItems";
 import {
-  calculateVolume,
+  getBallVolume,
   isBiggerThanObj,
   useDisplay,
   useKeyboardSteering,
@@ -85,7 +85,8 @@ export default function KatamariBall() {
     if (!isBiggerThanObj(userData, virtualRadius)) return;
     if (!ballRef.current) return;
 
-    const newVolume = calculateVolume(virtualRadius) + userData.volume * 0.5;
+    const objectVolume = userData.dim[0] * userData.dim[1] * userData.dim[2];
+    const newVolume = getBallVolume(virtualRadius) + objectVolume * 0.7;
     const newRadius = Math.cbrt(newVolume / ((4 / 3) * Math.PI));
     setVirtualRadius(newRadius);
     const newMass = 3 * (newRadius / initialRadius) ** 3;
@@ -99,11 +100,7 @@ export default function KatamariBall() {
 
     const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
 
-    const objectDimensions: [number, number, number] = [
-      userData.width,
-      userData.height,
-      userData.depth,
-    ];
+    const objectDimensions = userData.dim;
 
     addCompoundCollider(attachPoint, relativeRotation, objectDimensions);
 

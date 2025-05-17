@@ -113,15 +113,11 @@ export function Letter({
   const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
-  const [dimensions, setDimensions] = useState<{
-    width: number;
-    height: number;
-    depth: number;
-  }>({
-    width: fontSize,
-    height: fontSize,
-    depth: letterDepth,
-  });
+  const [dimensions, setDimensions] = useState<[number, number, number]>([
+    fontSize,
+    fontSize,
+    letterDepth,
+  ]);
 
   useEffect(() => {
     const data = font.data as any as Font;
@@ -131,21 +127,13 @@ export function Letter({
     const height =
       ((data.ascender - data.descender) / data.resolution) * fontSize;
 
-    setDimensions({
-      width,
-      height,
-      depth: letterDepth,
-    });
+    setDimensions([width, height, letterDepth]);
   }, [font, char, fontSize, letterDepth]);
 
-  const objectVolume = dimensions.width * dimensions.height * dimensions.depth;
-  const maxDimension = Math.max(
-    dimensions.width,
-    dimensions.height,
-    dimensions.depth
-  );
+  const objectVolume = dimensions[0] * dimensions[1] * dimensions[2];
+  const maxDimension = Math.max(...dimensions);
 
-  if (dimensions.width === 0) {
+  if (dimensions[0] === 0) {
     return null;
   }
 
@@ -157,11 +145,7 @@ export function Letter({
       colliders="cuboid"
       userData={{
         id,
-        size: maxDimension,
-        width: dimensions.width,
-        height: dimensions.height,
-        depth: dimensions.depth,
-        volume: objectVolume,
+        dim: dimensions,
         isCollectable: true,
         setCollected: setIsCollected,
         initialRotation: rotation,

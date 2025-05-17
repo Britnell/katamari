@@ -59,7 +59,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
         }
 
         if (type === "box") {
-          const { width, height, depth, color, initialRotation } = object;
+          const { color, initialRotation } = object;
           return (
             <group
               key={`collected-${id}`}
@@ -67,9 +67,7 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
               quaternion={rotation}
             >
               <BoxShape
-                width={width}
-                height={height}
-                depth={depth}
+                dim={object.dim}
                 color={color}
                 rotation={initialRotation}
               />

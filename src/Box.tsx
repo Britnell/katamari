@@ -17,32 +17,19 @@ export function Box({
   rotation?: [number, number, number];
   quaternion?: THREE.Quaternion;
 }) {
-  const [width, height, depth] = dim;
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
 
-  const objectVolume = useMemo(
-    () => width * height * depth,
-    [width, height, depth]
-  );
-  const maxDimension = useMemo(
-    () => Math.max(width, height, depth),
-    [width, height, depth]
-  );
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={[position[0], position[1] - height / 2, position[2]]}
+      position={[position[0], position[1] - dim[1] / 2, position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
         type: "box",
         id: `box-${position.join("-")}-${id ?? "."}`,
-        size: maxDimension,
-        width,
-        height,
-        depth,
-        volume: objectVolume,
+        dim: dim,
         isCollectable: true,
         setCollected: setIsCollected,
         color,
@@ -52,9 +39,7 @@ export function Box({
     >
       {!isCollected && (
         <BoxShape
-          width={width}
-          height={height}
-          depth={depth}
+          dim={dim}
           color={color}
           rotation={rotation}
           quaternion={quaternion}
@@ -65,18 +50,14 @@ export function Box({
 }
 
 interface BoxShapeProps {
-  width: number;
-  height: number;
-  depth: number;
+  dim: [number, number, number];
   color?: string;
   rotation?: [number, number, number];
   quaternion?: THREE.Quaternion;
 }
 
 export function BoxShape({
-  width,
-  height,
-  depth,
+  dim,
   color = "red",
   rotation = [0, 0, 0],
   quaternion,
@@ -84,7 +65,7 @@ export function BoxShape({
   return (
     <group rotation={rotation} quaternion={quaternion}>
       <mesh castShadow>
-        <boxGeometry args={[width, height, depth]} />
+        <boxGeometry args={dim} />
         <meshStandardMaterial color={color} roughness={0.8} metalness={0.1} />
       </mesh>
     </group>
