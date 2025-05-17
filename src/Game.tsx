@@ -39,7 +39,6 @@ export default function Game() {
           <Physics interpolate={true} timeStep={1 / 60}>
             <group position={[0, 0, 0]}>
               <KatamariBall />
-              <Box position={[2, 0, 2]} dim={[0.59, 1, 0.3]} />
               <Ground />
               <Words />
               <Objects />
@@ -115,7 +114,7 @@ function Words() {
 
       <Word
         text="Im Tommy"
-        position={[1, 0.4, 7.5]}
+        position={[1, 0.2, 7.5]}
         fontSize={1.3}
         id="intro2"
         wordAngle={0}
@@ -287,11 +286,7 @@ function Words() {
 function Ground() {
   return (
     <RigidBody type="fixed" name="ground" friction={0.9} restitution={0.0}>
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -0.5, 0]}
-        receiveShadow
-      >
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial
           color="#a3d9ff"

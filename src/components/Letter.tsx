@@ -40,6 +40,7 @@ export function Word({
     const width = ((glyph.x_max - glyph.x_min) / data.resolution) * fontSize;
     return width;
   });
+
   const cumWidth = widths.reduce(
     (acc: number[], w) => [...acc, (acc[acc.length - 1] ?? 0) + w],
     [0]
@@ -110,7 +111,7 @@ export function Letter({
   rotation = [0, 0, 0],
 }: LetterProps) {
   // depth & fontSize are relative factors
-  const letterDepth = fontSize * depth * 0.1; // generally depth = 0.1 of fontsize
+  const letterDepth = fontSize * depth * 0.12; // generally depth = 0.1 of fontsize
   const font = useFont(fontUrl);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [isCollected, setIsCollected] = useState(false);
@@ -134,7 +135,7 @@ export function Letter({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={position}
+      position={[position[0] + dimensions[0] / 2, position[1], position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
@@ -191,23 +192,23 @@ export function LetterShape({
       quaternion={quaternion}
       rotation={quaternion ? undefined : rotation}
     >
-      <Center>
-        <Text3D
-          ref={textRef}
-          font={fontUrl}
-          size={fontSize}
-          height={depth}
-          bevelEnabled={true}
-          bevelThickness={0.03}
-          bevelSize={0.02}
-          bevelSegments={1}
-          curveSegments={12}
-          castShadow
-        >
-          {char}
-          <meshStandardMaterial color={color} />
-        </Text3D>
-      </Center>
+      {/* <Center> */}
+      <Text3D
+        ref={textRef}
+        font={fontUrl}
+        size={fontSize}
+        height={depth}
+        bevelEnabled={true}
+        bevelThickness={0.03}
+        bevelSize={0.02}
+        bevelSegments={1}
+        curveSegments={12}
+        castShadow
+      >
+        {char}
+        <meshStandardMaterial color={color} />
+      </Text3D>
+      {/* </Center> */}
     </group>
   );
 }

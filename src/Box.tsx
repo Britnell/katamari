@@ -23,7 +23,7 @@ export function Box({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={[position[0], position[1] - dim[1] / 2, position[2]]}
+      position={[position[0], position[1] + dim[1] / 2, position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
