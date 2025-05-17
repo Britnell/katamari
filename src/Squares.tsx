@@ -1,36 +1,6 @@
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useMemo, useRef, useState } from "react";
 
-export function CollectibleObjects() {
-  const count = 500;
-  const area = 60;
-  const maxSize = 0.8;
-
-  const objects = useMemo(() => {
-    return Array.from({ length: count }).map((_, i) => {
-      const position: [number, number, number] = [
-        (Math.random() - 0.5) * area,
-        0,
-        (Math.random() - 0.5) * area,
-      ];
-
-      const width = Math.random() * maxSize + 0.2;
-      const height = Math.random() * maxSize + 0.2;
-      const depth = Math.random() * maxSize + 0.2;
-
-      return { position, width, height, depth, id: i };
-    });
-  }, [count, area, maxSize]);
-
-  return (
-    <>
-      {objects.map((props) => (
-        <CollectibleObject key={props.id} {...props} />
-      ))}
-    </>
-  );
-}
-
 export function CollectibleObject({
   position,
   width,

@@ -51,7 +51,6 @@ export default function Game() {
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
             <Ground />
-            {/* <CollectibleObjects /> */}
             <Words />
             <ModelObject
               modelPath="/3d/gameboy/scene.gltf"
