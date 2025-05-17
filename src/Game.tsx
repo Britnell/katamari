@@ -54,13 +54,6 @@ function Objects() {
   return (
     <>
       <ModelObject
-        modelPath="/3d/gameboy/scene.gltf"
-        position={[6, -1, 8]}
-        scale={0.6}
-        rotation={[0, pi * -0.3, 0]}
-        id="gameboy"
-      />
-      <ModelObject
         modelPath="/3d/diskette/scene.gltf"
         position={[-10, 0, 6]}
         scale={0.8}
@@ -84,7 +77,7 @@ function Objects() {
       />
       <ModelObject
         modelPath="/3d/retro_computer/scene.gltf"
-        position={[9, 0.3, 11]}
+        position={[9, 0, 11]}
         scale={2.8}
         rotation={[0, pi * 1.0, 0]}
         id="computer"
@@ -189,6 +182,14 @@ function Words() {
         matrix={[6, 4]}
         checkered={true}
         color="#124"
+      />
+
+      <ModelObject
+        modelPath="/3d/gameboy/scene.gltf"
+        position={[5, 0, -13]}
+        scale={0.6}
+        rotation={[0, pi * 0.3, 0]}
+        id="gameboy"
       />
 
       <Word

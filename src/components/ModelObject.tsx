@@ -51,7 +51,7 @@ export function ModelObject({
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={position}
+      position={[position[0], position[1] + dimensions[1] / 2, position[2]]}
       rotation={rotation}
       colliders="cuboid"
       userData={{
@@ -68,7 +68,9 @@ export function ModelObject({
       }}
       sensor={isCollected}
     >
-      {!isCollected && <ModelShape modelPath={modelPath} scale={scale} />}
+      <Center>
+        {!isCollected && <ModelShape modelPath={modelPath} scale={scale} />}
+      </Center>
     </RigidBody>
   );
 }
