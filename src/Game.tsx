@@ -178,8 +178,8 @@ function Words() {
       />
       <Tiles
         position={[-1, 0, -13]}
-        dim={[0.8, 0.05, 0.8]}
-        matrix={[6, 4]}
+        dim={[0.6, 0.06, 0.6]}
+        matrix={[8, 5]}
         checkered={true}
         color="#124"
       />
@@ -194,14 +194,12 @@ function Words() {
 
       <Word
         text="React"
-        position={[4, 0, -8]}
+        position={[5, 0, -8]}
         fontSize={1.0}
         id="intro17"
-        wordAngle={Math.PI * -1.3}
+        wordAngle={Math.PI * -1.2}
         letterAngle={pi * -0.2}
       />
-
-      <Box position={[5.8, 0, -6]} dim={[1.0, 0.6, 1.5]} />
 
       <Word
         text="UI UX"
