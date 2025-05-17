@@ -28,27 +28,8 @@ export default function Game() {
         >
           <PerspectiveCamera makeDefault position={[0, 2, -4]} fov={55} />
           <OrbitControls />
-          <ambientLight intensity={0.6} color="#f0f8ff" />
-          <directionalLight
-            position={[10, 15, 10]}
-            intensity={1.2}
-            castShadow
-            shadow-mapSize={[4096, 4096]}
-            shadow-camera-left={-30}
-            shadow-camera-right={30}
-            shadow-camera-top={30}
-            shadow-camera-bottom={-30}
-            shadow-camera-near={0.1}
-            shadow-camera-far={100}
-            shadow-bias={-0.00001}
-            shadow-normalBias={0.01}
-            shadow-radius={3}
-          />
-          <hemisphereLight
-            intensity={0.4}
-            color="#87ceeb"
-            groundColor="#8a5a44"
-          />
+
+          <Lights />
           <Physics interpolate={true} timeStep={1 / 60}>
             <KatamariBall />
             <Ground />
@@ -66,7 +47,9 @@ export default function Game() {
 function Boxes() {
   return (
     <>
-      <Box position={[1, 0, 1]} dim={[0.3, 0.3, 0.3]} id="box 1" />
+      <Box position={[0, 0, -2]} dim={[1, 0.3, 0.3]} />
+      <Box position={[1, 0, -2]} dim={[1, 0.3, 0.3]} />
+      <Box position={[-1, 0, -2]} dim={[1, 0.3, 0.3]} />
     </>
   );
 }
@@ -131,6 +114,8 @@ function Words() {
         id="intro2"
         wordAngle={0}
       />
+      <Box position={[4.5, 0, 4.5]} dim={[0.5, 0.6, 0.4]} />
+
       <Word
         text="html"
         position={[4, 0, 1]}
@@ -191,16 +176,33 @@ function Words() {
         id="intro16"
         wordAngle={Math.PI * -1}
       />
+      <group position={[-2, 0, 0]}>
+        <Box position={[1.4, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
+
+        <Box position={[2.2, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
+        <Box position={[2.2, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
+
+        <Box position={[3.0, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
+
+        <Box position={[3.8, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
+        <Box position={[3.8, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
+
+        <Box position={[4.6, 0, -11.2]} dim={[0.8, 0.05, 0.8]} color="#124" />
+
+        <Box position={[5.2, 0, -12]} dim={[0.8, 0.05, 0.8]} color="#124" />
+        <Box position={[5.2, 0, -10.4]} dim={[0.8, 0.05, 0.8]} color="#124" />
+      </group>
 
       <Word
         text="React"
         position={[4, 0, -8]}
         fontSize={1.0}
-        // depth={0.9}
         id="intro17"
         wordAngle={Math.PI * -1.3}
         letterAngle={pi * -0.2}
       />
+
+      <Box position={[5.8, 0, -6]} dim={[1.0, 0.6, 1.5]} />
 
       <Word
         text="UI UX"
@@ -360,3 +362,27 @@ export interface CollectibleObject {
 }
 
 export const pi = Math.PI;
+
+function Lights() {
+  return (
+    <>
+      <ambientLight intensity={0.6} color="#f0f8ff" />
+      <directionalLight
+        position={[10, 15, 10]}
+        intensity={1.2}
+        castShadow
+        shadow-mapSize={[4096, 4096]}
+        shadow-camera-left={-30}
+        shadow-camera-right={30}
+        shadow-camera-top={30}
+        shadow-camera-bottom={-30}
+        shadow-camera-near={0.1}
+        shadow-camera-far={100}
+        shadow-bias={-0.00001}
+        shadow-normalBias={0.01}
+        shadow-radius={3}
+      />
+      <hemisphereLight intensity={0.4} color="#87ceeb" groundColor="#8a5a44" />
+    </>
+  );
+}

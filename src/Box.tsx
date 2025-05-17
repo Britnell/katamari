@@ -12,7 +12,7 @@ export function Box({
 }: {
   position: [number, number, number];
   dim: [number, number, number];
-  id: string;
+  id?: string;
   color?: string;
   rotation?: [number, number, number];
   quaternion?: THREE.Quaternion;
@@ -37,7 +37,7 @@ export function Box({
       colliders="cuboid"
       userData={{
         type: "box",
-        id,
+        id: `box-${position.join("-")}-${id ?? "."}`,
         size: maxDimension,
         width,
         height,
@@ -50,12 +50,43 @@ export function Box({
       }}
       sensor={isCollected}
     >
-      <group rotation={rotation} quaternion={quaternion}>
-        <mesh castShadow>
-          <boxGeometry args={[width, height, depth]} />
-          <meshStandardMaterial color={color} roughness={0.8} metalness={0.1} />
-        </mesh>
-      </group>
+      {!isCollected && (
+        <BoxShape
+          width={width}
+          height={height}
+          depth={depth}
+          color={color}
+          rotation={rotation}
+          quaternion={quaternion}
+        />
+      )}
     </RigidBody>
+  );
+}
+
+interface BoxShapeProps {
+  width: number;
+  height: number;
+  depth: number;
+  color?: string;
+  rotation?: [number, number, number];
+  quaternion?: THREE.Quaternion;
+}
+
+export function BoxShape({
+  width,
+  height,
+  depth,
+  color = "red",
+  rotation = [0, 0, 0],
+  quaternion,
+}: BoxShapeProps) {
+  return (
+    <group rotation={rotation} quaternion={quaternion}>
+      <mesh castShadow>
+        <boxGeometry args={[width, height, depth]} />
+        <meshStandardMaterial color={color} roughness={0.8} metalness={0.1} />
+      </mesh>
+    </group>
   );
 }

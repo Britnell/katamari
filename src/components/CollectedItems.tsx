@@ -2,6 +2,7 @@ import { RefObject } from "react";
 import { CollectibleObject } from "../Game";
 import { LetterShape } from "./Letter";
 import { ModelShape } from "./ModelObject";
+import { BoxShape } from "../Box";
 
 interface CollectedItemsProps {
   collectedObjects: RefObject<Map<string, CollectibleObject>>;
@@ -57,7 +58,24 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
           );
         }
 
-        console.log(object);
+        if (type === "box") {
+          const { width, height, depth, color, initialRotation } = object;
+          return (
+            <group
+              key={`collected-${id}`}
+              position={[position.x, position.y, position.z]}
+              quaternion={rotation}
+            >
+              <BoxShape
+                width={width}
+                height={height}
+                depth={depth}
+                color={color}
+                rotation={initialRotation}
+              />
+            </group>
+          );
+        }
 
         return null;
       })}
