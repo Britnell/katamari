@@ -13,6 +13,7 @@
     "@react-three/drei": "^10.0.3",
     "@react-three/fiber": "^9.0.4",
     "@react-three/rapier": "^1.5.0",
+    "musiquejs": "^1.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.174.0"

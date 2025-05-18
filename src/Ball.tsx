@@ -14,6 +14,7 @@ import {
   useDisplay,
   useKeyboardSteering,
 } from "./hooks";
+import { bloop, boop } from "./audio";
 
 const initialRadius = 0.5;
 
@@ -83,7 +84,10 @@ export default function KatamariBall() {
     if (!ballRef.current) return;
     if (!userData?.isCollectable) return;
     if (collectedObjects.current.has(userData.id)) return;
-    if (!isBiggerThanObj(userData, virtualRadius)) return;
+    if (!isBiggerThanObj(userData, virtualRadius)) {
+      boop();
+      return;
+    }
 
     const objectVolume = userData.volume;
     const newVolume = getBallVolume(virtualRadius) + objectVolume * 0.8;
@@ -114,6 +118,8 @@ export default function KatamariBall() {
     otherBody.setEnabled(false);
 
     userData.setCollected && userData.setCollected(true);
+
+    bloop();
   }
 
   return (

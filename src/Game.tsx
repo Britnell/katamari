@@ -11,42 +11,53 @@ import { Word } from "./components/Letter";
 import KatamariBall from "./Ball";
 import { ModelObject } from "./components/ModelObject";
 import Tiles from "./Box";
+import { useState } from "react";
 
 export default function Game() {
-  return (
-    <div style={{ width: "100%", height: "100vh" }}>
-      <KeyboardControls map={keyboardMap}>
-        <Canvas
-          shadows
-          gl={{
-            antialias: true,
-          }}
-          onCreated={({ gl }) => {
-            gl.shadowMap.enabled = true;
-            gl.shadowMap.type = THREE.PCFSoftShadowMap;
-            gl.shadowMap.autoUpdate = true;
-          }}
-        >
-          <PerspectiveCamera
-            makeDefault
-            position={[0, 2, 0 - 4]}
-            fov={55}
-            manual={false}
-          />
-          <OrbitControls />
+  const [musicOn, setMusicOn] = useState(false);
 
-          <Lights />
-          <Physics interpolate={true} timeStep={1 / 60}>
-            <group position={[0, 0, 0]}>
-              <KatamariBall />
-              <Ground />
-              <Words />
-              <Objects />
-            </group>
-          </Physics>
-        </Canvas>
-      </KeyboardControls>
-    </div>
+  return (
+    <>
+      <button
+        onClick={() => setMusicOn(!musicOn)}
+        style={{ position: "absolute", top: "1rem", right: "1rem" }}
+      >
+        {musicOn ? "turn on music" : "turn off"}
+      </button>
+      <div style={{ width: "100%", height: "100vh" }}>
+        <KeyboardControls map={keyboardMap}>
+          <Canvas
+            shadows
+            gl={{
+              antialias: true,
+            }}
+            onCreated={({ gl }) => {
+              gl.shadowMap.enabled = true;
+              gl.shadowMap.type = THREE.PCFSoftShadowMap;
+              gl.shadowMap.autoUpdate = true;
+            }}
+          >
+            <PerspectiveCamera
+              makeDefault
+              position={[0, 2, 0 - 4]}
+              fov={55}
+              manual={false}
+            />
+            <OrbitControls />
+
+            <Lights />
+            <Physics interpolate={true} timeStep={1 / 60}>
+              <group position={[0, 0, 0]}>
+                <KatamariBall />
+                <Ground />
+                <Words />
+                <Objects />
+              </group>
+            </Physics>
+          </Canvas>
+        </KeyboardControls>
+      </div>
+    </>
   );
 }
 
