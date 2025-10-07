@@ -42,11 +42,11 @@ export function CollectedItems({ collectedObjects }: CollectedItemsProps) {
         }
 
         if (type === "model") {
-          const { modelPath, scale, initialRotation, center } = object;
+          const { modelPath, scale, initialRotation } = object;
           return (
             <group
               key={`collected-${id}`}
-              position={center}
+              position={[position.x, position.y, position.z]}
               quaternion={rotation}
             >
               <ModelShape

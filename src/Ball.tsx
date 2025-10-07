@@ -80,10 +80,29 @@ export default function KatamariBall() {
   function onCollision(otherBody: RapierRigidBody | undefined): void {
     if (!otherBody) return;
 
+    // Skip collision if it's the ball's own collider or has no userData
+    if (otherBody === ballRef.current) return;
+    
     const userData = otherBody.userData as UserData;
+    const ballPos = ballRef.current?.translation();
+    const otherPos = otherBody.translation();
+    
+    // Debug logging for problematic collisions
+    if (!userData) {
+      console.warn("COLLISION WITH OBJECT WITHOUT USERDATA:", {
+        ballPosition: ballPos ? [ballPos.x.toFixed(2), ballPos.y.toFixed(2), ballPos.z.toFixed(2)] : "no ball",
+        otherPosition: [otherPos.x.toFixed(2), otherPos.y.toFixed(2), otherPos.z.toFixed(2)],
+        otherBodyEnabled: otherBody.isEnabled()
+      });
+      return; // Skip objects without userData
+    }
+    
     if (!ballRef.current) return;
     if (!userData?.isCollectable) return;
     if (collectedObjects.current.has(userData.id)) return;
+
+    if (!otherBody.isEnabled()) return;
+
     if (!isBiggerThanObj(userData, virtualRadius)) {
       boop();
       return;
@@ -99,7 +118,7 @@ export default function KatamariBall() {
     const attachPoint = calcAttachmentPoint(
       otherBody,
       ballRef.current,
-      virtualRadius
+      newRadius
     );
 
     const relativeRotation = calcRelativeRotation(ballRef.current, otherBody);
@@ -116,7 +135,6 @@ export default function KatamariBall() {
     });
 
     otherBody.setEnabled(false);
-
     userData.setCollected && userData.setCollected(true);
 
     bloop();
@@ -138,7 +156,7 @@ export default function KatamariBall() {
       >
         <group>
           <mesh castShadow>
-            <sphereGeometry args={[initialRadius, 32, 32]} />
+            <sphereGeometry args={[initialRadius * 0.9, 32, 32]} />
             <meshStandardMaterial
               map={texture.current}
               transparent={false}
@@ -242,7 +260,9 @@ const calcAttachmentPoint = (
     .clone()
     .applyQuaternion(inverseRotation);
 
-  const localAttachPoint = localDirection.multiplyScalar(radius);
+  const objectDim = Math.min(...(objectBody.userData as UserData).dim);
+  const attachmentDistance = radius + objectDim * 1.0;
+  const localAttachPoint = localDirection.multiplyScalar(attachmentDistance);
 
   return localAttachPoint;
 };
